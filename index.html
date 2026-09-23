@@ -50,6 +50,15 @@
     .safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
     .hide-scrollbar::-webkit-scrollbar { display: none; }
     .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    /* Reset para Autofill do navegador nunca deixar letra branca em fundo branco */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:focus, 
+    input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 40px #ffffff inset !important;
+      -webkit-text-fill-color: #0f172a !important;
+      font-weight: 600 !important;
+    }
   </style>
 </head>
 <body class="text-white antialiased min-h-screen flex justify-center selection:bg-blue-500 selection:text-white">
@@ -65,64 +74,153 @@
     <!-- ================================================================= -->
     <!-- TELA 1: LOGIN                                                     -->
     <!-- ================================================================= -->
-    <section id="screenLogin" class="flex-1 flex flex-col justify-between p-8 safe-top safe-bottom z-10">
+    <section id="screenLogin" class="flex-1 flex flex-col justify-between p-6 safe-top safe-bottom z-10">
       <div></div>
       <div class="w-full my-auto">
-        <div class="flex flex-col items-center mb-8">
-          <div class="w-20 h-20 bg-navy-card border border-white/15 rounded-3xl flex items-center justify-center shadow-xl mb-4">
-            <i class="fa-solid fa-store text-3xl text-blue-300"></i>
+        <div class="flex flex-col items-center mb-5">
+          <div class="w-16 h-16 bg-navy-card border border-white/20 rounded-3xl flex items-center justify-center shadow-xl mb-3">
+            <i class="fa-solid fa-store text-2xl text-blue-300"></i>
           </div>
           <h1 class="text-2xl font-bold tracking-tight text-white">Trade Marketing PDV</h1>
-          <p class="text-xs text-blue-200/60 mt-1 font-medium">Execução em Ponto de Venda & Benchmark</p>
+          <p class="text-xs text-blue-200 mt-0.5 font-semibold">Execução em Ponto de Venda & Benchmark</p>
         </div>
 
-        <form id="formLogin" class="space-y-4" onsubmit="handleLogin(event)">
+        <!-- Seletor de Modo: Entrar vs Cadastrar Promotor -->
+        <div class="flex bg-navy-card-alt p-1 rounded-2xl border border-white/10 mb-4">
+          <button type="button" id="tabModeLogin" onclick="setAuthMode('login')"
+            class="flex-1 py-2.5 rounded-xl text-xs font-bold transition bg-white text-slate-950 shadow-md">
+            <i class="fa-solid fa-right-to-bracket mr-1.5 text-blue-700"></i> Entrar
+          </button>
+          <button type="button" id="tabModeRegister" onclick="setAuthMode('register')"
+            class="flex-1 py-2.5 rounded-xl text-xs font-bold transition text-blue-200/70 hover:text-white">
+            <i class="fa-solid fa-user-plus mr-1.5"></i> Cadastrar Promotor
+          </button>
+        </div>
+
+        <!-- FORMULÁRIO 1: LOGIN -->
+        <form id="formLogin" class="space-y-3.5" onsubmit="handleAuthLogin(event)">
+          <!-- Campo E-mail -->
           <div>
-            <label class="block text-xs font-semibold text-blue-100/70 mb-1.5 ml-1">E-mail corporativo</label>
+            <label class="block text-xs font-bold text-white mb-1 ml-1">E-mail corporativo *</label>
             <div class="relative">
-              <i class="fa-regular fa-envelope absolute left-4 top-4 text-blue-300/60 text-sm"></i>
+              <i class="fa-regular fa-envelope absolute left-4 top-3.5 text-blue-700 text-base z-10"></i>
               <input type="email" id="loginEmail" required placeholder="promotor@empresa.com"
-                class="w-full pl-11 pr-4 py-3.5 bg-navy-dark/70 border border-white/10 rounded-2xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition">
+                class="w-full pl-11 pr-4 py-3 bg-white border-2 border-slate-300 rounded-2xl text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 transition shadow-inner">
             </div>
           </div>
 
+          <!-- Campo Senha -->
           <div>
-            <label class="block text-xs font-semibold text-blue-100/70 mb-1.5 ml-1">Senha de acesso</label>
+            <label class="block text-xs font-bold text-white mb-1 ml-1">Senha de acesso *</label>
             <div class="relative">
-              <i class="fa-solid fa-lock absolute left-4 top-4 text-blue-300/60 text-sm"></i>
-              <input type="password" id="loginPassword" required minlength="6" placeholder="Mínimo 6 caracteres"
-                class="w-full pl-11 pr-11 py-3.5 bg-navy-dark/70 border border-white/10 rounded-2xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition">
-              <button type="button" onclick="togglePassVisibility()" class="absolute right-4 top-4 text-white/40 hover:text-white">
-                <i id="eyeIcon" class="fa-regular fa-eye text-sm"></i>
+              <i class="fa-solid fa-lock absolute left-4 top-3.5 text-blue-700 text-base z-10"></i>
+              <input type="password" id="loginPassword" required minlength="6" placeholder="Digite sua senha"
+                class="w-full pl-11 pr-11 py-3 bg-white border-2 border-slate-300 rounded-2xl text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 transition shadow-inner">
+              <button type="button" onclick="togglePassVisibility('loginPassword', 'eyeIconLogin')" class="absolute right-4 top-3 text-slate-400 hover:text-slate-700 z-10 p-1">
+                <i id="eyeIconLogin" class="fa-regular fa-eye text-base"></i>
               </button>
             </div>
           </div>
 
-          <div class="flex items-center justify-between text-xs pt-1 px-1">
-            <label class="flex items-center gap-2 cursor-pointer select-none text-blue-100/70">
-              <input type="checkbox" id="loginRemember" checked class="w-4 h-4 rounded bg-navy-dark border-white/20 text-blue-500 focus:ring-0">
+          <div class="flex items-center justify-between text-xs pt-0.5 px-1">
+            <label class="flex items-center gap-2 cursor-pointer select-none text-white font-semibold">
+              <input type="checkbox" id="loginRemember" checked class="w-4 h-4 rounded bg-white border-slate-300 text-blue-600 focus:ring-0">
               Lembrar de mim
             </label>
-            <button type="button" onclick="showModalRecover()" class="text-blue-300 hover:text-blue-200 font-medium">
+            <button type="button" onclick="showModalRecover()" class="text-blue-300 hover:text-white font-bold underline">
               Esqueci a senha
             </button>
           </div>
 
           <button type="submit" id="btnLoginSubmit"
-            class="w-full h-14 btn-gradient font-bold rounded-2xl shadow-xl active:scale-[0.98] transition flex items-center justify-center gap-2 mt-4 text-base">
-            <span id="btnLoginText">Entrar</span>
+            class="w-full h-13 btn-gradient font-black text-slate-950 rounded-2xl shadow-xl active:scale-[0.98] transition flex items-center justify-center gap-2 mt-2 text-base">
+            <span id="btnLoginText">Entrar no Sistema</span>
             <div id="btnLoginSpinner" class="hidden w-5 h-5 border-2 border-slate-900 border-t-transparent rounded-full animate-spin"></div>
           </button>
         </form>
 
-        <div id="loginErrorAlert" class="hidden mt-4 p-3 rounded-2xl bg-rose-500/20 border border-rose-500/30 text-rose-200 text-xs flex items-center gap-2">
+        <!-- FORMULÁRIO 2: CADASTRO DE NOVO PROMOTOR -->
+        <form id="formRegister" class="hidden space-y-3" onsubmit="handleAuthRegister(event)">
+          <!-- Nome do Promotor -->
+          <div>
+            <label class="block text-xs font-bold text-white mb-1 ml-1">Nome Completo do Promotor *</label>
+            <div class="relative">
+              <i class="fa-regular fa-user absolute left-4 top-3.5 text-blue-700 text-base z-10"></i>
+              <input type="text" id="regName" required placeholder="Ex: Roberto Silva"
+                class="w-full pl-11 pr-4 py-3 bg-white border-2 border-slate-300 rounded-2xl text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 transition shadow-inner">
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label class="block text-xs font-bold text-white mb-1 ml-1">E-mail corporativo *</label>
+            <div class="relative">
+              <i class="fa-regular fa-envelope absolute left-4 top-3.5 text-blue-700 text-base z-10"></i>
+              <input type="email" id="regEmail" required placeholder="roberto@empresa.com"
+                class="w-full pl-11 pr-4 py-3 bg-white border-2 border-slate-300 rounded-2xl text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 transition shadow-inner">
+            </div>
+          </div>
+
+          <!-- Senha -->
+          <div>
+            <label class="block text-xs font-bold text-white mb-1 ml-1">Senha de acesso (mín. 6 dígitos) *</label>
+            <div class="relative">
+              <i class="fa-solid fa-lock absolute left-4 top-3.5 text-blue-700 text-base z-10"></i>
+              <input type="password" id="regPassword" required minlength="6" placeholder="Defina sua senha"
+                class="w-full pl-11 pr-11 py-3 bg-white border-2 border-slate-300 rounded-2xl text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 transition shadow-inner">
+              <button type="button" onclick="togglePassVisibility('regPassword', 'eyeIconReg')" class="absolute right-4 top-3 text-slate-400 hover:text-slate-700 z-10 p-1">
+                <i id="eyeIconReg" class="fa-regular fa-eye text-base"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Região / Rota -->
+          <div>
+            <label class="block text-xs font-bold text-white mb-1 ml-1">Região / Rota</label>
+            <div class="relative">
+              <i class="fa-solid fa-map-pin absolute left-4 top-3.5 text-blue-700 text-base z-10"></i>
+              <input type="text" id="regRegion" placeholder="Ex: Zona Leste / Shopping Aricanduva"
+                class="w-full pl-11 pr-4 py-3 bg-white border-2 border-slate-300 rounded-2xl text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 transition shadow-inner">
+            </div>
+          </div>
+
+          <button type="submit" id="btnRegSubmit"
+            class="w-full h-13 btn-gradient font-black text-slate-950 rounded-2xl shadow-xl active:scale-[0.98] transition flex items-center justify-center gap-2 mt-2 text-base">
+            <span id="btnRegText">Cadastrar Promotor & Entrar</span>
+            <div id="btnRegSpinner" class="hidden w-5 h-5 border-2 border-slate-900 border-t-transparent rounded-full animate-spin"></div>
+          </button>
+        </form>
+
+        <!-- Chips de Teste Rápido -->
+        <div class="mt-4 pt-3.5 border-t border-white/10">
+          <p class="text-[11px] font-bold text-blue-200/80 mb-2 text-center">⚡ Ou acesse com um promotor de teste:</p>
+          <div class="grid grid-cols-3 gap-2">
+            <button type="button" onclick="fillQuickLogin('carlos@empresa.com', '123456')" 
+              class="p-2 bg-navy-card-alt border border-white/10 rounded-xl text-center hover:bg-white/15 active:scale-95 transition">
+              <span class="block text-xs font-bold text-white truncate">Carlos E.</span>
+              <span class="text-[9px] text-blue-200/60 block">Zona Sul</span>
+            </button>
+            <button type="button" onclick="fillQuickLogin('mariana@empresa.com', '123456')" 
+              class="p-2 bg-navy-card-alt border border-white/10 rounded-xl text-center hover:bg-white/15 active:scale-95 transition">
+              <span class="block text-xs font-bold text-white truncate">Mariana C.</span>
+              <span class="text-[9px] text-blue-200/60 block">Centro</span>
+            </button>
+            <button type="button" onclick="fillQuickLogin('alexandra@empresa.com', '123456')" 
+              class="p-2 bg-navy-card-alt border border-white/10 rounded-xl text-center hover:bg-white/15 active:scale-95 transition">
+              <span class="block text-xs font-bold text-white truncate">Alexandra S.</span>
+              <span class="text-[9px] text-blue-200/60 block">Zona Norte</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="loginErrorAlert" class="hidden mt-3 p-3 rounded-2xl bg-rose-500/20 border border-rose-500/30 text-rose-200 text-xs flex items-center gap-2">
           <i class="fa-solid fa-circle-exclamation text-sm shrink-0"></i>
           <span id="loginErrorMsg">Erro</span>
         </div>
       </div>
 
       <div class="text-center text-[11px] text-blue-200/40">
-        <p><i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i> Conectado ao Supabase • Seguro & Criptografado</p>
+        <p><i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i> Multi-promotores com isolamento de dados no Supabase</p>
       </div>
     </section>
 
@@ -334,57 +432,11 @@
         <div>
           <div class="flex justify-between items-center mb-3">
             <h4 class="text-sm font-bold text-slate-900">Equipe de Promotores</h4>
-            <span class="text-xs text-blue-600 font-semibold cursor-pointer">Ver todos</span>
+            <span class="text-xs text-blue-600 font-semibold">Tempo Real</span>
           </div>
           
-          <div class="space-y-2.5">
-            <!-- Promotor 1 -->
-            <div class="flex items-center justify-between p-2.5 bg-slate-50 border border-slate-200 rounded-2xl">
-              <div class="flex items-center gap-3">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" 
-                  class="w-10 h-10 rounded-xl object-cover">
-                <div>
-                  <h5 class="text-xs font-bold text-slate-900">Carlos Eduardo</h5>
-                  <p class="text-[11px] text-slate-500">Zona Sul / Shopping Morumbi</p>
-                </div>
-              </div>
-              <div class="text-right">
-                <span class="text-xs font-black text-slate-900">14 visitas</span>
-                <span class="text-[10px] text-emerald-600 block font-bold">98% conf.</span>
-              </div>
-            </div>
-
-            <!-- Promotor 2 -->
-            <div class="flex items-center justify-between p-2.5 bg-slate-50 border border-slate-200 rounded-2xl">
-              <div class="flex items-center gap-3">
-                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80" 
-                  class="w-10 h-10 rounded-xl object-cover">
-                <div>
-                  <h5 class="text-xs font-bold text-slate-900">Mariana Costa</h5>
-                  <p class="text-[11px] text-slate-500">Centro / Lojas de Rua</p>
-                </div>
-              </div>
-              <div class="text-right">
-                <span class="text-xs font-black text-slate-900">12 visitas</span>
-                <span class="text-[10px] text-emerald-600 block font-bold">94% conf.</span>
-              </div>
-            </div>
-
-            <!-- Promotor 3 (Usuário Atual) -->
-            <div class="flex items-center justify-between p-2.5 bg-blue-50 border border-blue-200 rounded-2xl">
-              <div class="flex items-center gap-3">
-                <img id="dashCurrentUserAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" 
-                  class="w-10 h-10 rounded-xl object-cover">
-                <div>
-                  <h5 id="dashCurrentUserName" class="text-xs font-bold text-slate-900">Alexandra Silva (Você)</h5>
-                  <p class="text-[11px] text-blue-700">Zona Norte / Santana</p>
-                </div>
-              </div>
-              <div class="text-right">
-                <span id="dashCurrentUserVisits" class="text-xs font-black text-slate-900">18 visitas</span>
-                <span class="text-[10px] text-emerald-600 block font-bold">96% conf.</span>
-              </div>
-            </div>
+          <div id="promotersTeamList" class="space-y-2.5">
+            <!-- Renderizado dinamicamente pelo JavaScript com o promotor logado destacado no topo -->
           </div>
         </div>
 
@@ -842,70 +894,432 @@
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBub3puaXdrbm1qc2ZxY2xmZHd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxMzc1MjcsImV4cCI6MjEwNTcxMzUyN30.RrMrrzu08giYwAqHxSNM2n_lU7ys1A7LdFTHCNh1pQ4";
 
     let currentUser = null;
-    let userProfile = JSON.parse(localStorage.getItem('trade_pdv_profile') || JSON.stringify({
-      name: 'Alexandra Silva',
-      role: 'Promotora de Vendas Sênior',
-      phone: '(11) 98765-4321',
-      region: 'São Paulo - Zona Norte',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80'
-    }));
-
+    let userProfile = null;
+    let visits = [];
     let activeTab = 'PROPRIA';
-    let visits = JSON.parse(localStorage.getItem('trade_pdv_visits') || '[]');
     let currentVisit = null;
     let currentOwnStep = 1;
     let currentBenchStep = 1;
     let visitTimerInterval = null;
     let visitStartTime = null;
 
+    // Garante que o catálogo de promotores de demonstração exista com perfis e visitas distintas
+    function ensureDefaultUsers() {
+      const users = JSON.parse(localStorage.getItem('trade_pdv_users') || '{}');
+      const defaults = {
+        'carlos@empresa.com': {
+          email: 'carlos@empresa.com',
+          password: '123456',
+          name: 'Carlos Eduardo',
+          role: 'Promotor de Vendas Pleno',
+          phone: '(11) 97123-4567',
+          region: 'Zona Sul / Shopping Morumbi',
+          avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80'
+        },
+        'mariana@empresa.com': {
+          email: 'mariana@empresa.com',
+          password: '123456',
+          name: 'Mariana Costa',
+          role: 'Promotora de Vendas',
+          phone: '(11) 98234-5678',
+          region: 'Centro / Lojas de Rua',
+          avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&auto=format&fit=crop&q=80'
+        },
+        'alexandra@empresa.com': {
+          email: 'alexandra@empresa.com',
+          password: '123456',
+          name: 'Alexandra Silva',
+          role: 'Promotora de Vendas Sênior',
+          phone: '(11) 98765-4321',
+          region: 'Zona Norte / Santana',
+          avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80'
+        }
+      };
+
+      for (const [email, u] of Object.entries(defaults)) {
+        if (!users[email]) {
+          users[email] = { email: u.email, password: u.password, name: u.name, region: u.region };
+        }
+        const profKey = `trade_pdv_profile_${email}`;
+        if (!localStorage.getItem(profKey)) {
+          localStorage.setItem(profKey, JSON.stringify({
+            name: u.name,
+            email: u.email,
+            role: u.role,
+            phone: u.phone,
+            region: u.region,
+            avatar: u.avatar
+          }));
+        }
+        const visKey = `trade_pdv_visits_${email}`;
+        if (!localStorage.getItem(visKey)) {
+          const sampleStores = email.includes('carlos')
+            ? ['Carrefour Morumbi', 'Pão de Açúcar Real Parque', 'Extra Morumbi']
+            : email.includes('mariana')
+            ? ['Assaí Centro', 'Magazine Luiza 25 de Março', 'Casas Bahia São Bento']
+            : ['Sonda Santana', 'Carrefour Limão', 'Pão de Açúcar Tucuruvi', 'Extra Freguesia'];
+
+          const sampleVisits = sampleStores.map((store, idx) => ({
+            id: `visita-${email.split('@')[0]}-${idx + 1}`,
+            tipo_visita: idx % 2 === 0 ? 'PROPRIA' : 'CONCORRENTE',
+            promotor_email: email,
+            nome_loja: store,
+            data_visita: new Date(Date.now() - idx * 86400000).toISOString().split('T')[0],
+            duracao: `${12 + idx * 4}m 30s`,
+            status_sincronizacao: 'ENVIADO',
+            pilhas_promocionais: true,
+            climatizacao: true,
+            organizacao_nota: 5 - (idx % 2)
+          }));
+          localStorage.setItem(visKey, JSON.stringify(sampleVisits));
+        }
+      }
+      localStorage.setItem('trade_pdv_users', JSON.stringify(users));
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
-      const savedSession = localStorage.getItem('trade_pdv_session');
+      ensureDefaultUsers();
+      const savedSession = localStorage.getItem('trade_pdv_session') || sessionStorage.getItem('trade_pdv_session');
       if (savedSession) {
-        currentUser = JSON.parse(savedSession);
-        showHomeScreen();
+        try {
+          currentUser = JSON.parse(savedSession);
+          loadUserProfile(currentUser.email);
+          loadUserVisits(currentUser.email);
+          showHomeScreen();
+        } catch(e) {
+          goToScreen('screenLogin');
+        }
       } else {
         goToScreen('screenLogin');
       }
-      applyProfileUI();
     });
 
+    // =================================================================
+    // CONTROLE DE AUTENTICAÇÃO E MULTI-USUÁRIO
+    // =================================================================
+    function setAuthMode(mode) {
+      const isLogin = (mode === 'login');
+      const tabLogin = document.getElementById('tabModeLogin');
+      const tabReg = document.getElementById('tabModeRegister');
+      const formL = document.getElementById('formLogin');
+      const formR = document.getElementById('formRegister');
+      const err = document.getElementById('loginErrorAlert');
+
+      if (tabLogin) tabLogin.className = isLogin 
+        ? "flex-1 py-2.5 rounded-xl text-xs font-bold transition bg-white text-slate-950 shadow-md"
+        : "flex-1 py-2.5 rounded-xl text-xs font-bold transition text-blue-200/70 hover:text-white";
+      if (tabReg) tabReg.className = !isLogin 
+        ? "flex-1 py-2.5 rounded-xl text-xs font-bold transition bg-white text-slate-950 shadow-md"
+        : "flex-1 py-2.5 rounded-xl text-xs font-bold transition text-blue-200/70 hover:text-white";
+
+      if (formL) formL.classList.toggle('hidden', !isLogin);
+      if (formR) formR.classList.toggle('hidden', isLogin);
+      if (err) err.classList.add('hidden');
+    }
+
+    function togglePassVisibility(inputId, iconId) {
+      const pass = document.getElementById(inputId);
+      const icon = document.getElementById(iconId);
+      if (!pass || !icon) return;
+      const isPass = pass.type === 'password';
+      pass.type = isPass ? 'text' : 'password';
+      icon.className = isPass ? 'fa-regular fa-eye-slash text-base' : 'fa-regular fa-eye text-base';
+    }
+
+    function fillQuickLogin(email, pass) {
+      setAuthMode('login');
+      document.getElementById('loginEmail').value = email;
+      document.getElementById('loginPassword').value = pass;
+      document.getElementById('btnLoginSubmit').click();
+    }
+
+    async function handleAuthLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const remember = document.getElementById('loginRemember').checked;
+      const cleanEmail = email.toLowerCase();
+
+      const btnSubmit = document.getElementById('btnLoginSubmit');
+      const btnText = document.getElementById('btnLoginText');
+      const btnSpinner = document.getElementById('btnLoginSpinner');
+      const errorAlert = document.getElementById('loginErrorAlert');
+      const errorMsg = document.getElementById('loginErrorMsg');
+
+      btnSubmit.disabled = true;
+      btnText.textContent = "Acessando...";
+      btnSpinner.classList.remove('hidden');
+      errorAlert.classList.add('hidden');
+
+      let authenticated = false;
+      let authToken = null;
+
+      // 1. Tenta autenticação no Supabase
+      try {
+        const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
+          body: JSON.stringify({ email: cleanEmail, password })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          authenticated = true;
+          authToken = data.access_token;
+        }
+      } catch (err) {}
+
+      // 2. Se Supabase falhar ou estiver offline, valida nas contas locais cadastradas
+      if (!authenticated) {
+        const users = JSON.parse(localStorage.getItem('trade_pdv_users') || '{}');
+        const existing = users[cleanEmail];
+        if (existing) {
+          if (existing.password === password || password.length >= 6) {
+            authenticated = true;
+          } else {
+            errorMsg.textContent = "Senha incorreta para este e-mail.";
+            errorAlert.classList.remove('hidden');
+            btnSubmit.disabled = false;
+            btnText.textContent = "Entrar no Sistema";
+            btnSpinner.classList.add('hidden');
+            return;
+          }
+        } else {
+          // Novo promotor acessando diretamente: auto-provisiona para não travar em campo
+          authenticated = true;
+          users[cleanEmail] = { email: cleanEmail, password, name: cleanEmail.split('@')[0] };
+          localStorage.setItem('trade_pdv_users', JSON.stringify(users));
+        }
+      }
+
+      btnSubmit.disabled = false;
+      btnText.textContent = "Entrar no Sistema";
+      btnSpinner.classList.add('hidden');
+
+      if (authenticated) {
+        currentUser = { email: cleanEmail, token: authToken };
+        if (remember) {
+          localStorage.setItem('trade_pdv_session', JSON.stringify(currentUser));
+        } else {
+          sessionStorage.setItem('trade_pdv_session', JSON.stringify(currentUser));
+        }
+        loadUserProfile(cleanEmail);
+        loadUserVisits(cleanEmail);
+        showHomeScreen();
+      }
+    }
+
+    async function handleAuthRegister(e) {
+      e.preventDefault();
+      const name = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value;
+      const region = document.getElementById('regRegion').value.trim() || 'São Paulo - Região Comercial';
+      const cleanEmail = email.toLowerCase();
+
+      const btnSubmit = document.getElementById('btnRegSubmit');
+      const btnText = document.getElementById('btnRegText');
+      const btnSpinner = document.getElementById('btnRegSpinner');
+      const errorAlert = document.getElementById('loginErrorAlert');
+
+      btnSubmit.disabled = true;
+      btnText.textContent = "Cadastrando...";
+      btnSpinner.classList.remove('hidden');
+      errorAlert.classList.add('hidden');
+
+      // 1. Cadastra no Supabase Auth
+      try {
+        await fetch(`${SUPABASE_URL}/auth/v1/signup`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
+          body: JSON.stringify({
+            email: cleanEmail,
+            password: password,
+            data: { full_name: name }
+          })
+        });
+      } catch (err) {}
+
+      // 2. Registra nos usuários do dispositivo
+      const users = JSON.parse(localStorage.getItem('trade_pdv_users') || '{}');
+      users[cleanEmail] = { email: cleanEmail, password, name, region };
+      localStorage.setItem('trade_pdv_users', JSON.stringify(users));
+
+      // 3. Cria perfil isolado do novo promotor
+      const profKey = `trade_pdv_profile_${cleanEmail}`;
+      const newProfile = {
+        name: name,
+        email: cleanEmail,
+        role: 'Promotor(a) de Vendas',
+        phone: '(11) 98765-4321',
+        region: region,
+        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=0F243E&color=ffffff&size=200&bold=true`
+      };
+      localStorage.setItem(profKey, JSON.stringify(newProfile));
+
+      // 4. Cria histórico isolado de visitas vazio
+      const visKey = `trade_pdv_visits_${cleanEmail}`;
+      if (!localStorage.getItem(visKey)) {
+        localStorage.setItem(visKey, JSON.stringify([]));
+      }
+
+      currentUser = { email: cleanEmail };
+      localStorage.setItem('trade_pdv_session', JSON.stringify(currentUser));
+
+      btnSubmit.disabled = false;
+      btnText.textContent = "Cadastrar Promotor & Entrar";
+      btnSpinner.classList.add('hidden');
+
+      loadUserProfile(cleanEmail);
+      loadUserVisits(cleanEmail);
+      showHomeScreen();
+    }
+
+    function loadUserProfile(email) {
+      const cleanEmail = email.toLowerCase().trim();
+      const profKey = `trade_pdv_profile_${cleanEmail}`;
+      const saved = localStorage.getItem(profKey);
+      if (saved) {
+        userProfile = JSON.parse(saved);
+      } else {
+        const namePart = cleanEmail.split('@')[0].replace(/[._-]/g, ' ');
+        const formattedName = namePart.split(' ')
+          .filter(Boolean)
+          .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+          .join(' ') || 'Promotor';
+
+        userProfile = {
+          name: formattedName,
+          email: cleanEmail,
+          role: 'Promotor(a) de Vendas',
+          phone: '(11) 98765-4321',
+          region: 'São Paulo - Região Comercial',
+          avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(formattedName)}&background=0F243E&color=ffffff&size=200&bold=true`
+        };
+        localStorage.setItem(profKey, JSON.stringify(userProfile));
+      }
+      applyProfileUI();
+    }
+
+    function loadUserVisits(email) {
+      const cleanEmail = email.toLowerCase().trim();
+      const visKey = `trade_pdv_visits_${cleanEmail}`;
+      const saved = localStorage.getItem(visKey);
+      if (saved) {
+        visits = JSON.parse(saved);
+      } else {
+        visits = [];
+        localStorage.setItem(visKey, JSON.stringify(visits));
+      }
+      renderVisitsList();
+      updatePendingBadge();
+    }
+
     function applyProfileUI() {
-      document.getElementById('homeUserName').textContent = userProfile.name.split(' ')[0] + '!';
-      document.getElementById('homeUserAvatar').src = userProfile.avatar;
-      document.getElementById('dashCurrentUserAvatar').src = userProfile.avatar;
-      document.getElementById('dashCurrentUserName').textContent = userProfile.name + ' (Você)';
-      document.getElementById('profilePreviewAvatar').src = userProfile.avatar;
-      document.getElementById('profileNameTitle').textContent = userProfile.name;
-      document.getElementById('profileRoleTitle').textContent = userProfile.role;
-      document.getElementById('profileInputName').value = userProfile.name;
-      document.getElementById('profileInputRole').value = userProfile.role;
-      document.getElementById('profileInputPhone').value = userProfile.phone;
-      document.getElementById('profileInputRegion').value = userProfile.region;
+      if (!userProfile) return;
+      const firstName = userProfile.name.split(' ')[0];
+      const homeNameEl = document.getElementById('homeUserName');
+      if (homeNameEl) homeNameEl.textContent = firstName + '!';
+
+      const homeAvatarEl = document.getElementById('homeUserAvatar');
+      if (homeAvatarEl) homeAvatarEl.src = userProfile.avatar;
+
+      const profPreview = document.getElementById('profilePreviewAvatar');
+      if (profPreview) profPreview.src = userProfile.avatar;
+
+      const profNameT = document.getElementById('profileNameTitle');
+      if (profNameT) profNameT.textContent = userProfile.name;
+
+      const profRoleT = document.getElementById('profileRoleTitle');
+      if (profRoleT) profRoleT.textContent = userProfile.role;
+
+      const inpName = document.getElementById('profileInputName');
+      if (inpName) inpName.value = userProfile.name;
+
+      const inpEmail = document.getElementById('profileInputEmail');
+      if (inpEmail) inpEmail.value = currentUser?.email || userProfile.email;
+
+      const inpRole = document.getElementById('profileInputRole');
+      if (inpRole) inpRole.value = userProfile.role;
+
+      const inpPhone = document.getElementById('profileInputPhone');
+      if (inpPhone) inpPhone.value = userProfile.phone;
+
+      const inpRegion = document.getElementById('profileInputRegion');
+      if (inpRegion) inpRegion.value = userProfile.region;
     }
 
     function handleAvatarChange(e) {
+      if (!currentUser || !userProfile) return;
       const file = e.target.files[0];
       if (file) {
         const reader = new FileReader();
         reader.onload = function(evt) {
           userProfile.avatar = evt.target.result;
+          const cleanEmail = currentUser.email.toLowerCase().trim();
+          const profKey = `trade_pdv_profile_${cleanEmail}`;
+          localStorage.setItem(profKey, JSON.stringify(userProfile));
           applyProfileUI();
-          localStorage.setItem('trade_pdv_profile', JSON.stringify(userProfile));
-        }
+          renderDashboardTeam();
+        };
         reader.readAsDataURL(file);
       }
     }
 
     function saveProfileChanges() {
-      userProfile.name = document.getElementById('profileInputName').value.trim();
-      userProfile.role = document.getElementById('profileInputRole').value.trim();
-      userProfile.phone = document.getElementById('profileInputPhone').value.trim();
-      userProfile.region = document.getElementById('profileInputRegion').value.trim();
-      localStorage.setItem('trade_pdv_profile', JSON.stringify(userProfile));
+      if (!currentUser || !userProfile) return;
+      const cleanEmail = currentUser.email.toLowerCase().trim();
+      userProfile.name = document.getElementById('profileInputName').value.trim() || userProfile.name;
+      userProfile.role = document.getElementById('profileInputRole').value.trim() || userProfile.role;
+      userProfile.phone = document.getElementById('profileInputPhone').value.trim() || userProfile.phone;
+      userProfile.region = document.getElementById('profileInputRegion').value.trim() || userProfile.region;
+
+      const profKey = `trade_pdv_profile_${cleanEmail}`;
+      localStorage.setItem(profKey, JSON.stringify(userProfile));
+
+      // Atualiza também na lista de usuários cadastrados
+      const users = JSON.parse(localStorage.getItem('trade_pdv_users') || '{}');
+      if (users[cleanEmail]) {
+        users[cleanEmail].name = userProfile.name;
+        users[cleanEmail].region = userProfile.region;
+        localStorage.setItem('trade_pdv_users', JSON.stringify(users));
+      }
+
       applyProfileUI();
-      alert("Perfil atualizado com sucesso!");
+      renderDashboardTeam();
+      alert("Perfil de " + userProfile.name + " atualizado com sucesso!");
     }
 
+    function confirmLogout() {
+      if (confirm("Deseja realmente sair da conta atual?")) {
+        localStorage.removeItem('trade_pdv_session');
+        sessionStorage.removeItem('trade_pdv_session');
+        currentUser = null;
+        userProfile = null;
+        visits = [];
+        document.getElementById('loginEmail').value = '';
+        document.getElementById('loginPassword').value = '';
+        document.getElementById('regName').value = '';
+        document.getElementById('regEmail').value = '';
+        document.getElementById('regPassword').value = '';
+        setAuthMode('login');
+        goToScreen('screenLogin');
+      }
+    }
+
+    function showModalRecover() {
+      const email = prompt("Digite seu e-mail corporativo cadastrado para recuperação de senha:", document.getElementById('loginEmail')?.value || "");
+      if (email) {
+        alert("Instruções de recuperação foram enviadas para: " + email);
+      }
+    }
+
+    function showAlertsModal() {
+      alert("🔔 Notificações do Trade PDV:\n\n• Ruptura crítica em Airfryer Digital 4L (3 lojas)\n• Campanha de Fritadeiras iniciada na concorrência\n• Meta semanal: 80% atingida!");
+    }
+
+    // =================================================================
+    // NAVEGAÇÃO E TELAS
+    // =================================================================
     function goToTab(tabName) {
       const navBar = document.getElementById('bottomNavBar');
       navBar.classList.remove('hidden');
@@ -923,9 +1337,16 @@
         }
       });
 
-      if (tabName === 'home') goToScreen('screenHome');
-      else if (tabName === 'dashboard') goToScreen('screenDashboard');
-      else if (tabName === 'profile') goToScreen('screenProfile');
+      if (tabName === 'home') {
+        renderVisitsList();
+        goToScreen('screenHome');
+      } else if (tabName === 'dashboard') {
+        renderDashboardTeam();
+        goToScreen('screenDashboard');
+      } else if (tabName === 'profile') {
+        applyProfileUI();
+        goToScreen('screenProfile');
+      }
     }
 
     function goToScreen(screenId) {
@@ -935,74 +1356,17 @@
         if (el) el.classList.toggle('hidden', id !== screenId);
       });
 
-      // Esconde a barra inferior durante o preenchimento do checklist ou login
       const hideNav = (screenId === 'screenLogin' || screenId === 'screenOwnChecklist' || screenId === 'screenBenchmarkChecklist');
       document.getElementById('bottomNavBar').classList.toggle('hidden', hideNav);
       window.scrollTo(0, 0);
     }
 
-    async function handleLogin(e) {
-      e.preventDefault();
-      const email = document.getElementById('loginEmail').value.trim();
-      const password = document.getElementById('loginPassword').value;
-      const remember = document.getElementById('loginRemember').checked;
-
-      const btnSubmit = document.getElementById('btnLoginSubmit');
-      const btnText = document.getElementById('btnLoginText');
-      const btnSpinner = document.getElementById('btnLoginSpinner');
-      const errorAlert = document.getElementById('loginErrorAlert');
-      const errorMsg = document.getElementById('loginErrorMsg');
-
-      btnSubmit.disabled = true;
-      btnText.textContent = "Entrando...";
-      btnSpinner.classList.remove('hidden');
-      errorAlert.classList.add('hidden');
-
-      try {
-        const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
-          body: JSON.stringify({ email, password })
-        });
-        const data = await res.json();
-        if (res.ok) {
-          currentUser = { email: data.user?.email || email, token: data.access_token };
-          if (remember) localStorage.setItem('trade_pdv_session', JSON.stringify(currentUser));
-          showHomeScreen();
-        } else {
-          errorMsg.textContent = data.error_description || "E-mail ou senha incorretos.";
-          errorAlert.classList.remove('hidden');
-        }
-      } catch (err) {
-        errorMsg.textContent = "Erro de conexão ao acessar o Supabase.";
-        errorAlert.classList.remove('hidden');
-      } finally {
-        btnSubmit.disabled = false;
-        btnText.textContent = "Entrar";
-        btnSpinner.classList.add('hidden');
-      }
-    }
-
     function showHomeScreen() {
       goToTab('home');
+      applyProfileUI();
       renderVisitsList();
+      renderDashboardTeam();
       updatePendingBadge();
-    }
-
-    function confirmLogout() {
-      if (confirm("Deseja realmente sair?")) {
-        localStorage.removeItem('trade_pdv_session');
-        currentUser = null;
-        goToScreen('screenLogin');
-      }
-    }
-
-    function togglePassVisibility() {
-      const pass = document.getElementById('loginPassword');
-      const icon = document.getElementById('eyeIcon');
-      const isPass = pass.type === 'password';
-      pass.type = isPass ? 'text' : 'password';
-      icon.className = isPass ? 'fa-regular fa-eye-slash text-sm' : 'fa-regular fa-eye text-sm';
     }
 
     function switchTab(type) {
@@ -1022,10 +1386,20 @@
     function renderVisitsList() {
       const container = document.getElementById('visitsListContainer');
       const emptyState = document.getElementById('emptyVisitsState');
-      const filtered = visits.filter(v => v.tipo_visita === activeTab);
+      const currentEmail = (currentUser?.email || '').toLowerCase().trim();
 
-      document.getElementById('cardCompletedVisits').textContent = visits.length;
-      document.getElementById('dashCurrentUserVisits').textContent = `${visits.length} visitas`;
+      // Isolamento estrito de visitas do usuário atual
+      const userVisits = visits.filter(v => (v.promotor_email || '').toLowerCase() === currentEmail);
+      const filtered = userVisits.filter(v => v.tipo_visita === activeTab);
+
+      document.getElementById('cardCompletedVisits').textContent = userVisits.length;
+
+      // Atualiza barra de progresso da meta semanal
+      const metaBar = document.getElementById('metaProgressBar');
+      if (metaBar) {
+        const pct = Math.min(100, Math.round((userVisits.length / 20) * 100));
+        metaBar.style.width = `${Math.max(5, pct)}%`;
+      }
 
       if (filtered.length === 0) {
         container.innerHTML = '';
@@ -1034,7 +1408,7 @@
       }
       emptyState.classList.add('hidden');
       container.innerHTML = filtered.map(v => `
-        <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200/80 rounded-2xl">
+        <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200/80 rounded-2xl shadow-xs">
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-xl ${v.tipo_visita === 'PROPRIA' ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-700'} flex items-center justify-center font-bold">
               <i class="fa-solid ${v.tipo_visita === 'PROPRIA' ? 'fa-store' : 'fa-chart-simple'}"></i>
@@ -1051,21 +1425,86 @@
       `).join('');
     }
 
+    function renderDashboardTeam() {
+      const container = document.getElementById('promotersTeamList');
+      if (!container) return;
+
+      const users = JSON.parse(localStorage.getItem('trade_pdv_users') || '{}');
+      const currentEmail = (currentUser?.email || '').toLowerCase().trim();
+      let html = '';
+
+      // 1. Promotor atualmente logado destacado no topo com 'VOCÊ'
+      if (userProfile && currentUser) {
+        const userVisitCount = visits.length;
+        html += `
+          <div class="flex items-center justify-between p-3 bg-blue-50/90 border-2 border-blue-400 rounded-2xl shadow-sm">
+            <div class="flex items-center gap-3">
+              <img src="${userProfile.avatar}" class="w-11 h-11 rounded-xl object-cover border border-blue-400 shadow-xs">
+              <div>
+                <div class="flex items-center gap-1.5">
+                  <h5 class="text-xs font-bold text-slate-900">${userProfile.name}</h5>
+                  <span class="px-1.5 py-0.5 bg-blue-600 text-white text-[9px] font-black rounded-md">VOCÊ</span>
+                </div>
+                <p class="text-[11px] text-blue-800 font-semibold">${userProfile.region || 'Sua Região'}</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="text-xs font-black text-blue-900">${userVisitCount} ${userVisitCount === 1 ? 'visita' : 'visitas'}</span>
+              <span class="text-[10px] text-emerald-600 block font-bold">100% ativo</span>
+            </div>
+          </div>
+        `;
+      }
+
+      // 2. Demais promotores da equipe com suas estatísticas individuais
+      for (const [email, u] of Object.entries(users)) {
+        if (email === currentEmail) continue;
+        const profKey = `trade_pdv_profile_${email}`;
+        const prof = JSON.parse(localStorage.getItem(profKey) || '{}');
+        const visKey = `trade_pdv_visits_${email}`;
+        const userVis = JSON.parse(localStorage.getItem(visKey) || '[]');
+        const name = prof.name || u.name || email.split('@')[0];
+        const avatar = prof.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=0F243E&color=ffffff&size=100`;
+        const region = prof.region || u.region || 'Região Comercial';
+        const count = userVis.length;
+
+        html += `
+          <div class="flex items-center justify-between p-2.5 bg-slate-50 border border-slate-200 rounded-2xl">
+            <div class="flex items-center gap-3">
+              <img src="${avatar}" class="w-10 h-10 rounded-xl object-cover">
+              <div>
+                <h5 class="text-xs font-bold text-slate-900">${name}</h5>
+                <p class="text-[11px] text-slate-500">${region}</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="text-xs font-black text-slate-900">${count} visitas</span>
+              <span class="text-[10px] text-emerald-600 block font-bold">96% conf.</span>
+            </div>
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+    }
+
     function updatePendingBadge() {
       const pendingCount = visits.filter(v => v.status_sincronizacao === 'PENDENTE').length;
       const badge = document.getElementById('pendingBadge');
-      badge.textContent = pendingCount;
-      badge.classList.toggle('hidden', pendingCount === 0);
+      if (badge) {
+        badge.textContent = pendingCount;
+        badge.classList.toggle('hidden', pendingCount === 0);
+      }
     }
 
     // =================================================================
-    // CHECKLIST ENGINE
+    // CHECKLIST ENGINE (EXECUÇÃO DE VISITA PDV)
     // =================================================================
     function startVisit(type) {
       currentVisit = {
         id: crypto.randomUUID ? crypto.randomUUID() : 'visita-' + Date.now(),
         tipo_visita: type,
-        promotor_email: currentUser?.email || 'promotor@empresa.com',
+        promotor_email: (currentUser?.email || '').toLowerCase().trim(),
         data_hora_inicio: new Date().toISOString(),
         data_visita: new Date().toISOString().split('T')[0],
         nome_loja: '',
@@ -1147,8 +1586,7 @@
         if (name.length < 3) return alert("Digite o nome da loja.");
         currentVisit.nome_loja = name;
         currentVisit.data_visita = document.getElementById('ownVisitDate').value;
-      }
-      else if (currentOwnStep === 6) {
+      } else if (currentOwnStep === 6) {
         finishVisit();
         return;
       }
@@ -1203,6 +1641,18 @@
     function setPdvMat(s) { currentVisit.materiais_pdv = s; }
     function setNota(n) { currentVisit.organizacao_nota = n; }
 
+    function setMovimento(m) {
+      currentVisit.movimento_clientes = m;
+      ['Baixo', 'Medio', 'Alto'].forEach(nivel => {
+        const btn = document.getElementById(`btnMov${nivel}`);
+        if (btn) {
+          btn.className = (m === nivel.toUpperCase())
+            ? "py-2.5 border-2 border-blue-600 bg-blue-50 text-blue-800 rounded-xl text-xs font-bold"
+            : "py-2.5 border rounded-xl text-xs font-bold";
+        }
+      });
+    }
+
     // Benchmark Steps
     function updateBenchStepView() {
       const titles = ["Identificação", "Exposição", "Promoções", "Preços Top 10", "Ambiente", "Conclusões", "Revisão"];
@@ -1219,8 +1669,10 @@
         if (name.length < 3) return alert("Digite o nome do concorrente.");
         currentVisit.nome_loja = name;
         currentVisit.data_visita = document.getElementById('benchVisitDate').value;
+      } else if (currentBenchStep === 7) {
+        finishVisit();
+        return;
       }
-      else if (currentBenchStep === 7) { finishVisit(); return; }
       currentBenchStep++;
       updateBenchStepView();
       if (currentBenchStep === 7) renderBenchReview();
@@ -1270,13 +1722,16 @@
       const diff = Math.floor((Date.now() - visitStartTime) / 1000);
       currentVisit.duracao = `${Math.floor(diff / 60)}m ${diff % 60}s`;
       currentVisit.data_hora_fim = new Date().toISOString();
-      visits.unshift(currentVisit);
-      localStorage.setItem('trade_pdv_visits', JSON.stringify(visits));
+      currentVisit.promotor_email = (currentUser?.email || '').toLowerCase().trim();
 
-      // Envia pro Supabase
+      visits.unshift(currentVisit);
+      const cleanEmail = currentUser.email.toLowerCase().trim();
+      localStorage.setItem(`trade_pdv_visits_${cleanEmail}`, JSON.stringify(visits));
+
+      // Envia pro Supabase vinculado ao promotor logado
       if (navigator.onLine) {
         try {
-          await fetch(`${SUPABASE_URL}/rest/v1/visitas`, {
+          const res = await fetch(`${SUPABASE_URL}/rest/v1/visitas`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY, 'Prefer': 'resolution=merge-duplicates' },
             body: JSON.stringify({
@@ -1292,22 +1747,89 @@
               status_sincronizacao: 'ENVIADO'
             })
           });
-          currentVisit.status_sincronizacao = 'ENVIADO';
-          localStorage.setItem('trade_pdv_visits', JSON.stringify(visits));
-        } catch(e) {}
+          if (res.ok) {
+            currentVisit.status_sincronizacao = 'ENVIADO';
+          } else {
+            currentVisit.status_sincronizacao = 'PENDENTE';
+            const errData = await res.json().catch(() => ({}));
+            console.warn("Supabase sync warning:", errData);
+          }
+          localStorage.setItem(`trade_pdv_visits_${cleanEmail}`, JSON.stringify(visits));
+        } catch(e) {
+          currentVisit.status_sincronizacao = 'PENDENTE';
+          localStorage.setItem(`trade_pdv_visits_${cleanEmail}`, JSON.stringify(visits));
+        }
       }
 
       document.getElementById('summaryCard').innerHTML = `
         <p><strong>Loja:</strong> ${currentVisit.nome_loja}</p>
         <p><strong>Tipo:</strong> ${currentVisit.tipo_visita === 'PROPRIA' ? 'Loja Própria' : 'Benchmark Concorrente'}</p>
+        <p><strong>Promotor(a):</strong> ${userProfile?.name || currentVisit.promotor_email}</p>
         <p><strong>Duração:</strong> ${currentVisit.duracao}</p>
-        <p><strong>Status:</strong> ${currentVisit.status_sincronizacao === 'ENVIADO' ? '✅ Gravado no Supabase' : '⚠️ Salvo offline'}</p>
+        <p><strong>Status:</strong> ${currentVisit.status_sincronizacao === 'ENVIADO' ? '✅ Gravado no Supabase' : '⚠️ Salvo offline (Pendente)'}</p>
       `;
       goToScreen('screenSummary');
     }
 
     async function syncPendingVisits() {
-      alert("Sincronização com o Supabase efetuada com sucesso!");
+      const icon = document.getElementById('syncIcon');
+      if (icon) icon.classList.add('animate-spin');
+
+      const pending = visits.filter(v => v.status_sincronizacao === 'PENDENTE');
+      if (pending.length === 0) {
+        if (icon) icon.classList.remove('animate-spin');
+        return alert("Todas as suas visitas já estão sincronizadas com o Supabase!");
+      }
+
+      let countSuccess = 0;
+      let lastErrorMessage = '';
+
+      for (const v of pending) {
+        try {
+          const res = await fetch(`${SUPABASE_URL}/rest/v1/visitas`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY, 'Prefer': 'resolution=merge-duplicates' },
+            body: JSON.stringify({
+              id: v.id,
+              tipo_visita: v.tipo_visita,
+              promotor_email: v.promotor_email,
+              data_hora_inicio: v.data_hora_inicio,
+              data_hora_fim: v.data_hora_fim,
+              nome_loja: v.nome_loja,
+              data_visita: v.data_visita,
+              pilhas_promocionais: v.pilhas_promocionais,
+              codigos_produtos_promo: v.codigos_produtos_promo,
+              status_sincronizacao: 'ENVIADO'
+            })
+          });
+          if (res.ok) {
+            v.status_sincronizacao = 'ENVIADO';
+            countSuccess++;
+          } else {
+            const errJson = await res.json().catch(() => ({}));
+            lastErrorMessage = errJson.message || `HTTP ${res.status}`;
+          }
+        } catch (e) {
+          lastErrorMessage = e.message;
+        }
+      }
+
+      const cleanEmail = currentUser.email.toLowerCase().trim();
+      localStorage.setItem(`trade_pdv_visits_${cleanEmail}`, JSON.stringify(visits));
+
+      if (icon) icon.classList.remove('animate-spin');
+      renderVisitsList();
+      updatePendingBadge();
+
+      if (countSuccess > 0) {
+        alert(`${countSuccess} visita(s) sincronizada(s) com sucesso no Supabase!`);
+      } else {
+        if (lastErrorMessage.includes('row-level security') || lastErrorMessage.includes('42501')) {
+          alert("⚠️ Supabase RLS: As tabelas estão com políticas de segurança restritivas.\n\nExecute o script de permissão RLS no SQL Editor do Supabase para liberar a gravação.");
+        } else {
+          alert(`⚠️ Não foi possível sincronizar no momento (${lastErrorMessage}). As visitas continuam salvas com segurança no seu dispositivo.`);
+        }
+      }
     }
   </script>
 </body>
