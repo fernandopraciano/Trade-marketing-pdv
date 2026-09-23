@@ -556,151 +556,116 @@
           <div>
             <h4 class="text-base font-bold text-white">Loja Concorrente (Benchmark)</h4>
             <p class="text-xs text-blue-100/70 mt-1 leading-relaxed">Inteligência de campo: exposição, promoções, comparativo Top 10 preços e alertas.</p>
-            <span class="inline-block mt-3 px-3 py-1 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 rounded-lg text-xs font-bold">7 Etapas Rápidas</span>
+            <span class="inline-block mt-3 px-3 py-1 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 rounded-lg text-xs font-bold">Por SKU · 4 Etapas</span>
           </div>
         </div>
       </div>
     </section>
 
+
+
     <!-- ================================================================= -->
-    <!-- TELA 6: CHECKLIST LOJA PRÓPRIA (6 ETAPAS)                         -->
+    <!-- TELA 6: CHECKLIST LOJA PRÓPRIA (69 PERGUNTAS · 5 ETAPAS)          -->
     <!-- ================================================================= -->
     <section id="screenOwnChecklist" class="hidden flex-1 flex flex-col safe-top">
-      <header class="p-4 px-6 border-b border-white/10 flex items-center justify-between">
-        <button onclick="prevOwnStep()" class="text-blue-200 text-xs font-bold flex items-center gap-1">
-          <i class="fa-solid fa-chevron-left text-[10px]"></i> Voltar
+      <header class="p-4 px-6 border-b border-white/10 flex items-center justify-between bg-navy-main/80 backdrop-blur-md sticky top-0 z-20">
+        <button onclick="prevOwnStep()" class="text-blue-200 text-xs font-bold flex items-center gap-1.5 hover:text-white transition-colors">
+          <i class="fa-solid fa-chevron-left text-[11px]"></i> Voltar
         </button>
         <div class="text-center">
-          <span id="ownStepBadge" class="text-[10px] font-black text-blue-400 uppercase tracking-widest">Etapa 1 de 6</span>
-          <h4 id="ownStepTitle" class="text-xs font-bold text-white">Identificação</h4>
+          <span id="ownStepBadge" class="text-[10px] font-black text-blue-400 uppercase tracking-widest block">Etapa 1 de 5</span>
+          <h4 id="ownStepTitle" class="text-xs font-bold text-white">Identificação da Visita</h4>
         </div>
-        <div id="ownTimer" class="text-xs font-mono font-bold bg-white/10 px-2.5 py-1 rounded-full text-blue-200">00:00</div>
+        <div id="ownTimer" class="text-xs font-mono font-bold bg-white/10 px-2.5 py-1 rounded-full text-blue-200 border border-white/10">00:00</div>
       </header>
 
-      <div class="w-full bg-navy-dark h-1">
-        <div id="ownProgressBar" class="bg-gradient-to-r from-blue-400 to-indigo-500 h-1 transition-all duration-300" style="width: 16.6%;"></div>
+      <div class="w-full bg-navy-dark h-1.5">
+        <div id="ownProgressBar" class="bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-400 h-1.5 transition-all duration-300" style="width: 20%;"></div>
       </div>
 
-      <main class="flex-1 overflow-y-auto p-5 bg-slate-50 text-slate-800 rounded-t-[32px] mt-2">
-        <!-- ETAPA 1 -->
+      <main id="ownChecklistMain" class="flex-1 overflow-y-auto p-4 sm:p-5 bg-slate-100 text-slate-800 rounded-t-[28px] mt-2 pb-24 hide-scrollbar">
+        <!-- Step 1: Identificação -->
         <div id="ownStepContent1" class="space-y-4">
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Nome da Loja Própria *</label>
-            <input type="text" id="ownStoreName" placeholder="Ex: Magazine Luiza Centro"
-              class="w-full p-3.5 bg-white border border-slate-300 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Data da Visita *</label>
-            <input type="date" id="ownVisitDate" class="w-full p-3.5 bg-white border border-slate-300 rounded-2xl text-sm font-semibold">
-          </div>
-          <div class="p-3 bg-blue-50 rounded-2xl flex items-center justify-between text-xs text-blue-900 border border-blue-100">
-            <span id="ownGeoText"><i class="fa-solid fa-location-dot text-blue-600 mr-1.5"></i> Obtendo GPS...</span>
-            <button type="button" onclick="captureGeolocation('ownGeoText')" class="font-bold underline">Atualizar</button>
-          </div>
-        </div>
-
-        <!-- ETAPA 2 -->
-        <div id="ownStepContent2" class="hidden space-y-4">
-          <h4 class="text-sm font-bold text-slate-900">Há pilhas de produtos promocionais na loja? *</h4>
-          <div class="grid grid-cols-2 gap-3">
-            <button type="button" onclick="setYesNo('ownPilhas', true)" id="btnOwnPilhasYes" class="py-4 border-2 border-slate-200 rounded-2xl font-bold text-sm">Sim</button>
-            <button type="button" onclick="setYesNo('ownPilhas', false)" id="btnOwnPilhasNo" class="py-4 border-2 border-slate-200 rounded-2xl font-bold text-sm">Não</button>
-          </div>
-          <div id="boxOwnPromoCodes" class="hidden pt-3 border-t border-slate-200">
-            <label class="block text-xs font-bold text-slate-700 mb-1">Códigos dos Produtos Promocionais *</label>
-            <div class="flex gap-2">
-              <input type="text" id="inputPromoCode" placeholder="Ex: FRIT01" class="flex-1 p-3 bg-white border border-slate-300 rounded-xl text-xs uppercase font-bold">
-              <button type="button" onclick="addPromoCode()" class="px-4 bg-blue-700 text-white rounded-xl text-xs font-bold">Add</button>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs space-y-4">
+            <div class="border-b border-slate-100 pb-3">
+              <span class="text-[10px] font-black uppercase text-blue-600 tracking-wider">Bloco 0</span>
+              <h3 class="text-sm font-bold text-slate-900">Identificação da Visita</h3>
+              <p class="text-xs text-slate-500 mt-0.5">Preencha os dados de abertura da visita técnica.</p>
             </div>
-            <div id="promoCodesChips" class="flex flex-wrap gap-1.5 mt-3"></div>
-          </div>
-        </div>
 
-        <!-- ETAPA 3 -->
-        <div id="ownStepContent3" class="hidden space-y-4">
-          <h4 class="text-sm font-bold text-slate-900">A loja está bem climatizada? *</h4>
-          <div class="grid grid-cols-2 gap-3">
-            <button type="button" onclick="setYesNo('ownClima', true)" id="btnOwnClimaYes" class="py-4 border-2 border-slate-200 rounded-2xl font-bold text-sm">Sim</button>
-            <button type="button" onclick="setYesNo('ownClima', false)" id="btnOwnClimaNo" class="py-4 border-2 border-slate-200 rounded-2xl font-bold text-sm">Não</button>
-          </div>
-          <div id="boxOwnClimaObs" class="hidden pt-3 border-t border-slate-200">
-            <label class="block text-xs font-bold text-slate-700 mb-1">Observação do clima:</label>
-            <textarea id="ownClimaObs" rows="2" placeholder="Descreva o problema..." class="w-full p-3 bg-white border rounded-xl text-xs"></textarea>
-          </div>
-        </div>
-
-        <!-- ETAPA 4 -->
-        <div id="ownStepContent4" class="hidden space-y-4">
-          <h4 class="text-sm font-bold text-slate-900">Todos os produtos do encarte estão disponíveis? *</h4>
-          <div class="grid grid-cols-2 gap-3">
-            <button type="button" onclick="setYesNo('ownEncarte', true)" id="btnOwnEncarteYes" class="py-4 border-2 border-slate-200 rounded-2xl font-bold text-sm">Sim</button>
-            <button type="button" onclick="setYesNo('ownEncarte', false)" id="btnOwnEncarteNo" class="py-4 border-2 border-slate-200 rounded-2xl font-bold text-sm">Não</button>
-          </div>
-          <div id="boxOwnUnavailable" class="hidden pt-3 border-t border-slate-200">
-            <label class="block text-xs font-bold text-slate-700 mb-1">Produtos Indisponíveis do Encarte *</label>
-            <div class="flex gap-2">
-              <input type="text" id="inputUnavailableProd" placeholder="Ex: Geladeira 375L" class="flex-1 p-3 bg-white border rounded-xl text-xs font-semibold">
-              <button type="button" onclick="addUnavailableProd()" class="px-4 bg-rose-600 text-white rounded-xl text-xs font-bold">Add</button>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1.5">Loja Própria *</label>
+              <input type="text" id="ownStoreName" placeholder="Ex: Magazine Luiza Morumbi ou Loja 01"
+                class="w-full p-3.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:bg-white focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all">
             </div>
-            <div id="unavailableChips" class="flex flex-wrap gap-1.5 mt-3"></div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1.5">Nome do Promotor</label>
+              <input type="text" id="ownPromoterName" readonly
+                class="w-full p-3.5 bg-slate-100 border border-slate-200 rounded-xl text-sm font-medium text-slate-600 cursor-not-allowed">
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1.5">Data da Visita *</label>
+              <input type="date" id="ownVisitDate"
+                class="w-full p-3.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:bg-white focus:ring-2 focus:ring-blue-600 focus:outline-none">
+            </div>
+
+            <div class="p-3.5 bg-blue-50/80 rounded-xl flex items-center justify-between text-xs text-blue-950 border border-blue-100">
+              <span id="ownGeoText" class="font-medium"><i class="fa-solid fa-location-dot text-blue-600 mr-1.5"></i> Obtendo GPS...</span>
+              <button type="button" onclick="captureGeolocation('ownGeoText')" class="font-bold text-blue-600 hover:text-blue-800 underline ml-2 shrink-0">Atualizar</button>
+            </div>
           </div>
         </div>
 
-        <!-- ETAPA 5 -->
+        <!-- Step 2: Bloco 1 — Fachada (23 perguntas) -->
+        <div id="ownStepContent2" class="hidden space-y-3">
+          <div class="bg-gradient-to-r from-blue-900 to-indigo-950 text-white p-4 rounded-2xl shadow-sm mb-4">
+            <span class="text-[10px] font-black uppercase text-blue-300 tracking-wider">Bloco 1 · 23 Questões</span>
+            <h3 class="text-sm font-bold">Entrada da Loja e Fachada</h3>
+            <p class="text-xs text-blue-200/80 mt-1">Avalie integridade, limpeza, luminosos e sinalização externa.</p>
+          </div>
+          <div id="ownQuestionsBloco1" class="space-y-3"></div>
+        </div>
+
+        <!-- Step 3: Bloco 2 — Marketing (22 perguntas) -->
+        <div id="ownStepContent3" class="hidden space-y-3">
+          <div class="bg-gradient-to-r from-blue-900 to-indigo-950 text-white p-4 rounded-2xl shadow-sm mb-4">
+            <span class="text-[10px] font-black uppercase text-blue-300 tracking-wider">Bloco 2 · 22 Questões</span>
+            <h3 class="text-sm font-bold">Área de Marketing e Exposição Comercial</h3>
+            <p class="text-xs text-blue-200/80 mt-1">Avalie planogramas, etiquetas de preço, pilhas de oferta e materiais de PDV.</p>
+          </div>
+          <div id="ownQuestionsBloco2" class="space-y-3"></div>
+        </div>
+
+        <!-- Step 4: Bloco 3 — Predial (24 perguntas) -->
+        <div id="ownStepContent4" class="hidden space-y-3">
+          <div class="bg-gradient-to-r from-blue-900 to-indigo-950 text-white p-4 rounded-2xl shadow-sm mb-4">
+            <span class="text-[10px] font-black uppercase text-blue-300 tracking-wider">Bloco 3 · 24 Questões</span>
+            <h3 class="text-sm font-bold">Parte Predial, Conforto e Segurança</h3>
+            <p class="text-xs text-blue-200/80 mt-1">Avalie iluminação, ar-condicionado, sanitários, conservação do piso e saídas de emergência.</p>
+          </div>
+          <div id="ownQuestionsBloco3" class="space-y-3"></div>
+        </div>
+
+        <!-- Step 5: Revisão Final -->
         <div id="ownStepContent5" class="hidden space-y-4">
-          <div class="bg-white p-3.5 rounded-2xl border border-slate-200">
-            <h5 class="text-xs font-bold text-slate-800 mb-2">1. Produtos em pontas de gôndola/ilhas?</h5>
-            <div class="grid grid-cols-2 gap-2">
-              <button type="button" onclick="setYesNo('ownPontosExtras', true)" id="btnOwnPontosExtrasYes" class="py-2.5 border rounded-xl text-xs font-bold">Sim</button>
-              <button type="button" onclick="setYesNo('ownPontosExtras', false)" id="btnOwnPontosExtrasNo" class="py-2.5 border rounded-xl text-xs font-bold">Não</button>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+            <div class="border-b border-slate-100 pb-3 mb-4">
+              <span class="text-[10px] font-black uppercase text-emerald-600 tracking-wider">Etapa 5 de 5</span>
+              <h3 class="text-base font-bold text-slate-900">Resumo da Avaliação da Loja</h3>
+              <p class="text-xs text-slate-500 mt-0.5">Revise as não-conformidades e pendências antes do envio.</p>
             </div>
-          </div>
-
-          <div class="bg-white p-3.5 rounded-2xl border border-slate-200">
-            <h5 class="text-xs font-bold text-slate-800 mb-2">2. Materiais de PDV (wobblers, displays)?</h5>
-            <div class="grid grid-cols-3 gap-2 mb-2">
-              <button type="button" onclick="setPdvMat('SIM')" id="btnPdvSim" class="py-2 border rounded-xl text-xs font-bold">Sim</button>
-              <button type="button" onclick="setPdvMat('PARCIAL')" id="btnPdvParcial" class="py-2 border rounded-xl text-xs font-bold">Parcial</button>
-              <button type="button" onclick="setPdvMat('NAO')" id="btnPdvNao" class="py-2 border rounded-xl text-xs font-bold">Não</button>
-            </div>
-            <input type="text" id="ownPdvObs" placeholder="Observação (opcional)" class="w-full p-2 bg-slate-50 border rounded-xl text-xs">
-          </div>
-
-          <div class="bg-white p-3.5 rounded-2xl border border-slate-200">
-            <h5 class="text-xs font-bold text-slate-800 mb-2">3. Organização e limpeza da loja (1 a 5):</h5>
-            <div class="flex gap-1.5">
-              <button type="button" onclick="setNota(1)" class="btn-nota flex-1 py-2.5 border rounded-xl font-black text-xs" data-nota="1">1</button>
-              <button type="button" onclick="setNota(2)" class="btn-nota flex-1 py-2.5 border rounded-xl font-black text-xs" data-nota="2">2</button>
-              <button type="button" onclick="setNota(3)" class="btn-nota flex-1 py-2.5 border rounded-xl font-black text-xs" data-nota="3">3</button>
-              <button type="button" onclick="setNota(4)" class="btn-nota flex-1 py-2.5 border rounded-xl font-black text-xs" data-nota="4">4</button>
-              <button type="button" onclick="setNota(5)" class="btn-nota flex-1 py-2.5 border rounded-xl font-black text-xs" data-nota="5">5</button>
-            </div>
-          </div>
-
-          <div class="bg-white p-3.5 rounded-2xl border border-slate-200">
-            <h5 class="text-xs font-bold text-slate-800 mb-2">4. Há ruptura perceptível de estoque?</h5>
-            <div class="grid grid-cols-2 gap-2 mb-2">
-              <button type="button" onclick="setYesNo('ownRuptura', true)" id="btnOwnRupturaYes" class="py-2 border rounded-xl text-xs font-bold">Sim</button>
-              <button type="button" onclick="setYesNo('ownRuptura', false)" id="btnOwnRupturaNo" class="py-2 border rounded-xl text-xs font-bold">Não</button>
-            </div>
-            <input type="text" id="ownRupturaProds" placeholder="Produtos em falta (separados por vírgula)" class="w-full p-2 bg-slate-50 border rounded-xl text-xs">
-          </div>
-        </div>
-
-        <!-- ETAPA 6 -->
-        <div id="ownStepContent6" class="hidden space-y-4">
-          <div class="bg-white p-5 rounded-2xl border border-slate-200">
-            <h4 class="text-sm font-bold text-slate-900 mb-3">Revisão Final da Visita</h4>
-            <div id="ownReviewSummary" class="space-y-2 text-xs divide-y divide-slate-100"></div>
+            <div id="ownReviewSummary" class="space-y-3"></div>
           </div>
         </div>
       </main>
 
-      <footer class="p-4 bg-white border-t border-slate-200 flex gap-3">
-        <button type="button" onclick="prevOwnStep()" id="btnOwnPrevFooter" class="flex-1 h-13 bg-slate-100 text-slate-700 font-bold rounded-2xl text-xs">
+      <footer class="p-3.5 sm:p-4 bg-white/95 backdrop-blur-md border-t border-slate-200 flex gap-3 fixed bottom-0 left-0 right-0 max-w-md mx-auto z-30">
+        <button type="button" onclick="prevOwnStep()" id="btnOwnPrevFooter" class="flex-1 h-12 bg-slate-100 text-slate-700 hover:bg-slate-200 font-bold rounded-xl text-xs transition-colors">
           Anterior
         </button>
-        <button type="button" onclick="nextOwnStep()" id="btnOwnNextFooter" class="flex-2 h-13 bg-navy-main text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-2">
+        <button type="button" onclick="nextOwnStep()" id="btnOwnNextFooter" class="flex-2 h-12 bg-navy-main hover:bg-blue-900 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-md transition-all">
           <span>Próxima Etapa</span>
           <i class="fa-solid fa-arrow-right text-[10px]"></i>
         </button>
@@ -708,136 +673,296 @@
     </section>
 
     <!-- ================================================================= -->
-    <!-- TELA 7: CHECKLIST BENCHMARK CONCORRENTE (7 ETAPAS)                 -->
+    <!-- TELA 7: CHECKLIST BENCHMARK CONCORRÊNCIA (POR PRODUTO · 4 ETAPAS)  -->
     <!-- ================================================================= -->
     <section id="screenBenchmarkChecklist" class="hidden flex-1 flex flex-col safe-top">
-      <header class="p-4 px-6 border-b border-white/10 flex items-center justify-between">
-        <button onclick="prevBenchStep()" class="text-emerald-300 text-xs font-bold flex items-center gap-1">
-          <i class="fa-solid fa-chevron-left text-[10px]"></i> Voltar
+      <header class="p-4 px-6 border-b border-white/10 flex items-center justify-between bg-navy-main/80 backdrop-blur-md sticky top-0 z-20">
+        <button onclick="prevBenchStep()" class="text-emerald-200 text-xs font-bold flex items-center gap-1.5 hover:text-white transition-colors">
+          <i class="fa-solid fa-chevron-left text-[11px]"></i> Voltar
         </button>
         <div class="text-center">
-          <span id="benchStepBadge" class="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Etapa 1 de 7</span>
-          <h4 id="benchStepTitle" class="text-xs font-bold text-white">Identificação Concorrente</h4>
+          <span id="benchStepBadge" class="text-[10px] font-black text-emerald-400 uppercase tracking-widest block">Etapa 1 de 4</span>
+          <h4 id="benchStepTitle" class="text-xs font-bold text-white">Identificação da Concorrência</h4>
         </div>
-        <div id="benchTimer" class="text-xs font-mono font-bold bg-white/10 px-2.5 py-1 rounded-full text-emerald-200">00:00</div>
+        <div id="benchTimer" class="text-xs font-mono font-bold bg-white/10 px-2.5 py-1 rounded-full text-emerald-200 border border-white/10">00:00</div>
       </header>
 
-      <div class="w-full bg-navy-dark h-1">
-        <div id="benchProgressBar" class="bg-gradient-to-r from-emerald-400 to-teal-500 h-1 transition-all duration-300" style="width: 14.2%;"></div>
+      <div class="w-full bg-navy-dark h-1.5">
+        <div id="benchProgressBar" class="bg-gradient-to-r from-emerald-400 to-teal-500 h-1.5 transition-all duration-300" style="width: 25%;"></div>
       </div>
 
-      <main class="flex-1 overflow-y-auto p-5 bg-slate-50 text-slate-800 rounded-t-[32px] mt-2">
-        <!-- ETAPA 1 -->
+      <main id="benchChecklistMain" class="flex-1 overflow-y-auto p-4 sm:p-5 bg-slate-100 text-slate-800 rounded-t-[28px] mt-2 pb-24 hide-scrollbar">
+        <!-- Step 1: Identificação -->
         <div id="benchStepContent1" class="space-y-4">
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Nome da Loja Concorrente *</label>
-            <input type="text" id="benchStoreName" placeholder="Ex: Casas Bahia Shopping"
-              class="w-full p-3.5 bg-white border border-slate-300 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-emerald-600 focus:outline-none">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Data da Visita *</label>
-            <input type="date" id="benchVisitDate" class="w-full p-3.5 bg-white border border-slate-300 rounded-2xl text-sm font-semibold">
-          </div>
-          <div class="p-3 bg-emerald-50 rounded-2xl flex items-center justify-between text-xs text-emerald-900 border border-emerald-100">
-            <span id="benchGeoText"><i class="fa-solid fa-location-dot text-emerald-600 mr-1.5"></i> Obtendo GPS...</span>
-            <button type="button" onclick="captureGeolocation('benchGeoText')" class="font-bold underline">Atualizar</button>
-          </div>
-        </div>
-
-        <!-- ETAPA 2 -->
-        <div id="benchStepContent2" class="hidden space-y-4">
-          <h4 class="text-sm font-bold text-slate-900">Há pontas de gôndola ou pontos extras montados?</h4>
-          <div class="grid grid-cols-2 gap-3">
-            <button type="button" onclick="setYesNo('benchExposicao', true)" id="btnBenchExposicaoYes" class="py-4 border-2 rounded-2xl font-bold text-sm">Sim</button>
-            <button type="button" onclick="setYesNo('benchExposicao', false)" id="btnBenchExposicaoNo" class="py-4 border-2 rounded-2xl font-bold text-sm">Não</button>
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Quais categorias/produtos em destaque?</label>
-            <input type="text" id="benchCategorias" placeholder="Ex: Fritadeiras, Ar Condicionado" class="w-full p-3 bg-white border rounded-xl text-xs">
-          </div>
-        </div>
-
-        <!-- ETAPA 3 -->
-        <div id="benchStepContent3" class="hidden space-y-4">
-          <h4 class="text-sm font-bold text-slate-900">O concorrente tem encarte ou panfleto ativo?</h4>
-          <div class="grid grid-cols-2 gap-3">
-            <button type="button" onclick="setYesNo('benchEncarte', true)" id="btnBenchEncarteYes" class="py-4 border-2 rounded-2xl font-bold text-sm">Sim</button>
-            <button type="button" onclick="setYesNo('benchEncarte', false)" id="btnBenchEncarteNo" class="py-4 border-2 rounded-2xl font-bold text-sm">Não</button>
-          </div>
-          <div id="boxBenchPromoProds" class="hidden pt-3 border-t border-slate-200 space-y-3">
-            <label class="block text-xs font-bold text-slate-700">Produtos em promoção observados:</label>
-            <div class="flex gap-2">
-              <input type="text" id="benchInputProdName" placeholder="Produto" class="flex-2 p-2.5 bg-white border rounded-xl text-xs">
-              <input type="number" step="0.01" id="benchInputProdPrice" placeholder="R$ Preço" class="flex-1 p-2.5 bg-white border rounded-xl text-xs font-bold">
-              <button type="button" onclick="addBenchPromoProd()" class="px-3.5 bg-emerald-600 text-white rounded-xl text-xs font-bold">Add</button>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs space-y-4">
+            <div class="border-b border-slate-100 pb-3">
+              <span class="text-[10px] font-black uppercase text-emerald-600 tracking-wider">Identificação</span>
+              <h3 class="text-sm font-bold text-slate-900">Loja Concorrente</h3>
+              <p class="text-xs text-slate-500 mt-0.5">Registre o estabelecimento visitado para benchmark de preços.</p>
             </div>
-            <div id="benchPromoList" class="space-y-1.5 text-xs"></div>
-          </div>
-        </div>
 
-        <!-- ETAPA 4 (TOP 10 COMPARATIVO) -->
-        <div id="benchStepContent4" class="hidden space-y-3">
-          <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Top 10 Produtos-Chave</h4>
-          <p class="text-[11px] text-slate-500 mb-2">Digite o preço do concorrente para calcular o delta % automático:</p>
-          <div id="benchTop10List" class="space-y-2.5"></div>
-        </div>
-
-        <!-- ETAPA 5 -->
-        <div id="benchStepContent5" class="hidden space-y-4">
-          <div>
-            <h5 class="text-xs font-bold text-slate-800 mb-2">Movimento de clientes na loja:</h5>
-            <div class="grid grid-cols-3 gap-2">
-              <button type="button" onclick="setMovimento('BAIXO')" id="btnMovBaixo" class="py-2.5 border rounded-xl text-xs font-bold">Baixo</button>
-              <button type="button" onclick="setMovimento('MEDIO')" id="btnMovMedio" class="py-2.5 border rounded-xl text-xs font-bold">Médio</button>
-              <button type="button" onclick="setMovimento('ALTO')" id="btnMovAlto" class="py-2.5 border rounded-xl text-xs font-bold">Alto</button>
-            </div>
-          </div>
-
-          <div>
-            <h5 class="text-xs font-bold text-slate-800 mb-2">Presença de promotor/vendedor abordando?</h5>
-            <div class="grid grid-cols-2 gap-2">
-              <button type="button" onclick="setYesNo('benchPromotor', true)" id="btnBenchPromotorYes" class="py-2.5 border rounded-xl text-xs font-bold">Sim</button>
-              <button type="button" onclick="setYesNo('benchPromotor', false)" id="btnBenchPromotorNo" class="py-2.5 border rounded-xl text-xs font-bold">Não</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- ETAPA 6 -->
-        <div id="benchStepContent6" class="hidden space-y-4">
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Conclusões e Oportunidades Identificadas</label>
-            <textarea id="benchInsights" rows="4" placeholder="Ex: Concorrente está com 10% de desconto em fritadeiras..."
-              class="w-full p-3.5 bg-white border border-slate-300 rounded-2xl text-xs focus:ring-2 focus:ring-emerald-600 focus:outline-none"></textarea>
-          </div>
-
-          <div class="p-4 bg-amber-50 border border-amber-200 rounded-2xl flex items-center justify-between">
             <div>
-              <span class="text-xs font-bold text-amber-900 block">Disparar Alerta ao Gestor</span>
-              <span class="text-[11px] text-amber-700">Notificar coordenação sobre ação agressiva</span>
+              <label class="block text-xs font-bold text-slate-700 mb-1.5">Nome da Loja Concorrente *</label>
+              <input type="text" id="benchStoreName" placeholder="Ex: Casas Bahia Shopping, Fast Shop ou Ponto"
+                class="w-full p-3.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none transition-all">
             </div>
-            <input type="checkbox" id="benchAlertManager" class="w-5 h-5 rounded text-amber-600">
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1.5">Responsável / Promotor</label>
+              <input type="text" id="benchPromoterName" readonly
+                class="w-full p-3.5 bg-slate-100 border border-slate-200 rounded-xl text-sm font-medium text-slate-600 cursor-not-allowed">
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1.5">Data da Pesquisa *</label>
+              <input type="date" id="benchVisitDate"
+                class="w-full p-3.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+            </div>
+
+            <div class="p-3.5 bg-emerald-50/80 rounded-xl flex items-center justify-between text-xs text-emerald-950 border border-emerald-100">
+              <span id="benchGeoText" class="font-medium"><i class="fa-solid fa-location-dot text-emerald-600 mr-1.5"></i> Obtendo GPS...</span>
+              <button type="button" onclick="captureGeolocation('benchGeoText')" class="font-bold text-emerald-600 hover:text-emerald-800 underline ml-2 shrink-0">Atualizar</button>
+            </div>
           </div>
         </div>
 
-        <!-- ETAPA 7 -->
-        <div id="benchStepContent7" class="hidden space-y-4">
-          <div class="bg-white p-5 rounded-2xl border border-slate-200">
-            <h4 class="text-sm font-bold text-slate-900 mb-3">Revisão de Benchmark</h4>
-            <div id="benchReviewSummary" class="space-y-2 text-xs divide-y divide-slate-100"></div>
+        <!-- Step 2: Coleta de Preços por Produto (B.1 a B.9) -->
+        <div id="benchStepContent2" class="hidden space-y-4">
+          <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
+              <div>
+                <span class="text-[10px] font-black uppercase text-emerald-600 tracking-wider">Pesquisa de SKUs</span>
+                <h4 class="text-sm font-bold text-slate-900">Coletar Produto da Cesta</h4>
+              </div>
+              <button type="button" onclick="openProductCatalog('screenBenchmarkChecklist')" class="px-2.5 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg text-[11px] font-bold hover:bg-emerald-100 flex items-center gap-1 transition-colors">
+                <i class="fa-solid fa-sliders"></i> Gerenciar Cesta
+              </button>
+            </div>
+
+            <div class="mb-3">
+              <label class="block text-xs font-bold text-slate-700 mb-1">B.1 — Selecione o SKU Monitorado</label>
+              <select id="benchProductSelect" onchange="onBenchProductSelectChange()" class="w-full p-3.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-emerald-500 outline-none">
+                <option value="">-- Escolha um produto da cesta --</option>
+              </select>
+            </div>
+
+            <!-- Formulário B.2 a B.9 -->
+            <div id="benchProductForm" class="hidden space-y-3.5 pt-3 border-t border-slate-100">
+              <div id="benchSelectedProdInfo" class="p-3 bg-emerald-50/80 rounded-xl border border-emerald-100 text-xs text-emerald-950 flex items-center justify-between">
+                <div>
+                  <span class="font-bold block" id="benchInfoProdName">-</span>
+                  <span class="text-[11px] text-emerald-700" id="benchInfoProdRef">Preço Ref: R$ 0,00</span>
+                </div>
+                <span class="text-[10px] font-bold uppercase bg-emerald-200/60 text-emerald-800 px-2 py-0.5 rounded" id="benchInfoProdCat">-</span>
+              </div>
+
+              <!-- B.2: Disponível fisicamente? -->
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">B.2 — Disponível fisicamente na loja?</label>
+                <div class="flex gap-2">
+                  <button type="button" onclick="setBenchField('disponivel', true, this)" id="btnBenchDispSim" class="flex-1 py-2.5 px-3 rounded-xl border border-slate-200 bg-white text-slate-700 font-semibold text-xs hover:bg-slate-50 transition-all">Sim</button>
+                  <button type="button" onclick="setBenchField('disponivel', false, this)" id="btnBenchDispNao" class="flex-1 py-2.5 px-3 rounded-xl border border-slate-200 bg-white text-slate-700 font-semibold text-xs hover:bg-slate-50 transition-all">Não</button>
+                </div>
+              </div>
+
+              <!-- Campos dependentes da disponibilidade -->
+              <div id="benchDispFieldsGroup" class="space-y-3.5">
+                <!-- B.3: Preço à vista e foto da etiqueta -->
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1">B.3 — Preço à vista (R$) *</label>
+                  <div class="flex gap-2 items-center">
+                    <input type="number" id="benchPreco" step="0.01" placeholder="Ex: 349.90" class="flex-1 p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-bold text-slate-900 focus:ring-2 focus:ring-emerald-500 outline-none">
+                    <label class="flex items-center gap-1.5 px-3.5 py-3 border-2 border-dashed border-slate-300 rounded-xl text-slate-600 hover:border-emerald-500 hover:text-emerald-700 hover:bg-emerald-50/50 cursor-pointer text-xs font-bold shrink-0 transition-colors">
+                      <i class="fa-solid fa-camera text-sm"></i>
+                      <span>Foto Etiqueta</span>
+                      <input type="file" accept="image/*" id="benchPrecoFoto" class="hidden" onchange="handleBenchPhotoUpload(this)">
+                    </label>
+                  </div>
+                  <div id="benchPrecoPreviewContainer" class="hidden mt-2 relative">
+                    <img id="benchPrecoPreview" class="w-full h-28 object-cover rounded-xl border border-slate-200">
+                    <button type="button" onclick="removeBenchPhoto()" class="absolute top-2 right-2 w-6 h-6 bg-slate-900/70 text-white rounded-full flex items-center justify-center text-xs hover:bg-rose-600 transition-colors">
+                      <i class="fa-solid fa-xmark"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- B.4 e B.5: Parcelamento -->
+                <div class="grid grid-cols-2 gap-2.5">
+                  <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">B.4 — Nº de parcelas</label>
+                    <input type="number" id="benchParcelas" placeholder="Ex: 10" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-emerald-500 outline-none">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">B.5 — Valor parcela (R$)</label>
+                    <input type="number" id="benchValorParcela" step="0.01" placeholder="Ex: 34.99" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-emerald-500 outline-none">
+                  </div>
+                </div>
+
+                <!-- B.6 e B.7: Promoção -->
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1">B.6 — Sinalizado como promoção / oferta?</label>
+                  <div class="flex gap-2">
+                    <button type="button" onclick="setBenchField('promocao', true, this)" id="btnBenchPromoSim" class="flex-1 py-2.5 px-3 rounded-xl border border-slate-200 bg-white text-slate-700 font-semibold text-xs hover:bg-slate-50 transition-all">Sim</button>
+                    <button type="button" onclick="setBenchField('promocao', false, this)" id="btnBenchPromoNao" class="flex-1 py-2.5 px-3 rounded-xl border border-slate-200 bg-white text-slate-700 font-semibold text-xs hover:bg-slate-50 transition-all">Não</button>
+                  </div>
+                </div>
+
+                <div id="benchPromoDateDiv" class="hidden">
+                  <label class="block text-xs font-bold text-slate-700 mb-1">B.7 — Validade da promoção informada</label>
+                  <input type="text" id="benchValPromo" placeholder="Ex: Até 30/09 ou válida hoje" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-emerald-500 outline-none">
+                </div>
+
+                <!-- B.8: Frete Grátis -->
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1">B.8 — Frete grátis anunciado?</label>
+                  <div class="flex gap-2">
+                    <button type="button" onclick="setBenchField('freteGratis', true, this)" id="btnBenchFreteSim" class="flex-1 py-2.5 px-3 rounded-xl border border-slate-200 bg-white text-slate-700 font-semibold text-xs hover:bg-slate-50 transition-all">Sim</button>
+                    <button type="button" onclick="setBenchField('freteGratis', false, this)" id="btnBenchFreteNao" class="flex-1 py-2.5 px-3 rounded-xl border border-slate-200 bg-white text-slate-700 font-semibold text-xs hover:bg-slate-50 transition-all">Não</button>
+                  </div>
+                </div>
+
+                <!-- B.9: Garantia Estendida -->
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1">B.9 — Garantia estendida sem custo?</label>
+                  <div class="flex gap-2">
+                    <button type="button" onclick="setBenchField('garantiaEstendida', true, this)" id="btnBenchGarantiaSim" class="flex-1 py-2.5 px-3 rounded-xl border border-slate-200 bg-white text-slate-700 font-semibold text-xs hover:bg-slate-50 transition-all">Sim</button>
+                    <button type="button" onclick="setBenchField('garantiaEstendida', false, this)" id="btnBenchGarantiaNao" class="flex-1 py-2.5 px-3 rounded-xl border border-slate-200 bg-white text-slate-700 font-semibold text-xs hover:bg-slate-50 transition-all">Não</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Botão Adicionar à Lista -->
+              <div class="pt-2">
+                <button type="button" onclick="addBenchmarkProduct()" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all">
+                  <i class="fa-solid fa-plus"></i> Adicionar Produto à Pesquisa
+                </button>
+              </div>
+            </div>
           </div>
-          <div id="benchValidationAlert" class="hidden p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs">
-            <p class="font-bold">A visita não pode terminar em branco.</p>
+
+          <!-- Produtos Coletados -->
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between px-1">
+              <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wide">Produtos Coletados Nesta Visita</h4>
+              <span id="benchCollectedCount" class="text-[11px] font-bold bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full">0 produtos</span>
+            </div>
+            <div id="benchCollectedProducts" class="space-y-2">
+              <div class="text-center py-6 bg-white rounded-2xl border border-dashed border-slate-200 text-slate-400 text-xs">
+                Nenhum produto coletado ainda. Selecione um item acima.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Observações e Alerta -->
+        <div id="benchStepContent3" class="hidden space-y-4">
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-800 mb-1.5">Observações e Percepções de Campo</label>
+              <textarea id="benchInsights" rows="4" placeholder="Descreva campanhas do concorrente, brindes, fluxo de clientes, agressividade de preços ou diferenciais..."
+                class="w-full p-3.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 outline-none"></textarea>
+            </div>
+
+            <div class="p-4 bg-amber-50 rounded-2xl border border-amber-200/80 flex items-start gap-3">
+              <input type="checkbox" id="benchAlertManager" class="mt-1 w-4 h-4 text-amber-600 border-amber-300 rounded focus:ring-amber-500">
+              <div>
+                <label for="benchAlertManager" class="text-xs font-bold text-amber-950 block mb-0.5 cursor-pointer">Sinalizar Alerta Imediato ao Gestor</label>
+                <p class="text-[11px] text-amber-800 leading-relaxed">Marque esta opção se o concorrente estiver realizando queima de estoque, preços abaixo do custo ou ação massiva de encarte na região.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Revisão Final Benchmark -->
+        <div id="benchStepContent4" class="hidden space-y-4">
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+            <div class="border-b border-slate-100 pb-3 mb-4">
+              <span class="text-[10px] font-black uppercase text-emerald-600 tracking-wider">Etapa 4 de 4</span>
+              <h3 class="text-base font-bold text-slate-900">Revisão do Benchmark de Preços</h3>
+              <p class="text-xs text-slate-500 mt-0.5">Confira o comparativo contra nossa tabela antes de finalizar.</p>
+            </div>
+            <div id="benchReviewSummary" class="space-y-3"></div>
           </div>
         </div>
       </main>
 
-      <footer class="p-4 bg-white border-t border-slate-200 flex gap-3">
-        <button type="button" onclick="prevBenchStep()" id="btnBenchPrevFooter" class="flex-1 h-13 bg-slate-100 text-slate-700 font-bold rounded-2xl text-xs">Anterior</button>
-        <button type="button" onclick="nextBenchStep()" id="btnBenchNextFooter" class="flex-2 h-13 bg-emerald-700 text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-2">
+      <footer class="p-3.5 sm:p-4 bg-white/95 backdrop-blur-md border-t border-slate-200 flex gap-3 fixed bottom-0 left-0 right-0 max-w-md mx-auto z-30">
+        <button type="button" onclick="prevBenchStep()" id="btnBenchPrevFooter" class="flex-1 h-12 bg-slate-100 text-slate-700 hover:bg-slate-200 font-bold rounded-xl text-xs transition-colors">
+          Anterior
+        </button>
+        <button type="button" onclick="nextBenchStep()" id="btnBenchNextFooter" class="flex-2 h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-md transition-all">
           <span>Próxima Etapa</span>
           <i class="fa-solid fa-arrow-right text-[10px]"></i>
         </button>
       </footer>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TELA 9: GERENCIADOR DA CESTA DE PRODUTOS MONITORADOS               -->
+    <!-- ================================================================= -->
+    <section id="screenProductCatalog" class="hidden flex-1 flex flex-col safe-top">
+      <header class="p-4 px-6 border-b border-white/10 flex items-center justify-between bg-navy-main/80 backdrop-blur-md sticky top-0 z-20">
+        <button onclick="closeProductCatalog()" class="text-blue-200 text-xs font-bold flex items-center gap-1.5 hover:text-white transition-colors">
+          <i class="fa-solid fa-chevron-left text-[11px]"></i> Voltar
+        </button>
+        <h4 class="text-xs font-bold text-white text-center flex-1">Cesta de Produtos Monitorados</h4>
+        <span id="catalogProductCount" class="text-[10px] font-bold bg-blue-500/30 text-blue-200 px-2.5 py-1 rounded-full border border-blue-400/30">0 SKUs</span>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-4 sm:p-5 bg-slate-100 rounded-t-[28px] mt-2 pb-10 hide-scrollbar">
+        <!-- Card Adicionar Novo SKU -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs mb-4">
+          <div class="flex items-center gap-2 border-b border-slate-100 pb-3 mb-3">
+            <div class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-xs">
+              <i class="fa-solid fa-plus"></i>
+            </div>
+            <h5 class="text-xs font-bold text-slate-800 uppercase tracking-wide">Cadastrar Novo SKU na Cesta</h5>
+          </div>
+
+          <div class="space-y-3">
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Nome do Produto / Modelo / SKU *</label>
+              <input type="text" id="catalogProdName" placeholder="Ex: Smart TV 50 polegadas 4K ou Fritadeira 4L"
+                class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none">
+            </div>
+
+            <div class="grid grid-cols-2 gap-2.5">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600 mb-1">Preço Ref. Própria (R$) *</label>
+                <input type="number" id="catalogProdPrice" step="0.01" placeholder="Ex: 2199.00"
+                  class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none">
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600 mb-1">Categoria *</label>
+                <input type="text" id="catalogProdCategory" placeholder="Ex: Eletro, TV, Linha Branca"
+                  class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none">
+              </div>
+            </div>
+
+            <button type="button" onclick="addCatalogProduct()" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all">
+              <i class="fa-solid fa-floppy-disk"></i> Salvar SKU na Cesta de Pesquisa
+            </button>
+          </div>
+        </div>
+
+        <!-- Lista de SKUs na Cesta -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between px-1 mb-1">
+            <h5 class="text-xs font-bold text-slate-700 uppercase tracking-wide">Itens Ativos na Cesta Fixa</h5>
+            <span class="text-[11px] text-slate-500">Mês a mês comparável</span>
+          </div>
+
+          <div id="catalogProductList" class="space-y-2"></div>
+
+          <div id="catalogEmptyState" class="hidden text-center py-10 bg-white rounded-2xl border border-dashed border-slate-300 p-6">
+            <div class="w-12 h-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-2 text-xl">
+              <i class="fa-solid fa-box-open"></i>
+            </div>
+            <p class="text-xs font-bold text-slate-600">Nenhum produto cadastrado na cesta</p>
+            <p class="text-[11px] text-slate-400 mt-0.5">Cadastre os itens acima para que os promotores possam pesquisá-los nos concorrentes.</p>
+          </div>
+        </div>
+      </main>
     </section>
 
     <!-- ================================================================= -->
@@ -1415,7 +1540,7 @@
             </div>
             <div>
               <h5 class="text-xs font-bold text-slate-900">${v.nome_loja}</h5>
-              <p class="text-[11px] text-slate-400">${v.data_visita} • ${v.duracao || 'N/A'}</p>
+              <p class="text-[11px] text-slate-400">${v.data_visita} • ${v.duracao || 'N/A'}${v.organizacao_nota ? ' • Nota: ' + v.organizacao_nota + '/5' : ''}${v.materiais_pdv ? ' • PDV: ' + v.materiais_pdv : ''}</p>
             </div>
           </div>
           <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${v.status_sincronizacao === 'ENVIADO' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}">
@@ -1497,43 +1622,101 @@
       }
     }
 
-    // =================================================================
-    // CHECKLIST ENGINE (EXECUÇÃO DE VISITA PDV)
-    // =================================================================
-    function startVisit(type) {
-      currentVisit = {
-        id: crypto.randomUUID ? crypto.randomUUID() : 'visita-' + Date.now(),
-        tipo_visita: type,
-        promotor_email: (currentUser?.email || '').toLowerCase().trim(),
-        data_hora_inicio: new Date().toISOString(),
-        data_visita: new Date().toISOString().split('T')[0],
-        nome_loja: '',
-        status_sincronizacao: 'PENDENTE'
-      };
 
-      visitStartTime = Date.now();
-      startTimer(type === 'PROPRIA' ? 'ownTimer' : 'benchTimer');
 
-      if (type === 'PROPRIA') {
-        currentOwnStep = 1;
-        document.getElementById('ownVisitDate').value = currentVisit.data_visita;
-        document.getElementById('ownStoreName').value = '';
-        currentVisit.codigos_produtos_promo = [];
-        currentVisit.produtos_indisponiveis = [];
-        updateOwnStepView();
-        captureGeolocation('ownGeoText');
-        goToScreen('screenOwnChecklist');
-      } else {
-        currentBenchStep = 1;
-        document.getElementById('benchVisitDate').value = currentVisit.data_visita;
-        document.getElementById('benchStoreName').value = '';
-        currentVisit.produtos_promo_concorrente = [];
-        currentVisit.precos_comparativos = {};
-        renderBenchmarkTop10();
-        updateBenchStepView();
-        captureGeolocation('benchGeoText');
-        goToScreen('screenBenchmarkChecklist');
+    // =================================================================
+    // MOTOR DE CHECKLIST AVANÇADO (69 PERGUNTAS + BENCHMARK POR SKU)
+    // =================================================================
+
+    // 1. Definições das 69 Perguntas de Loja Própria
+    const BLOCO1_FACHADA = [
+      { id: '1.1', texto: 'Fachada possui amassados ou avarias visíveis?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '1.2', texto: 'Fachada possui manchas ou sujeira aparente?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '1.3', texto: 'Fachada possui descascamento de pintura/revestimento?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '1.4', texto: 'Fachada possui sinais de ferrugem/corrosão?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '1.5', texto: 'Fachada possui mofo/bolor visível?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '1.6', texto: 'Fachada possui pichação?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '1.7', texto: 'Fachada possui rachaduras visíveis?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '1.8', texto: 'Fachada possui sinais de infiltração visível?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '1.9', texto: 'Letreiro/luminoso possui alguma letra ou lâmpada apagada?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '1.10', texto: 'Se sim, quantas letras/lâmpadas apagadas?', tipo: 'NUM', foto: null, txtCondicional: null },
+      { id: '1.11', texto: 'Acionamento automático (sensor/timer) do letreiro está funcionando?', tipo: 'SN_NA', foto: null, txtCondicional: null },
+      { id: '1.12', texto: 'Logo/identidade visual está no padrão oficial vigente?', tipo: 'SN', foto: 'nao', txtCondicional: null },
+      { id: '1.13', texto: 'Placa de horário de funcionamento está atualizada e visível?', tipo: 'SN', foto: null, txtCondicional: null },
+      { id: '1.14', texto: 'Vidro da vitrine possui trinca ou quebra?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '1.15', texto: 'Vidro da vitrine está sujo (poeira/manchas)?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '1.16', texto: 'Vitrine está montada conforme o layout/planograma da campanha atual?', tipo: 'SN', foto: 'nao', txtCondicional: null },
+      { id: '1.17', texto: 'Iluminação interna da vitrine está funcionando?', tipo: 'SN', foto: null, txtCondicional: null },
+      { id: '1.18', texto: 'Adesivação da campanha atual está aplicada conforme a arte oficial enviada?', tipo: 'SN', foto: 'nao', txtCondicional: null },
+      { id: '1.19', texto: 'Algum adesivo está rasgado ou descolando (bolha)?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '1.20', texto: 'Algum adesivo está desbotado/manchado pelo sol?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '1.21', texto: 'Ainda há adesivo de campanha anterior não removido?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '1.22', texto: 'Porta-encartes está presente e íntegro?', tipo: 'SN', foto: null, txtCondicional: null },
+      { id: '1.23', texto: 'Porta-encartes está abastecido com o encarte da campanha vigente?', tipo: 'SN', foto: 'nao', txtCondicional: null }
+    ];
+
+    const BLOCO2_MARKETING = [
+      { id: '2.1', texto: 'Exposição está 100% conforme o planograma da categoria?', tipo: 'SN', foto: 'nao', txtCondicional: 'Categorias com divergência' },
+      { id: '2.2', texto: 'Existe gôndola/vão vazio (ruptura de exposição)?', tipo: 'SN', foto: 'sim', txtCondicional: 'Categorias afetadas' },
+      { id: '2.3', texto: 'Produtos expostos possuem poeira visível?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '2.4', texto: 'Produtos expostos possuem avarias (amassado, risco, quebrado)?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '2.5', texto: 'Existe produto exposto sem etiqueta de preço?', tipo: 'SN', foto: 'sim', txtCondicional: 'Quais produtos?' },
+      { id: '2.6', texto: 'Existe etiqueta com preço divergente do sistema/tabela vigente?', tipo: 'SN', foto: 'sim', txtCondicional: 'Quais produtos e preços?' },
+      { id: '2.7', texto: 'Existe etiqueta feita à mão/fora do padrão oficial?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '2.8', texto: 'Existe etiqueta com rasura?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '2.9', texto: 'Pilha promocional está com o produto correto conforme orientação enviada?', tipo: 'SN', foto: 'nao', txtCondicional: null },
+      { id: '2.10', texto: 'Pilha promocional está com a quantidade correta conforme orientação?', tipo: 'SN', foto: null, txtCondicional: null },
+      { id: '2.11', texto: 'Pilha está no local definido na orientação (ex.: entrada, corredor principal)?', tipo: 'SN', foto: null, txtCondicional: null },
+      { id: '2.12', texto: 'Pilha possui sinalização de oferta/preço visível?', tipo: 'SN', foto: null, txtCondicional: null },
+      { id: '2.13', texto: 'Pilha está com vão vazio (ruptura de estoque)?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '2.14', texto: 'Existe produto do encarte indisponível em loja?', tipo: 'SN', foto: null, txtCondicional: 'Quais produtos do encarte?' },
+      { id: '2.15', texto: 'Produtos do encarte estão em local de destaque/fácil localização?', tipo: 'SN', foto: null, txtCondicional: null },
+      { id: '2.16', texto: 'Preço em loja é igual ao anunciado no encarte para todos os itens?', tipo: 'SN', foto: 'nao', txtCondicional: 'Quais itens divergentes?' },
+      { id: '2.17', texto: 'Materiais de fornecedores estão instalados conforme manual/orientação?', tipo: 'SN', foto: 'nao', txtCondicional: null },
+      { id: '2.18', texto: 'Algum material de comunicação obstrui produto ou preço?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '2.19', texto: 'Algum material de comunicação obstrui a circulação/corredor?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '2.20', texto: 'Produtos de categorias correlatas (cross-merchandising) estão próximos?', tipo: 'SN_NA', foto: null, txtCondicional: null },
+      { id: '2.21', texto: 'Há ação promocional ativa em concorrente próximo no momento?', tipo: 'SN', foto: null, txtCondicional: 'Loja/item/preço do concorrente' },
+      { id: '2.22', texto: 'Vendedor soube informar corretamente sobre o produto em destaque?', tipo: 'SN', foto: null, txtCondicional: null }
+    ];
+
+    const BLOCO3_PREDIAL = [
+      { id: '3.1', texto: 'Existem lâmpadas queimadas/apagadas?', tipo: 'SN', foto: null, txtCondicional: 'Qual setor?' },
+      { id: '3.2', texto: 'Existem lâmpadas piscando ou com mau contato?', tipo: 'SN', foto: null, txtCondicional: 'Qual setor?' },
+      { id: '3.3', texto: 'Existe algum setor sem iluminação (área escura)?', tipo: 'SN', foto: null, txtCondicional: 'Qual setor?' },
+      { id: '3.4', texto: 'Ar-condicionado está funcionando em todos os ambientes?', tipo: 'SN', foto: null, txtCondicional: 'Quais ambientes com problema?' },
+      { id: '3.5', texto: 'Piso está molhado ou com líquido visível?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '3.6', texto: 'Piso possui sujeira/resíduos visíveis?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '3.7', texto: 'Prateleiras/vitrines/balcões possuem poeira visível?', tipo: 'SN', foto: null, txtCondicional: null },
+      { id: '3.8', texto: 'Banheiro de clientes possui papel higiênico e sabonete disponíveis?', tipo: 'SN_NA', foto: null, txtCondicional: null },
+      { id: '3.9', texto: 'Banheiro de clientes está com odor forte ou sujeira aparente?', tipo: 'SN_NA', foto: null, txtCondicional: null },
+      { id: '3.10', texto: 'Paredes/teto possuem infiltração visível?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '3.11', texto: 'Paredes/teto possuem mofo/bolor visível?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '3.12', texto: 'Paredes/teto possuem bolhas ou descascamento de tinta?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '3.13', texto: 'Piso possui buracos ou desníveis visíveis?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '3.14', texto: 'Piso possui peças soltas ou quebradas?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '3.15', texto: 'Portas funcionam normalmente (abrem/fecham sem esforço)?', tipo: 'SN', foto: null, txtCondicional: null },
+      { id: '3.16', texto: 'Fechaduras funcionam normalmente?', tipo: 'SN_NA', foto: null, txtCondicional: null },
+      { id: '3.17', texto: 'Catracas (se houver) funcionam normalmente?', tipo: 'SN_NA', foto: null, txtCondicional: null },
+      { id: '3.18', texto: 'Extintores estão visíveis e sinalizados?', tipo: 'SN', foto: null, txtCondicional: null },
+      { id: '3.19', texto: 'Extintores estão dentro do prazo de validade (conferir etiqueta)?', tipo: 'SN', foto: null, txtCondicional: null },
+      { id: '3.20', texto: 'Extintores estão desobstruídos (fácil acesso)?', tipo: 'SN', foto: null, txtCondicional: null },
+      { id: '3.21', texto: 'Saídas de emergência estão sinalizadas?', tipo: 'SN', foto: null, txtCondicional: null },
+      { id: '3.22', texto: 'Saídas de emergência estão desobstruídas?', tipo: 'SN', foto: null, txtCondicional: null },
+      { id: '3.23', texto: 'Existe fiação elétrica exposta ou risco elétrico aparente?', tipo: 'SN', foto: 'sim', txtCondicional: null },
+      { id: '3.24', texto: 'Estacionamento/acesso externo possui buracos, poças ou obstáculos visíveis?', tipo: 'SN_NA', foto: 'sim', txtCondicional: null }
+    ];
+
+    // 2. Utilitários Básicos
+    function generateUUID() {
+      if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+        try { return crypto.randomUUID(); } catch (e) {}
       }
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
     }
 
     function startTimer(id) {
@@ -1543,7 +1726,7 @@
         const mins = String(Math.floor(diff / 60)).padStart(2, '0');
         const secs = String(diff % 60).padStart(2, '0');
         const el = document.getElementById(id);
-        if (el) el.textContent = `${mins}:${secs}`;
+        if (el) el.textContent = mins + ':' + secs;
       }, 1000);
     }
 
@@ -1552,285 +1735,1071 @@
       if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(
           pos => {
-            currentVisit.latitude = pos.coords.latitude;
-            currentVisit.longitude = pos.coords.longitude;
-            el.innerHTML = `<i class="fa-solid fa-location-dot text-emerald-600 mr-1.5"></i> GPS: ${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`;
+            if (currentVisit) {
+              currentVisit.latitude = pos.coords.latitude;
+              currentVisit.longitude = pos.coords.longitude;
+            }
+            if (el) el.innerHTML = '<i class="fa-solid fa-location-dot text-emerald-600 mr-1.5"></i> GPS: ' + pos.coords.latitude.toFixed(4) + ', ' + pos.coords.longitude.toFixed(4);
           },
-          err => { el.textContent = "GPS indisponível"; }
+          err => {
+            if (el) el.innerHTML = '<i class="fa-solid fa-location-crosshairs text-amber-500 mr-1.5"></i> GPS Padrão SP';
+            if (currentVisit) {
+              currentVisit.latitude = -23.5505;
+              currentVisit.longitude = -46.6333;
+            }
+          },
+          { enableHighAccuracy: true, timeout: 5000, maximumAge: 60000 }
         );
       }
     }
 
-    function updateOwnStepView() {
-      const titles = ["Identificação", "Execução Promocional", "Ambiente", "Encarte", "Experiência", "Revisão"];
-      document.getElementById('ownStepBadge').textContent = `Etapa ${currentOwnStep} de 6`;
-      document.getElementById('ownStepTitle').textContent = titles[currentOwnStep - 1];
-      document.getElementById('ownProgressBar').style.width = `${(currentOwnStep / 6) * 100}%`;
+    // 3. Catálogo / Cesta Fixa de Produtos Monitorados
+    let _catalogReturnScreen = 'screenProfile';
 
-      for (let i = 1; i <= 6; i++) {
-        document.getElementById(`ownStepContent${i}`).classList.toggle('hidden', i !== currentOwnStep);
+    function loadProductCatalog() {
+      const stored = localStorage.getItem('trade_pdv_product_catalog');
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        } catch(e) {}
       }
-      document.getElementById('btnOwnPrevFooter').style.visibility = currentOwnStep === 1 ? 'hidden' : 'visible';
-      const btnNext = document.getElementById('btnOwnNextFooter');
-      btnNext.innerHTML = currentOwnStep === 6 ? `<span>Enviar Visita ✅</span>` : `<span>Próxima Etapa</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>`;
+      const initialCatalog = [
+        { id: '1', nome: 'Smart TV 50" 4K UHD', precoReferencia: 2299.00, categoria: 'Eletrônicos' },
+        { id: '2', nome: 'Fritadeira Airfryer Digital 4L', precoReferencia: 349.90, categoria: 'Eletroportáteis' },
+        { id: '3', nome: 'Refrigerador Frost Free 375L', precoReferencia: 2899.00, categoria: 'Linha Branca' },
+        { id: '4', nome: 'Smartphone 128GB 5G', precoReferencia: 1499.00, categoria: 'Telefonia' },
+        { id: '5', nome: 'Máquina de Lavar 11kg', precoReferencia: 1899.00, categoria: 'Linha Branca' },
+        { id: '6', nome: 'Fogão 4 Bocas Acendimento Auto', precoReferencia: 899.00, categoria: 'Linha Branca' },
+        { id: '7', nome: 'Micro-ondas 32L Inox', precoReferencia: 649.00, categoria: 'Eletroportáteis' },
+        { id: '8', nome: 'Notebook 15.6" i5 8GB SSD 256GB', precoReferencia: 3199.00, categoria: 'Informática' },
+        { id: '9', nome: 'Liquidificador Turbo 1200W', precoReferencia: 159.90, categoria: 'Eletroportáteis' },
+        { id: '10', nome: 'Ventilador Turbo 40cm Coluna', precoReferencia: 199.90, categoria: 'Eletroportáteis' }
+      ];
+      localStorage.setItem('trade_pdv_product_catalog', JSON.stringify(initialCatalog));
+      return initialCatalog;
     }
 
-    function prevOwnStep() {
-      if (currentOwnStep > 1) { currentOwnStep--; updateOwnStepView(); }
-      else { goToTab('home'); }
+    function saveProductCatalog(catalog) {
+      localStorage.setItem('trade_pdv_product_catalog', JSON.stringify(catalog));
+    }
+
+    function openProductCatalog(returnScreen) {
+      _catalogReturnScreen = returnScreen || 'screenProfile';
+      renderProductCatalog();
+      goToScreen('screenProductCatalog');
+    }
+
+    function closeProductCatalog() {
+      if (_catalogReturnScreen === 'screenBenchmarkChecklist') {
+        populateBenchProductSelect();
+        goToScreen('screenBenchmarkChecklist');
+      } else {
+        goToTab('profile');
+      }
+    }
+
+    function renderProductCatalog() {
+      const catalog = loadProductCatalog();
+      const listEl = document.getElementById('catalogProductList');
+      const countEl = document.getElementById('catalogProductCount');
+      const emptyEl = document.getElementById('catalogEmptyState');
+
+      if (countEl) countEl.textContent = catalog.length + ' SKUs';
+
+      if (!listEl) return;
+
+      if (catalog.length === 0) {
+        listEl.innerHTML = '';
+        if (emptyEl) emptyEl.classList.remove('hidden');
+        return;
+      }
+
+      if (emptyEl) emptyEl.classList.add('hidden');
+
+      let html = '';
+      catalog.forEach(p => {
+        html += '<div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-2xs flex items-center justify-between gap-3">';
+        html += '  <div class="flex-1 min-w-0">';
+        html += '    <div class="flex items-center gap-2 mb-0.5">';
+        html += '      <span class="text-[10px] font-bold uppercase px-2 py-0.5 bg-slate-100 text-slate-700 rounded-md">' + p.categoria + '</span>';
+        html += '      <span class="text-xs font-bold text-slate-900 truncate">' + p.nome + '</span>';
+        html += '    </div>';
+        html += '    <div class="text-xs font-semibold text-blue-700">Preço Ref. Própria: <span class="font-extrabold">R$ ' + Number(p.precoReferencia).toFixed(2).replace('.', ',') + '</span></div>';
+        html += '  </div>';
+        html += '  <button type="button" onclick="removeCatalogProduct(\'' + p.id + '\')" class="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-100 flex items-center justify-center shrink-0 transition-colors" title="Excluir produto da cesta">';
+        html += '    <i class="fa-solid fa-trash text-xs"></i>';
+        html += '  </button>';
+        html += '</div>';
+      });
+
+      listEl.innerHTML = html;
+    }
+
+    function addCatalogProduct() {
+      const nameInput = document.getElementById('catalogProdName');
+      const priceInput = document.getElementById('catalogProdPrice');
+      const catInput = document.getElementById('catalogProdCategory');
+
+      const name = nameInput ? nameInput.value.trim() : '';
+      const price = priceInput ? parseFloat(priceInput.value) : 0;
+      const cat = catInput ? catInput.value.trim() : 'Geral';
+
+      if (!name) {
+        alert('Por favor, informe o nome do produto/SKU.');
+        return;
+      }
+      if (!price || price <= 0) {
+        alert('Por favor, informe um preço de referência válido.');
+        return;
+      }
+
+      const catalog = loadProductCatalog();
+      catalog.push({
+        id: generateUUID(),
+        nome: name,
+        precoReferencia: price,
+        categoria: cat || 'Geral'
+      });
+
+      saveProductCatalog(catalog);
+
+      if (nameInput) nameInput.value = '';
+      if (priceInput) priceInput.value = '';
+      if (catInput) catInput.value = '';
+
+      renderProductCatalog();
+    }
+
+    function removeCatalogProduct(id) {
+      if (!confirm('Deseja remover este item da cesta monitorada?')) return;
+      let catalog = loadProductCatalog();
+      catalog = catalog.filter(p => p.id !== id);
+      saveProductCatalog(catalog);
+      renderProductCatalog();
+    }
+
+    // 4. Renderizador Dinâmico dos Blocos de Questões (Loja Própria)
+    function renderQuestionBlock(containerId, questions, answersObj, blocoKey) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      let html = '';
+
+      questions.forEach(q => {
+        const answer = answersObj[q.id] || {};
+        const safeId = q.id.replace(/\./g, '_');
+        const condId = 'cond_' + safeId;
+        const photoId = 'photo_' + safeId;
+
+        let controlHtml = '';
+
+        if (q.tipo === 'SN' || q.tipo === 'SN_NA') {
+          const isSim = answer.resposta === true;
+          const isNao = answer.resposta === false;
+          const isNa = answer.resposta === 'NA';
+
+          const btnSimClass = isSim ? 'border-emerald-500 bg-emerald-50 text-emerald-800 ring-2 ring-emerald-300 font-bold' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 font-medium';
+          const btnNaoClass = isNao ? 'border-rose-500 bg-rose-50 text-rose-800 ring-2 ring-rose-300 font-bold' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 font-medium';
+
+          controlHtml += '<div class="flex gap-2 mb-3">';
+          controlHtml += '  <button type="button" onclick="setBlockAnswer(\'' + blocoKey + '\', \'' + q.id + '\', true, this)" class="flex-1 py-2.5 px-3 rounded-xl border text-xs transition-all ' + btnSimClass + '">Sim</button>';
+          controlHtml += '  <button type="button" onclick="setBlockAnswer(\'' + blocoKey + '\', \'' + q.id + '\', false, this)" class="flex-1 py-2.5 px-3 rounded-xl border text-xs transition-all ' + btnNaoClass + '">Não</button>';
+
+          if (q.tipo === 'SN_NA') {
+            const btnNaClass = isNa ? 'border-slate-500 bg-slate-100 text-slate-800 ring-2 ring-slate-300 font-bold' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 font-medium';
+            controlHtml += '  <button type="button" onclick="setBlockAnswer(\'' + blocoKey + '\', \'' + q.id + '\', \'NA\', this)" class="flex-1 py-2.5 px-3 rounded-xl border text-xs transition-all ' + btnNaClass + '">N/A</button>';
+          }
+
+          controlHtml += '</div>';
+        } else if (q.tipo === 'NUM') {
+          const val = (answer.resposta !== undefined && answer.resposta !== null) ? answer.resposta : '';
+          controlHtml = '<div class="mb-3"><input type="number" value="' + val + '" placeholder="Digite o valor numérico" onchange="setBlockAnswer(\'' + blocoKey + '\', \'' + q.id + '\', this.value, this)" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none"></div>';
+        }
+
+        const showCond = (q.txtCondicional && answer.resposta === true);
+        const condDisplay = showCond ? 'block' : 'none';
+
+        let showPhoto = false;
+        if (q.foto === 'sim' && answer.resposta === true) showPhoto = true;
+        if (q.foto === 'nao' && answer.resposta === false) showPhoto = true;
+        const photoDisplay = showPhoto ? 'block' : 'none';
+
+        html += '<div class="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-2xs mb-3">';
+        html += '  <div class="flex items-start gap-2.5 mb-3">';
+        html += '    <span class="bg-blue-100 text-blue-800 text-[11px] font-extrabold px-2 py-0.5 rounded-md shrink-0">' + q.id + '</span>';
+        html += '    <span class="text-xs font-semibold text-slate-900 leading-snug pt-0.5">' + q.texto + '</span>';
+        html += '  </div>';
+
+        html += controlHtml;
+
+        // Texto condicional
+        html += '  <div id="' + condId + '" style="display: ' + condDisplay + ';" class="mb-3">';
+        html += '    <input type="text" placeholder="' + (q.txtCondicional || 'Detalhes da observação') + '" value="' + (answer.textoCondicional || '') + '" onchange="saveBlockConditionalText(\'' + blocoKey + '\', \'' + q.id + '\', this.value)" class="w-full p-3 bg-slate-50 border border-amber-300 rounded-xl text-xs font-medium focus:ring-2 focus:ring-amber-500 outline-none">';
+        html += '  </div>';
+
+        // Upload de foto do dispositivo
+        html += '  <div id="' + photoId + '" style="display: ' + photoDisplay + ';" class="pt-1">';
+        html += '    <label class="flex items-center justify-center gap-2 w-full p-2.5 border-2 border-dashed border-slate-300 hover:border-blue-500 rounded-xl text-slate-600 hover:text-blue-700 bg-slate-50/50 hover:bg-blue-50/30 cursor-pointer transition-colors text-xs font-bold">';
+        html += '      <i class="fa-solid fa-upload text-blue-600"></i>';
+        html += '      <span>Anexar Foto de Evidência (Dispositivo)</span>';
+        html += '      <input type="file" accept="image/*" class="hidden" onchange="handleFileUpload(\'' + blocoKey + '\', \'' + q.id + '\', this)">';
+        html += '    </label>';
+        html += '    <div id="preview_' + safeId + '" class="' + (answer.foto ? 'mt-2' : 'hidden') + '">';
+        if (answer.foto) {
+          html += '      <img src="' + answer.foto + '" class="w-full h-32 object-cover rounded-xl border border-slate-200 mt-2">';
+        }
+        html += '    </div>';
+        html += '  </div>';
+
+        html += '</div>';
+      });
+
+      container.innerHTML = html;
+    }
+
+    function saveBlockConditionalText(blocoKey, questionId, text) {
+      if (!currentVisit[blocoKey]) currentVisit[blocoKey] = {};
+      if (!currentVisit[blocoKey][questionId]) currentVisit[blocoKey][questionId] = {};
+      currentVisit[blocoKey][questionId].textoCondicional = text;
+    }
+
+    function setBlockAnswer(blocoKey, questionId, value, element) {
+      if (!currentVisit[blocoKey]) currentVisit[blocoKey] = {};
+      if (!currentVisit[blocoKey][questionId]) currentVisit[blocoKey][questionId] = {};
+
+      let finalValue = value;
+      if (element && element.type === 'number') {
+        finalValue = value === '' ? null : Number(value);
+      }
+
+      currentVisit[blocoKey][questionId].resposta = finalValue;
+
+      let questionDef = null;
+      if (blocoKey === 'bloco1') questionDef = BLOCO1_FACHADA.find(q => q.id === questionId);
+      else if (blocoKey === 'bloco2') questionDef = BLOCO2_MARKETING.find(q => q.id === questionId);
+      else if (blocoKey === 'bloco3') questionDef = BLOCO3_PREDIAL.find(q => q.id === questionId);
+
+      if (questionDef) {
+        const safeId = questionId.replace(/\./g, '_');
+
+        if (element && element.tagName === 'BUTTON' && element.parentElement && typeof element.parentElement.querySelectorAll === 'function') {
+          const buttons = element.parentElement.querySelectorAll('button');
+          buttons.forEach(b => {
+            b.className = 'flex-1 py-2.5 px-3 rounded-xl border text-xs border-slate-200 bg-white text-slate-700 hover:bg-slate-50 font-medium transition-all';
+          });
+
+          if (value === true) {
+            element.className = 'flex-1 py-2.5 px-3 rounded-xl border text-xs border-emerald-500 bg-emerald-50 text-emerald-800 ring-2 ring-emerald-300 font-bold transition-all';
+          } else if (value === false) {
+            element.className = 'flex-1 py-2.5 px-3 rounded-xl border text-xs border-rose-500 bg-rose-50 text-rose-800 ring-2 ring-rose-300 font-bold transition-all';
+          } else if (value === 'NA') {
+            element.className = 'flex-1 py-2.5 px-3 rounded-xl border text-xs border-slate-500 bg-slate-100 text-slate-800 ring-2 ring-slate-300 font-bold transition-all';
+          }
+        }
+
+        const condDiv = document.getElementById('cond_' + safeId);
+        if (condDiv) {
+          condDiv.style.display = (questionDef.txtCondicional && value === true) ? 'block' : 'none';
+        }
+
+        const photoDiv = document.getElementById('photo_' + safeId);
+        if (photoDiv) {
+          let showPhoto = false;
+          if (questionDef.foto === 'sim' && value === true) showPhoto = true;
+          if (questionDef.foto === 'nao' && value === false) showPhoto = true;
+          photoDiv.style.display = showPhoto ? 'block' : 'none';
+        }
+      }
+    }
+
+    function handleFileUpload(blocoKey, questionId, fileInput) {
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        if (!currentVisit[blocoKey]) currentVisit[blocoKey] = {};
+        if (!currentVisit[blocoKey][questionId]) currentVisit[blocoKey][questionId] = {};
+
+        currentVisit[blocoKey][questionId].foto = e.target.result;
+
+        const safeId = questionId.replace(/\./g, '_');
+        const previewDiv = document.getElementById('preview_' + safeId);
+        if (previewDiv) {
+          previewDiv.innerHTML = '<img src="' + e.target.result + '" class="w-full h-32 object-cover rounded-xl border border-slate-200 mt-2">';
+          previewDiv.classList.remove('hidden');
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function getBlockSummary(questions, answersObj) {
+      if (!answersObj) answersObj = {};
+      let total = questions.length;
+      let respondidas = 0;
+      let conformes = 0;
+      let naoConformes = 0;
+      let naoAplica = 0;
+
+      questions.forEach(q => {
+        const answer = answersObj[q.id];
+        if (answer && answer.resposta !== undefined && answer.resposta !== null && answer.resposta !== '') {
+          respondidas++;
+          if (answer.resposta === 'NA') {
+            naoAplica++;
+          } else {
+            let isNaoConforme = false;
+            if (q.foto === 'sim' && answer.resposta === true) isNaoConforme = true;
+            if (q.foto === 'nao' && answer.resposta === false) isNaoConforme = true;
+            if (isNaoConforme) naoConformes++;
+            else conformes++;
+          }
+        }
+      });
+
+      return {
+        total,
+        respondidas,
+        conformes,
+        naoConformes,
+        naoAplica,
+        pendentes: total - respondidas
+      };
+    }
+
+    // 5. Fluxo de Etapas da Loja Própria
+    function updateOwnStepView() {
+      const steps = ['Identificação da Visita', 'Fachada e Entrada', 'Marketing e Exposição', 'Predial e Manutenção', 'Revisão Final'];
+      const totalSteps = 5;
+
+      const badge = document.getElementById('ownStepBadge');
+      const title = document.getElementById('ownStepTitle');
+      const bar = document.getElementById('ownProgressBar');
+
+      if (badge) badge.textContent = 'Etapa ' + currentOwnStep + ' de ' + totalSteps;
+      if (title) title.textContent = steps[currentOwnStep - 1];
+      if (bar) bar.style.width = ((currentOwnStep / totalSteps) * 100) + '%';
+
+      for (let i = 1; i <= 5; i++) {
+        const el = document.getElementById('ownStepContent' + i);
+        if (el) el.classList.toggle('hidden', i !== currentOwnStep);
+      }
+
+      const nextBtn = document.getElementById('btnOwnNextFooter');
+      if (nextBtn) {
+        if (currentOwnStep === 5) {
+          nextBtn.innerHTML = '<span>Finalizar e Salvar</span> <i class="fa-solid fa-check text-[10px]"></i>';
+          nextBtn.className = 'flex-2 h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-md transition-all';
+        } else {
+          nextBtn.innerHTML = '<span>Próxima Etapa</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>';
+          nextBtn.className = 'flex-2 h-12 bg-navy-main hover:bg-blue-900 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-md transition-all';
+        }
+      }
+
+      if (currentOwnStep === 2) {
+        renderQuestionBlock('ownQuestionsBloco1', BLOCO1_FACHADA, currentVisit.bloco1 || {}, 'bloco1');
+      } else if (currentOwnStep === 3) {
+        renderQuestionBlock('ownQuestionsBloco2', BLOCO2_MARKETING, currentVisit.bloco2 || {}, 'bloco2');
+      } else if (currentOwnStep === 4) {
+        renderQuestionBlock('ownQuestionsBloco3', BLOCO3_PREDIAL, currentVisit.bloco3 || {}, 'bloco3');
+      } else if (currentOwnStep === 5) {
+        renderOwnReview();
+      }
     }
 
     function nextOwnStep() {
       if (currentOwnStep === 1) {
-        const name = document.getElementById('ownStoreName').value.trim();
-        if (name.length < 3) return alert("Digite o nome da loja.");
-        currentVisit.nome_loja = name;
-        currentVisit.data_visita = document.getElementById('ownVisitDate').value;
-      } else if (currentOwnStep === 6) {
-        finishVisit();
-        return;
+        const storeInput = document.getElementById('ownStoreName');
+        const storeName = storeInput ? storeInput.value.trim() : '';
+        if (!storeName) {
+          alert('Por favor, informe o nome da loja própria.');
+          if (storeInput) storeInput.focus();
+          return;
+        }
+        currentVisit.nome_loja = storeName;
+        const dateInput = document.getElementById('ownVisitDate');
+        if (dateInput && dateInput.value) currentVisit.data_visita = dateInput.value;
       }
-      currentOwnStep++;
-      updateOwnStepView();
-      if (currentOwnStep === 6) renderOwnReview();
+
+      if (currentOwnStep === 5) {
+        finishVisit();
+      } else {
+        currentOwnStep++;
+        updateOwnStepView();
+        window.scrollTo(0, 0);
+      }
+    }
+
+    function prevOwnStep() {
+      if (currentOwnStep > 1) {
+        currentOwnStep--;
+        updateOwnStepView();
+        window.scrollTo(0, 0);
+      } else {
+        if (confirm('Deseja sair do checklist? As respostas não enviadas serão perdidas.')) {
+          if (visitTimerInterval) clearInterval(visitTimerInterval);
+          goToTab('home');
+        }
+      }
     }
 
     function renderOwnReview() {
-      document.getElementById('ownReviewSummary').innerHTML = `
-        <div class="flex justify-between py-1"><span>Loja:</span> <strong>${currentVisit.nome_loja}</strong></div>
-        <div class="flex justify-between py-1"><span>Pilhas:</span> <strong>${currentVisit.pilhas_promocionais ? 'Sim' : 'Não'}</strong></div>
-        <div class="flex justify-between py-1"><span>Climatizada:</span> <strong>${currentVisit.climatizacao ? 'Sim' : 'Não'}</strong></div>
-        <div class="flex justify-between py-1"><span>Organização:</span> <strong>${currentVisit.organizacao_nota || 3}/5</strong></div>
-      `;
+      const container = document.getElementById('ownReviewSummary');
+      if (!container) return;
+
+      const sum1 = getBlockSummary(BLOCO1_FACHADA, currentVisit.bloco1);
+      const sum2 = getBlockSummary(BLOCO2_MARKETING, currentVisit.bloco2);
+      const sum3 = getBlockSummary(BLOCO3_PREDIAL, currentVisit.bloco3);
+
+      const totalRespondidas = sum1.respondidas + sum2.respondidas + sum3.respondidas;
+      const totalNaoConformes = sum1.naoConformes + sum2.naoConformes + sum3.naoConformes;
+
+      let html = '';
+      html += '<div class="grid grid-cols-2 gap-3 mb-4">';
+      html += '  <div class="p-3 bg-blue-50 rounded-xl text-center border border-blue-100">';
+      html += '    <span class="text-2xl font-black text-blue-700 block">' + totalRespondidas + '/69</span>';
+      html += '    <span class="text-[10px] font-bold uppercase text-blue-900 tracking-wider">Respondidas</span>';
+      html += '  </div>';
+      html += '  <div class="p-3 bg-rose-50 rounded-xl text-center border border-rose-100">';
+      html += '    <span class="text-2xl font-black text-rose-700 block">' + totalNaoConformes + '</span>';
+      html += '    <span class="text-[10px] font-bold uppercase text-rose-900 tracking-wider">Não-Conformidades</span>';
+      html += '  </div>';
+      html += '</div>';
+
+      html += renderReviewBlockCard('Bloco 1 — Fachada e Entrada', sum1, BLOCO1_FACHADA, currentVisit.bloco1);
+      html += renderReviewBlockCard('Bloco 2 — Marketing e Exposição', sum2, BLOCO2_MARKETING, currentVisit.bloco2);
+      html += renderReviewBlockCard('Bloco 3 — Predial e Manutenção', sum3, BLOCO3_PREDIAL, currentVisit.bloco3);
+
+      container.innerHTML = html;
     }
 
-    function setYesNo(prop, val) {
-      currentVisit[prop] = val;
-      const yesBtn = document.getElementById(`btn${prop.charAt(0).toUpperCase() + prop.slice(1)}Yes`);
-      const noBtn = document.getElementById(`btn${prop.charAt(0).toUpperCase() + prop.slice(1)}No`);
-      if (yesBtn && noBtn) {
-        yesBtn.className = val ? "py-4 border-2 border-emerald-600 bg-emerald-50 text-emerald-800 rounded-2xl font-bold text-sm" : "py-4 border-2 border-slate-200 rounded-2xl font-bold text-sm";
-        noBtn.className = !val ? "py-4 border-2 border-rose-600 bg-rose-50 text-rose-800 rounded-2xl font-bold text-sm" : "py-4 border-2 border-slate-200 rounded-2xl font-bold text-sm";
-      }
-      if (prop === 'ownPilhas') document.getElementById('boxOwnPromoCodes').classList.toggle('hidden', !val);
-      if (prop === 'ownClima') document.getElementById('boxOwnClimaObs').classList.toggle('hidden', val);
-      if (prop === 'ownEncarte') document.getElementById('boxOwnUnavailable').classList.toggle('hidden', val);
-      if (prop === 'benchEncarte') document.getElementById('boxBenchPromoProds').classList.toggle('hidden', !val);
-    }
+    function renderReviewBlockCard(title, summary, questions, answers) {
+      let issuesHtml = '';
+      questions.forEach(q => {
+        const answer = answers ? answers[q.id] : null;
+        if (answer && answer.resposta !== undefined) {
+          let isNaoConforme = false;
+          if (q.foto === 'sim' && answer.resposta === true) isNaoConforme = true;
+          if (q.foto === 'nao' && answer.resposta === false) isNaoConforme = true;
 
-    function addPromoCode() {
-      const input = document.getElementById('inputPromoCode');
-      const val = input.value.trim().toUpperCase();
-      if (val) {
-        currentVisit.codigos_produtos_promo.push(val);
-        input.value = '';
-        document.getElementById('promoCodesChips').innerHTML = currentVisit.codigos_produtos_promo.map(c => `<span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-lg text-xs font-bold">${c}</span>`).join('');
-      }
-    }
-
-    function addUnavailableProd() {
-      const input = document.getElementById('inputUnavailableProd');
-      const val = input.value.trim();
-      if (val) {
-        currentVisit.produtos_indisponiveis.push(val);
-        input.value = '';
-        document.getElementById('unavailableChips').innerHTML = currentVisit.produtos_indisponiveis.map(p => `<span class="px-2 py-1 bg-rose-100 text-rose-800 rounded-lg text-xs font-bold">${p}</span>`).join('');
-      }
-    }
-
-    function setPdvMat(s) { currentVisit.materiais_pdv = s; }
-    function setNota(n) { currentVisit.organizacao_nota = n; }
-
-    function setMovimento(m) {
-      currentVisit.movimento_clientes = m;
-      ['Baixo', 'Medio', 'Alto'].forEach(nivel => {
-        const btn = document.getElementById(`btnMov${nivel}`);
-        if (btn) {
-          btn.className = (m === nivel.toUpperCase())
-            ? "py-2.5 border-2 border-blue-600 bg-blue-50 text-blue-800 rounded-xl text-xs font-bold"
-            : "py-2.5 border rounded-xl text-xs font-bold";
+          if (isNaoConforme) {
+            issuesHtml += '<div class="text-xs text-slate-700 py-1 border-t border-slate-100 flex items-start gap-2">';
+            issuesHtml += '  <i class="fa-solid fa-triangle-exclamation text-rose-500 mt-0.5 shrink-0"></i>';
+            issuesHtml += '  <div class="flex-1">';
+            issuesHtml += '    <span class="font-bold text-slate-800">' + q.id + '</span> ' + q.texto;
+            if (answer.textoCondicional) {
+              issuesHtml += '    <div class="text-[11px] text-amber-800 font-medium mt-0.5 bg-amber-50 px-2 py-0.5 rounded">Obs: ' + answer.textoCondicional + '</div>';
+            }
+            if (answer.foto) {
+              issuesHtml += '    <div class="text-[11px] text-blue-600 font-bold mt-0.5"><i class="fa-solid fa-image mr-1"></i> Foto de evidência anexada</div>';
+            }
+            issuesHtml += '  </div>';
+            issuesHtml += '</div>';
+          }
         }
+      });
+
+      let card = '<div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-3">';
+      card += '  <div class="flex items-center justify-between mb-1.5">';
+      card += '    <h5 class="text-xs font-bold text-slate-900">' + title + '</h5>';
+      card += '    <span class="text-[11px] font-extrabold px-2 py-0.5 rounded-full ' + (summary.naoConformes > 0 ? 'bg-rose-100 text-rose-800' : 'bg-emerald-100 text-emerald-800') + '">' + summary.naoConformes + ' divergências</span>';
+      card += '  </div>';
+      card += '  <div class="text-[11px] text-slate-500 mb-2">' + summary.respondidas + ' de ' + summary.total + ' questões avaliadas</div>';
+      if (issuesHtml) card += issuesHtml;
+      card += '</div>';
+
+      return card;
+    }
+
+    // 6. Fluxo de Etapas do Benchmark de Concorrência
+    let _benchProductTemp = {};
+
+    function setBenchField(field, value, btnEl) {
+      _benchProductTemp[field] = value;
+
+      if (btnEl && btnEl.parentElement && typeof btnEl.parentElement.querySelectorAll === 'function') {
+        const btns = btnEl.parentElement.querySelectorAll('button');
+        btns.forEach(b => {
+          b.className = 'flex-1 py-2.5 px-3 rounded-xl border text-xs border-slate-200 bg-white text-slate-700 hover:bg-slate-50 font-medium transition-all';
+        });
+        if (value === true) {
+          btnEl.className = 'flex-1 py-2.5 px-3 rounded-xl border text-xs border-emerald-500 bg-emerald-50 text-emerald-800 ring-2 ring-emerald-300 font-bold transition-all';
+        } else if (value === false) {
+          btnEl.className = 'flex-1 py-2.5 px-3 rounded-xl border text-xs border-rose-500 bg-rose-50 text-rose-800 ring-2 ring-rose-300 font-bold transition-all';
+        }
+      }
+
+      if (field === 'disponivel') {
+        const dispGroup = document.getElementById('benchDispFieldsGroup');
+        if (dispGroup) dispGroup.style.opacity = value ? '1' : '0.4';
+      }
+
+      if (field === 'promocao') {
+        const promoDateDiv = document.getElementById('benchPromoDateDiv');
+        if (promoDateDiv) promoDateDiv.classList.toggle('hidden', !value);
+      }
+    }
+
+    function handleBenchPhotoUpload(fileInput) {
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        _benchProductTemp.fotoPreco = e.target.result;
+        const img = document.getElementById('benchPrecoPreview');
+        const container = document.getElementById('benchPrecoPreviewContainer');
+        if (img) img.src = e.target.result;
+        if (container) container.classList.remove('hidden');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removeBenchPhoto() {
+      _benchProductTemp.fotoPreco = null;
+      const fileInput = document.getElementById('benchPrecoFoto');
+      if (fileInput) fileInput.value = '';
+      const img = document.getElementById('benchPrecoPreview');
+      if (img) img.src = '';
+      const container = document.getElementById('benchPrecoPreviewContainer');
+      if (container) container.classList.add('hidden');
+    }
+
+    function populateBenchProductSelect() {
+      const sel = document.getElementById('benchProductSelect');
+      if (!sel) return;
+      const catalog = loadProductCatalog();
+      sel.innerHTML = '<option value="">-- Escolha um produto da cesta --</option>';
+      catalog.forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p.id;
+        opt.textContent = p.nome + ' (Ref: R$ ' + Number(p.precoReferencia).toFixed(2).replace('.', ',') + ')';
+        sel.appendChild(opt);
       });
     }
 
-    // Benchmark Steps
-    function updateBenchStepView() {
-      const titles = ["Identificação", "Exposição", "Promoções", "Preços Top 10", "Ambiente", "Conclusões", "Revisão"];
-      document.getElementById('benchStepBadge').textContent = `Etapa ${currentBenchStep} de 7`;
-      document.getElementById('benchStepTitle').textContent = titles[currentBenchStep - 1];
-      document.getElementById('benchProgressBar').style.width = `${(currentBenchStep / 7) * 100}%`;
-      for (let i = 1; i <= 7; i++) document.getElementById(`benchStepContent${i}`).classList.toggle('hidden', i !== currentBenchStep);
-      document.getElementById('btnBenchPrevFooter').style.visibility = currentBenchStep === 1 ? 'hidden' : 'visible';
-    }
-    function prevBenchStep() { if (currentBenchStep > 1) { currentBenchStep--; updateBenchStepView(); } else goToTab('home'); }
-    function nextBenchStep() {
-      if (currentBenchStep === 1) {
-        const name = document.getElementById('benchStoreName').value.trim();
-        if (name.length < 3) return alert("Digite o nome do concorrente.");
-        currentVisit.nome_loja = name;
-        currentVisit.data_visita = document.getElementById('benchVisitDate').value;
-      } else if (currentBenchStep === 7) {
-        finishVisit();
+    function onBenchProductSelectChange() {
+      const sel = document.getElementById('benchProductSelect');
+      const form = document.getElementById('benchProductForm');
+      if (!sel || !form) return;
+
+      if (!sel.value) {
+        form.classList.add('hidden');
         return;
       }
-      currentBenchStep++;
-      updateBenchStepView();
-      if (currentBenchStep === 7) renderBenchReview();
+
+      const catalog = loadProductCatalog();
+      const p = catalog.find(item => item.id === sel.value);
+      if (!p) return;
+
+      _benchProductTemp = {
+        produtoId: p.id,
+        nome: p.nome,
+        categoria: p.categoria,
+        precoReferencia: p.precoReferencia,
+        disponivel: true,
+        promocao: false,
+        freteGratis: false,
+        garantiaEstendida: false
+      };
+
+      document.getElementById('benchInfoProdName').textContent = p.nome;
+      document.getElementById('benchInfoProdRef').textContent = 'Preço Ref: R$ ' + Number(p.precoReferencia).toFixed(2).replace('.', ',');
+      document.getElementById('benchInfoProdCat').textContent = p.categoria;
+
+      // Reset campos
+      document.getElementById('benchPreco').value = '';
+      document.getElementById('benchParcelas').value = '';
+      document.getElementById('benchValorParcela').value = '';
+      document.getElementById('benchValPromo').value = '';
+      removeBenchPhoto();
+
+      // Reset botões
+      const btnDispSim = document.getElementById('btnBenchDispSim');
+      if (btnDispSim) setBenchField('disponivel', true, btnDispSim);
+
+      const btnPromoNao = document.getElementById('btnBenchPromoNao');
+      if (btnPromoNao) setBenchField('promocao', false, btnPromoNao);
+
+      const btnFreteNao = document.getElementById('btnBenchFreteNao');
+      if (btnFreteNao) setBenchField('freteGratis', false, btnFreteNao);
+
+      const btnGarantiaNao = document.getElementById('btnBenchGarantiaNao');
+      if (btnGarantiaNao) setBenchField('garantiaEstendida', false, btnGarantiaNao);
+
+      form.classList.remove('hidden');
     }
 
-    function renderBenchmarkTop10() {
-      const items = [
-        { id: '1', nome: 'Airfryer Digital 4L', ref: 349.90 },
-        { id: '2', nome: 'Liquidificador Turbo Inox', ref: 149.90 },
-        { id: '3', nome: 'Fogão 4 Bocas Auto', ref: 899.00 },
-        { id: '4', nome: 'Refrigerador Frost Free', ref: 2899.00 },
-        { id: '5', nome: 'Micro-ondas 32L', ref: 629.00 }
-      ];
-      document.getElementById('benchTop10List').innerHTML = items.map(p => `
-        <div class="p-3 bg-white border border-slate-200 rounded-2xl flex items-center justify-between">
-          <div>
-            <span class="text-xs font-bold text-slate-800 block">${p.nome}</span>
-            <span class="text-[10px] text-slate-400">Ref: R$ ${p.ref.toFixed(2)}</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <input type="number" step="0.01" placeholder="R$ Concorrente" oninput="calcDelta('${p.id}', ${p.ref}, this.value, 'delta_${p.id}')"
-              class="w-24 p-2 bg-slate-50 border rounded-xl text-xs font-bold">
-            <span id="delta_${p.id}" class="text-[10px] font-bold px-2 py-1 rounded-md bg-slate-100 text-slate-500">0%</span>
-          </div>
-        </div>
-      `).join('');
+    function addBenchmarkProduct() {
+      const sel = document.getElementById('benchProductSelect');
+      if (!sel || !sel.value) {
+        alert('Selecione um produto da cesta.');
+        return;
+      }
+
+      const precoInput = document.getElementById('benchPreco');
+      const preco = precoInput && precoInput.value ? parseFloat(precoInput.value) : null;
+
+      if (_benchProductTemp.disponivel && (!preco || preco <= 0)) {
+        alert('Informe o preço à vista do produto.');
+        if (precoInput) precoInput.focus();
+        return;
+      }
+
+      const parcelasInput = document.getElementById('benchParcelas');
+      const valorParcelaInput = document.getElementById('benchValorParcela');
+      const valPromoInput = document.getElementById('benchValPromo');
+
+      const entry = {
+        id: generateUUID(),
+        produtoId: _benchProductTemp.produtoId,
+        nome: _benchProductTemp.nome,
+        categoria: _benchProductTemp.categoria,
+        precoReferencia: _benchProductTemp.precoReferencia,
+        disponivel: _benchProductTemp.disponivel !== false,
+        preco: preco,
+        parcelas: parcelasInput && parcelasInput.value ? parseInt(parcelasInput.value, 10) : null,
+        valorParcela: valorParcelaInput && valorParcelaInput.value ? parseFloat(valorParcelaInput.value) : null,
+        promocao: _benchProductTemp.promocao === true,
+        validadePromocao: valPromoInput ? valPromoInput.value.trim() : null,
+        freteGratis: _benchProductTemp.freteGratis === true,
+        garantiaEstendida: _benchProductTemp.garantiaEstendida === true,
+        fotoPreco: _benchProductTemp.fotoPreco || null
+      };
+
+      if (!currentVisit.produtos_benchmark) currentVisit.produtos_benchmark = [];
+      currentVisit.produtos_benchmark.push(entry);
+
+      // Limpar formulário
+      sel.value = '';
+      document.getElementById('benchProductForm').classList.add('hidden');
+      removeBenchPhoto();
+      _benchProductTemp = {};
+
+      renderBenchProductList();
     }
 
-    function calcDelta(id, ref, val, spanId) {
-      const span = document.getElementById(spanId);
-      const v = parseFloat(val);
-      if (isNaN(v) || v <= 0) return span.textContent = '0%';
-      const d = ((v - ref) / ref) * 100;
-      span.textContent = `${d > 0 ? '+' : ''}${d.toFixed(1)}%`;
-      span.className = d < 0 ? "text-[10px] font-bold px-2 py-1 rounded-md bg-rose-100 text-rose-700" : "text-[10px] font-bold px-2 py-1 rounded-md bg-emerald-100 text-emerald-700";
+    function removeBenchmarkProduct(index) {
+      if (!confirm('Remover este produto da coleta?')) return;
+      if (currentVisit.produtos_benchmark) {
+        currentVisit.produtos_benchmark.splice(index, 1);
+        renderBenchProductList();
+      }
     }
 
-    function renderBenchReview() {
-      document.getElementById('benchReviewSummary').innerHTML = `
-        <div class="flex justify-between py-1"><span>Concorrente:</span> <strong>${currentVisit.nome_loja}</strong></div>
-        <div class="flex justify-between py-1"><span>Alerta Gestor:</span> <strong>${document.getElementById('benchAlertManager').checked ? 'ATIVO' : 'Não'}</strong></div>
-      `;
+    function renderBenchProductList() {
+      const container = document.getElementById('benchCollectedProducts');
+      const countEl = document.getElementById('benchCollectedCount');
+      const produtos = currentVisit.produtos_benchmark || [];
+
+      if (countEl) {
+        countEl.textContent = produtos.length + ' produto' + (produtos.length !== 1 ? 's' : '');
+      }
+
+      if (!container) return;
+
+      if (produtos.length === 0) {
+        container.innerHTML = '<div class="text-center py-6 bg-white rounded-2xl border border-dashed border-slate-200 text-slate-400 text-xs">Nenhum produto coletado ainda. Selecione um item acima.</div>';
+        return;
+      }
+
+      let html = '';
+      produtos.forEach((p, idx) => {
+        let deltaHtml = '';
+        if (p.disponivel && p.preco && p.precoReferencia) {
+          const delta = ((p.preco - p.precoReferencia) / p.precoReferencia) * 100;
+          const isMaisBarato = delta < 0;
+          const isMaisCaro = delta > 0;
+          const colorClass = isMaisBarato ? 'text-emerald-700 bg-emerald-50 border-emerald-200' : (isMaisCaro ? 'text-rose-700 bg-rose-50 border-rose-200' : 'text-slate-700 bg-slate-100 border-slate-200');
+          const sign = isMaisCaro ? '+' : '';
+          deltaHtml = '<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full border ' + colorClass + '">' + sign + delta.toFixed(1) + '% vs ref</span>';
+        }
+
+        html += '<div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-2xs space-y-2">';
+        html += '  <div class="flex items-start justify-between gap-2">';
+        html += '    <div class="flex-1">';
+        html += '      <span class="text-[10px] font-bold uppercase text-slate-500 block">' + p.categoria + '</span>';
+        html += '      <h5 class="text-xs font-bold text-slate-900 leading-snug">' + p.nome + '</h5>';
+        html += '    </div>';
+        html += '    <button type="button" onclick="removeBenchmarkProduct(' + idx + ')" class="w-7 h-7 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-100 flex items-center justify-center shrink-0 transition-colors">';
+        html += '      <i class="fa-solid fa-trash text-xs"></i>';
+        html += '    </button>';
+        html += '  </div>';
+
+        html += '  <div class="flex items-center justify-between text-xs pt-1 border-t border-slate-100">';
+        if (p.disponivel) {
+          html += '    <div class="flex items-baseline gap-1.5">';
+          html += '      <span class="font-extrabold text-sm text-slate-900">R$ ' + Number(p.preco).toFixed(2).replace('.', ',') + '</span>';
+          html += '      <span class="text-[10px] text-slate-400 line-through">Ref: R$ ' + Number(p.precoReferencia).toFixed(2).replace('.', ',') + '</span>';
+          html += '    </div>';
+        } else {
+          html += '    <span class="text-[11px] font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded-md">Indisponível em Loja</span>';
+        }
+        html += '    ' + deltaHtml;
+        html += '  </div>';
+
+        if (p.parcelas && p.valorParcela) {
+          html += '  <div class="text-[11px] text-slate-500"><i class="fa-solid fa-credit-card mr-1 text-slate-400"></i> ' + p.parcelas + 'x de R$ ' + Number(p.valorParcela).toFixed(2).replace('.', ',') + '</div>';
+        }
+
+        if (p.fotoPreco) {
+          html += '  <div class="text-[11px] text-emerald-700 font-medium flex items-center gap-1.5"><i class="fa-solid fa-camera"></i> Foto da etiqueta anexada</div>';
+        }
+
+        html += '</div>';
+      });
+
+      container.innerHTML = html;
     }
 
-    async function finishVisit() {
-      clearInterval(visitTimerInterval);
-      const diff = Math.floor((Date.now() - visitStartTime) / 1000);
-      currentVisit.duracao = `${Math.floor(diff / 60)}m ${diff % 60}s`;
-      currentVisit.data_hora_fim = new Date().toISOString();
-      currentVisit.promotor_email = (currentUser?.email || '').toLowerCase().trim();
+    function updateBenchStepView() {
+      const steps = ['Identificação da Concorrência', 'Coleta de Preços por SKU', 'Observações e Alerta', 'Revisão Final'];
+      const totalSteps = 4;
 
-      visits.unshift(currentVisit);
-      const cleanEmail = currentUser.email.toLowerCase().trim();
-      localStorage.setItem(`trade_pdv_visits_${cleanEmail}`, JSON.stringify(visits));
+      const badge = document.getElementById('benchStepBadge');
+      const title = document.getElementById('benchStepTitle');
+      const bar = document.getElementById('benchProgressBar');
 
-      // Envia pro Supabase vinculado ao promotor logado
-      if (navigator.onLine) {
-        try {
-          const res = await fetch(`${SUPABASE_URL}/rest/v1/visitas`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY, 'Prefer': 'resolution=merge-duplicates' },
-            body: JSON.stringify({
-              id: currentVisit.id,
-              tipo_visita: currentVisit.tipo_visita,
-              promotor_email: currentVisit.promotor_email,
-              data_hora_inicio: currentVisit.data_hora_inicio,
-              data_hora_fim: currentVisit.data_hora_fim,
-              nome_loja: currentVisit.nome_loja,
-              data_visita: currentVisit.data_visita,
-              pilhas_promocionais: currentVisit.pilhas_promocionais,
-              codigos_produtos_promo: currentVisit.codigos_produtos_promo,
-              status_sincronizacao: 'ENVIADO'
-            })
-          });
-          if (res.ok) {
-            currentVisit.status_sincronizacao = 'ENVIADO';
-          } else {
-            currentVisit.status_sincronizacao = 'PENDENTE';
-            const errData = await res.json().catch(() => ({}));
-            console.warn("Supabase sync warning:", errData);
-          }
-          localStorage.setItem(`trade_pdv_visits_${cleanEmail}`, JSON.stringify(visits));
-        } catch(e) {
-          currentVisit.status_sincronizacao = 'PENDENTE';
-          localStorage.setItem(`trade_pdv_visits_${cleanEmail}`, JSON.stringify(visits));
+      if (badge) badge.textContent = 'Etapa ' + currentBenchStep + ' de ' + totalSteps;
+      if (title) title.textContent = steps[currentBenchStep - 1];
+      if (bar) bar.style.width = ((currentBenchStep / totalSteps) * 100) + '%';
+
+      for (let i = 1; i <= 4; i++) {
+        const el = document.getElementById('benchStepContent' + i);
+        if (el) el.classList.toggle('hidden', i !== currentBenchStep);
+      }
+
+      const nextBtn = document.getElementById('btnBenchNextFooter');
+      if (nextBtn) {
+        if (currentBenchStep === 4) {
+          nextBtn.innerHTML = '<span>Finalizar Benchmark</span> <i class="fa-solid fa-check text-[10px]"></i>';
+          nextBtn.className = 'flex-2 h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-md transition-all';
+        } else {
+          nextBtn.innerHTML = '<span>Próxima Etapa</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>';
+          nextBtn.className = 'flex-2 h-12 bg-navy-main hover:bg-blue-900 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-md transition-all';
         }
       }
 
-      document.getElementById('summaryCard').innerHTML = `
-        <p><strong>Loja:</strong> ${currentVisit.nome_loja}</p>
-        <p><strong>Tipo:</strong> ${currentVisit.tipo_visita === 'PROPRIA' ? 'Loja Própria' : 'Benchmark Concorrente'}</p>
-        <p><strong>Promotor(a):</strong> ${userProfile?.name || currentVisit.promotor_email}</p>
-        <p><strong>Duração:</strong> ${currentVisit.duracao}</p>
-        <p><strong>Status:</strong> ${currentVisit.status_sincronizacao === 'ENVIADO' ? '✅ Gravado no Supabase' : '⚠️ Salvo offline (Pendente)'}</p>
-      `;
+      if (currentBenchStep === 2) {
+        populateBenchProductSelect();
+        renderBenchProductList();
+      } else if (currentBenchStep === 4) {
+        renderBenchReview();
+      }
+    }
+
+    function nextBenchStep() {
+      if (currentBenchStep === 1) {
+        const storeInput = document.getElementById('benchStoreName');
+        const storeName = storeInput ? storeInput.value.trim() : '';
+        if (!storeName) {
+          alert('Por favor, informe o nome do concorrente.');
+          if (storeInput) storeInput.focus();
+          return;
+        }
+        currentVisit.nome_loja = storeName;
+        const dateInput = document.getElementById('benchVisitDate');
+        if (dateInput && dateInput.value) currentVisit.data_visita = dateInput.value;
+      }
+
+      if (currentBenchStep === 3) {
+        const obsInput = document.getElementById('benchInsights');
+        if (obsInput) currentVisit.observacoes = obsInput.value.trim();
+        const alertInput = document.getElementById('benchAlertManager');
+        if (alertInput) currentVisit.alerta_gestor = alertInput.checked;
+      }
+
+      if (currentBenchStep === 4) {
+        finishVisit();
+      } else {
+        currentBenchStep++;
+        updateBenchStepView();
+        window.scrollTo(0, 0);
+      }
+    }
+
+    function prevBenchStep() {
+      if (currentBenchStep > 1) {
+        currentBenchStep--;
+        updateBenchStepView();
+        window.scrollTo(0, 0);
+      } else {
+        if (confirm('Deseja sair do benchmark? As respostas não enviadas serão perdidas.')) {
+          if (visitTimerInterval) clearInterval(visitTimerInterval);
+          goToTab('home');
+        }
+      }
+    }
+
+    function renderBenchReview() {
+      const container = document.getElementById('benchReviewSummary');
+      if (!container) return;
+
+      const prods = currentVisit.produtos_benchmark || [];
+      const total = prods.length;
+      const disponiveis = prods.filter(p => p.disponivel).length;
+
+      let html = '';
+      html += '<div class="grid grid-cols-2 gap-3 mb-4">';
+      html += '  <div class="p-3 bg-emerald-50 rounded-xl text-center border border-emerald-100">';
+      html += '    <span class="text-2xl font-black text-emerald-700 block">' + total + '</span>';
+      html += '    <span class="text-[10px] font-bold uppercase text-emerald-900 tracking-wider">SKUs Coletados</span>';
+      html += '  </div>';
+      html += '  <div class="p-3 bg-blue-50 rounded-xl text-center border border-blue-100">';
+      html += '    <span class="text-2xl font-black text-blue-700 block">' + disponiveis + '</span>';
+      html += '    <span class="text-[10px] font-bold uppercase text-blue-900 tracking-wider">Disponíveis</span>';
+      html += '  </div>';
+      html += '</div>';
+
+      if (total > 0) {
+        html += '<div class="space-y-2 mb-4">';
+        prods.forEach(p => {
+          let deltaTxt = '-';
+          let deltaColor = 'text-slate-500';
+          if (p.disponivel && p.preco && p.precoReferencia) {
+            const d = ((p.preco - p.precoReferencia) / p.precoReferencia) * 100;
+            deltaTxt = (d > 0 ? '+' : '') + d.toFixed(1) + '%';
+            deltaColor = d < 0 ? 'text-emerald-700 font-bold' : (d > 0 ? 'text-rose-700 font-bold' : 'text-slate-600');
+          }
+
+          html += '<div class="p-3 bg-slate-50 rounded-xl border border-slate-200/90 text-xs flex items-center justify-between">';
+          html += '  <div>';
+          html += '    <div class="font-bold text-slate-800">' + p.nome + '</div>';
+          html += '    <div class="text-[11px] text-slate-500">Ref: R$ ' + Number(p.precoReferencia).toFixed(2).replace('.', ',') + ' · Concorrente: ' + (p.disponivel ? ('R$ ' + Number(p.preco).toFixed(2).replace('.', ',')) : 'Indisp.') + '</div>';
+          html += '  </div>';
+          html += '  <div class="text-right">';
+          html += '    <span class="' + deltaColor + '">' + deltaTxt + '</span>';
+          html += '  </div>';
+          html += '</div>';
+        });
+        html += '</div>';
+      }
+
+      if (currentVisit.alerta_gestor) {
+        html += '<div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-900 font-bold flex items-center gap-2 mb-3">';
+        html += '  <i class="fa-solid fa-bell text-amber-600"></i> Alerta imediato ao gestor sinalizado';
+        html += '</div>';
+      }
+
+      if (currentVisit.observacoes) {
+        html += '<div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-700 mb-3">';
+        html += '  <span class="font-bold block text-slate-900 mb-0.5">Observações:</span> ' + currentVisit.observacoes;
+        html += '</div>';
+      }
+
+      container.innerHTML = html;
+    }
+
+    // 7. Abertura e Inicialização de Visita
+    function startVisit(type) {
+      currentVisit = {
+        id: generateUUID(),
+        tipo_visita: type,
+        promotor_email: (currentUser?.email || '').toLowerCase().trim(),
+        data_hora_inicio: new Date().toISOString(),
+        data_visita: new Date().toISOString().split('T')[0],
+        nome_loja: '',
+        status_sincronizacao: 'PENDENTE'
+      };
+
+      visitStartTime = Date.now();
+
+      if (type === 'PROPRIA') {
+        currentVisit.bloco1 = {};
+        currentVisit.bloco2 = {};
+        currentVisit.bloco3 = {};
+        currentOwnStep = 1;
+
+        const dateInput = document.getElementById('ownVisitDate');
+        if (dateInput) dateInput.value = currentVisit.data_visita;
+
+        const nameInput = document.getElementById('ownStoreName');
+        if (nameInput) nameInput.value = '';
+
+        const promInput = document.getElementById('ownPromoterName');
+        if (promInput) promInput.value = currentUser?.name || currentUser?.email || 'Promotor';
+
+        updateOwnStepView();
+        goToScreen('screenOwnChecklist');
+        startTimer('ownTimer');
+        captureGeolocation('ownGeoText');
+      } else {
+        currentVisit.produtos_benchmark = [];
+        currentBenchStep = 1;
+
+        const dateInput = document.getElementById('benchVisitDate');
+        if (dateInput) dateInput.value = currentVisit.data_visita;
+
+        const nameInput = document.getElementById('benchStoreName');
+        if (nameInput) nameInput.value = '';
+
+        const promInput = document.getElementById('benchPromoterName');
+        if (promInput) promInput.value = currentUser?.name || currentUser?.email || 'Promotor';
+
+        updateBenchStepView();
+        goToScreen('screenBenchmarkChecklist');
+        startTimer('benchTimer');
+        captureGeolocation('benchGeoText');
+      }
+    }
+
+    // 8. Construção de Payload e Sincronização Supabase
+    function buildVisitSupabasePayload(v) {
+      const payload = {
+        id: v.id,
+        tipo_visita: v.tipo_visita,
+        promotor_email: (v.promotor_email || '').toLowerCase().trim(),
+        data_hora_inicio: v.data_hora_inicio,
+        data_hora_fim: v.data_hora_fim,
+        nome_loja: v.nome_loja,
+        data_visita: v.data_visita,
+        latitude: v.latitude || null,
+        longitude: v.longitude || null,
+        status_sincronizacao: 'ENVIADO'
+      };
+
+      if (v.tipo_visita === 'PROPRIA') {
+        payload.bloco1_fachada = v.bloco1 || {};
+        payload.bloco2_marketing = v.bloco2 || {};
+        payload.bloco3_predial = v.bloco3 || {};
+
+        // Mapeamento retrocompatível para tabelas existentes
+        payload.pilhas_promocionais = v.bloco2?.['2.9']?.resposta === true;
+        payload.climatizacao = v.bloco3?.['3.4']?.resposta === true;
+        payload.encarte_disponivel = v.bloco1?.['1.23']?.resposta === true;
+        payload.materiais_pdv = v.bloco2?.['2.17']?.resposta === true ? 'SIM' : 'PARCIAL';
+        payload.organizacao_nota = 5;
+        payload.ruptura_estoque = v.bloco2?.['2.13']?.resposta === true;
+      } else {
+        payload.benchmark_produtos = v.produtos_benchmark || [];
+        payload.observacoes = v.observacoes || null;
+        payload.alerta_gestor = v.alerta_gestor || false;
+      }
+
+      return payload;
+    }
+
+    async function finishVisit() {
+      if (visitTimerInterval) clearInterval(visitTimerInterval);
+      currentVisit.data_hora_fim = new Date().toISOString();
+
+      const diffSecs = Math.floor((Date.now() - visitStartTime) / 1000);
+      const mins = Math.floor(diffSecs / 60);
+      const secs = diffSecs % 60;
+      currentVisit.duracao = mins + 'm ' + String(secs).padStart(2, '0') + 's';
+
+      visits.unshift(currentVisit);
+      const email = (currentUser?.email || '').toLowerCase().trim();
+      const storageKey = email ? ('trade_pdv_visits_' + email) : 'trade_pdv_visits';
+      localStorage.setItem(storageKey, JSON.stringify(visits));
+
+      // Sincronização em background com Supabase
+      if (navigator.onLine && SUPABASE_URL && SUPABASE_ANON_KEY) {
+        try {
+          const payload = buildVisitSupabasePayload(currentVisit);
+          const authToken = currentUser?.token || SUPABASE_ANON_KEY;
+
+          const res = await fetch(SUPABASE_URL + '/rest/v1/visitas', {
+            method: 'POST',
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': 'Bearer ' + authToken,
+              'Content-Type': 'application/json',
+              'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify(payload)
+          });
+
+          if (res.ok) {
+            currentVisit.status_sincronizacao = 'ENVIADO';
+            localStorage.setItem(storageKey, JSON.stringify(visits));
+          }
+        } catch (e) {
+          console.warn('Erro ao sincronizar com Supabase:', e);
+        }
+      }
+
+      renderVisitsList();
+
+      // Renderizar Tela de Resumo
+      const summaryCard = document.getElementById('summaryCard');
+      if (summaryCard) {
+        let detHtml = '';
+        if (currentVisit.tipo_visita === 'PROPRIA') {
+          const sum1 = getBlockSummary(BLOCO1_FACHADA, currentVisit.bloco1);
+          const sum2 = getBlockSummary(BLOCO2_MARKETING, currentVisit.bloco2);
+          const sum3 = getBlockSummary(BLOCO3_PREDIAL, currentVisit.bloco3);
+          detHtml = '<div class="space-y-1.5 text-xs text-blue-100/90 pt-2 border-t border-white/10">' +
+            '<div>• Bloco 1 (Fachada): <span class="font-bold text-white">' + sum1.respondidas + '/23 respondidas</span> (' + sum1.naoConformes + ' divergências)</div>' +
+            '<div>• Bloco 2 (Marketing): <span class="font-bold text-white">' + sum2.respondidas + '/22 respondidas</span> (' + sum2.naoConformes + ' divergências)</div>' +
+            '<div>• Bloco 3 (Predial): <span class="font-bold text-white">' + sum3.respondidas + '/24 respondidas</span> (' + sum3.naoConformes + ' divergências)</div>' +
+            '</div>';
+        } else {
+          const count = (currentVisit.produtos_benchmark || []).length;
+          detHtml = '<div class="space-y-1.5 text-xs text-blue-100/90 pt-2 border-t border-white/10">' +
+            '<div>• SKUs pesquisados no concorrente: <span class="font-bold text-white">' + count + ' produtos</span></div>' +
+            (currentVisit.alerta_gestor ? '<div class="text-amber-300 font-bold">• Alerta ao gestor sinalizado</div>' : '') +
+            '</div>';
+        }
+
+        summaryCard.innerHTML = '<div class="text-sm font-bold text-white mb-2">' + currentVisit.nome_loja + '</div>' +
+          '<div class="text-xs text-blue-200/80 mb-2">Tipo: ' + (currentVisit.tipo_visita === 'PROPRIA' ? 'Loja Própria' : 'Benchmark Concorrência') + ' · Duração: ' + currentVisit.duracao + '</div>' +
+          detHtml;
+      }
+
       goToScreen('screenSummary');
     }
 
     async function syncPendingVisits() {
-      const icon = document.getElementById('syncIcon');
-      if (icon) icon.classList.add('animate-spin');
-
       const pending = visits.filter(v => v.status_sincronizacao === 'PENDENTE');
       if (pending.length === 0) {
-        if (icon) icon.classList.remove('animate-spin');
-        return alert("Todas as suas visitas já estão sincronizadas com o Supabase!");
+        alert('Todas as visitas já estão sincronizadas com o Supabase!');
+        return;
       }
 
-      let countSuccess = 0;
-      let lastErrorMessage = '';
+      if (!navigator.onLine) {
+        alert('Você está sem conexão com a internet no momento.');
+        return;
+      }
+
+      let successCount = 0;
+      const email = (currentUser?.email || '').toLowerCase().trim();
+      const storageKey = email ? ('trade_pdv_visits_' + email) : 'trade_pdv_visits';
+      const authToken = currentUser?.token || SUPABASE_ANON_KEY;
 
       for (const v of pending) {
         try {
-          const res = await fetch(`${SUPABASE_URL}/rest/v1/visitas`, {
+          const payload = buildVisitSupabasePayload(v);
+          const res = await fetch(SUPABASE_URL + '/rest/v1/visitas', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY, 'Prefer': 'resolution=merge-duplicates' },
-            body: JSON.stringify({
-              id: v.id,
-              tipo_visita: v.tipo_visita,
-              promotor_email: v.promotor_email,
-              data_hora_inicio: v.data_hora_inicio,
-              data_hora_fim: v.data_hora_fim,
-              nome_loja: v.nome_loja,
-              data_visita: v.data_visita,
-              pilhas_promocionais: v.pilhas_promocionais,
-              codigos_produtos_promo: v.codigos_produtos_promo,
-              status_sincronizacao: 'ENVIADO'
-            })
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': 'Bearer ' + authToken,
+              'Content-Type': 'application/json',
+              'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify(payload)
           });
           if (res.ok) {
             v.status_sincronizacao = 'ENVIADO';
-            countSuccess++;
-          } else {
-            const errJson = await res.json().catch(() => ({}));
-            lastErrorMessage = errJson.message || `HTTP ${res.status}`;
+            successCount++;
           }
         } catch (e) {
-          lastErrorMessage = e.message;
+          console.error('Falha ao sincronizar:', e);
         }
       }
 
-      const cleanEmail = currentUser.email.toLowerCase().trim();
-      localStorage.setItem(`trade_pdv_visits_${cleanEmail}`, JSON.stringify(visits));
-
-      if (icon) icon.classList.remove('animate-spin');
+      localStorage.setItem(storageKey, JSON.stringify(visits));
       renderVisitsList();
-      updatePendingBadge();
 
-      if (countSuccess > 0) {
-        alert(`${countSuccess} visita(s) sincronizada(s) com sucesso no Supabase!`);
+      if (successCount > 0) {
+        alert(successCount + ' visita(s) sincronizada(s) com sucesso no Supabase!');
       } else {
-        if (lastErrorMessage.includes('row-level security') || lastErrorMessage.includes('42501')) {
-          alert("⚠️ Supabase RLS: As tabelas estão com políticas de segurança restritivas.\n\nExecute o script de permissão RLS no SQL Editor do Supabase para liberar a gravação.");
-        } else {
-          alert(`⚠️ Não foi possível sincronizar no momento (${lastErrorMessage}). As visitas continuam salvas com segurança no seu dispositivo.`);
-        }
+        alert('Não foi possível sincronizar no momento. Tente novamente mais tarde.');
       }
     }
+
   </script>
 </body>
 </html>
