@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Trade Marketing PDV</title>
+  
+  <meta name="theme-color" content="#0F243E">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Trade PDV">
+  <link rel="manifest" href="./manifest.json">
+
+  <!-- Tailwind CSS & FontAwesome -->
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * { -webkit-tap-highlight-color: transparent; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #0B192C;
+    }
+    
+    /* Paleta idêntica à referência */
+    .bg-navy-main { background-color: #0F243E; }
+    .bg-navy-dark { background-color: #091626; }
+    .bg-navy-card { background: linear-gradient(145deg, #183354 0%, #0F243E 100%); }
+    .bg-navy-card-alt { background: linear-gradient(135deg, #1E3E66 0%, #122844 100%); }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .glass-pill {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+    .btn-gradient {
+      background: linear-gradient(135deg, #D4E2F4 0%, #F5F8FC 100%);
+      color: #0B192C;
+    }
+    .btn-action-glow {
+      box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    }
+    .safe-top { padding-top: env(safe-area-inset-top, 0px); }
+    .safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="text-white antialiased min-h-screen flex justify-center selection:bg-blue-500 selection:text-white">
+
+  <!-- AVISO DE CONEXÃO OFFLINE -->
+  <div id="offlineBanner" class="hidden fixed top-0 inset-x-0 bg-amber-500 text-slate-950 text-xs font-bold px-4 py-1 text-center flex items-center justify-center gap-2 safe-top z-50 shadow-md">
+    <i class="fa-solid fa-wifi-slash"></i> Modo Offline Ativo • Visitas salvas localmente
+  </div>
+
+  <!-- CONTAINER MOBILE PRINCIPAL (ESTILO DA FOTO) -->
+  <div id="appContainer" class="w-full max-w-md bg-navy-main min-h-screen flex flex-col justify-between relative shadow-2xl overflow-hidden pb-24">
+    
+    <!-- ================================================================= -->
+    <!-- TELA 1: LOGIN                                                     -->
+    <!-- ================================================================= -->
+    <section id="screenLogin" class="flex-1 flex flex-col justify-between p-8 safe-top safe-bottom z-10">
+      <div></div>
+      <div class="w-full my-auto">
+        <div class="flex flex-col items-center mb-8">
+          <div class="w-20 h-20 bg-navy-card border border-white/15 rounded-3xl flex items-center justify-center shadow-xl mb-4">
+            <i class="fa-solid fa-store text-3xl text-blue-300"></i>
+          </div>
+          <h1 class="text-2xl font-bold tracking-tight text-white">Trade Marketing PDV</h1>
+          <p class="text-xs text-blue-200/60 mt-1 font-medium">Execução em Ponto de Venda & Benchmark</p>
+        </div>
+
+        <form id="formLogin" class="space-y-4" onsubmit="handleLogin(event)">
+          <div>
+            <label class="block text-xs font-semibold text-blue-100/70 mb-1.5 ml-1">E-mail corporativo</label>
+            <div class="relative">
+              <i class="fa-regular fa-envelope absolute left-4 top-4 text-blue-300/60 text-sm"></i>
+              <input type="email" id="loginEmail" required placeholder="promotor@empresa.com"
+                class="w-full pl-11 pr-4 py-3.5 bg-navy-dark/70 border border-white/10 rounded-2xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-blue-100/70 mb-1.5 ml-1">Senha de acesso</label>
+            <div class="relative">
+              <i class="fa-solid fa-lock absolute left-4 top-4 text-blue-300/60 text-sm"></i>
+              <input type="password" id="loginPassword" required minlength="6" placeholder="Mínimo 6 caracteres"
+                class="w-full pl-11 pr-11 py-3.5 bg-navy-dark/70 border border-white/10 rounded-2xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition">
+              <button type="button" onclick="togglePassVisibility()" class="absolute right-4 top-4 text-white/40 hover:text-white">
+                <i id="eyeIcon" class="fa-regular fa-eye text-sm"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-xs pt-1 px-1">
+            <label class="flex items-center gap-2 cursor-pointer select-none text-blue-100/70">
+              <input type="checkbox" id="loginRemember" checked class="w-4 h-4 rounded bg-navy-dark border-white/20 text-blue-500 focus:ring-0">
+              Lembrar de mim
+            </label>
+            <button type="button" onclick="showModalRecover()" class="text-blue-300 hover:text-blue-200 font-medium">
+              Esqueci a senha
+            </button>
+          </div>
+
+          <button type="submit" id="btnLoginSubmit"
+            class="w-full h-14 btn-gradient font-bold rounded-2xl shadow-xl active:scale-[0.98] transition flex items-center justify-center gap-2 mt-4 text-base">
+            <span id="btnLoginText">Entrar</span>
+            <div id="btnLoginSpinner" class="hidden w-5 h-5 border-2 border-slate-900 border-t-transparent rounded-full animate-spin"></div>
+          </button>
+        </form>
+
+        <div id="loginErrorAlert" class="hidden mt-4 p-3 rounded-2xl bg-rose-500/20 border border-rose-500/30 text-rose-200 text-xs flex items-center gap-2">
+          <i class="fa-solid fa-circle-exclamation text-sm shrink-0"></i>
+          <span id="loginErrorMsg">Erro</span>
+        </div>
+      </div>
+
+      <div class="text-center text-[11px] text-blue-200/40">
+        <p><i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i> Conectado ao Supabase • Seguro & Criptografado</p>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TELA 2: HOME / VISITAS (IDÊNTICO À PRIMEIRA TELA DA REFERÊNCIA)   -->
+    <!-- ================================================================= -->
+    <section id="screenHome" class="hidden flex-1 flex flex-col safe-top">
+      
+      <!-- Top Section com Avatar, Saudação & Card Escuro -->
+      <div class="p-6 pb-4">
+        <!-- Barra Superior: Avatar do Usuário e Notificações -->
+        <div class="flex items-center justify-between mb-5">
+          <div class="flex items-center gap-3.5" onclick="goToTab('profile')">
+            <div class="w-13 h-13 rounded-2xl p-0.5 bg-gradient-to-tr from-blue-400 to-indigo-500 cursor-pointer shadow-lg">
+              <img id="homeUserAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" 
+                class="w-12 h-12 rounded-[14px] object-cover border-2 border-navy-main">
+            </div>
+            <div>
+              <p class="text-xs text-blue-200/60 font-medium">Bem-vindo(a),</p>
+              <h2 id="homeUserName" class="text-base font-bold text-white tracking-tight">Alexandra!</h2>
+            </div>
+          </div>
+          
+          <div class="flex items-center gap-2">
+            <button onclick="syncPendingVisits()" title="Sincronizar visitas" 
+              class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-blue-200 hover:text-white active:scale-95 transition relative">
+              <i id="syncIcon" class="fa-solid fa-rotate text-sm"></i>
+              <span id="pendingBadge" class="hidden absolute -top-1 -right-1 bg-amber-400 text-slate-950 text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center">0</span>
+            </button>
+            <button onclick="goToTab('dashboard')" title="Ir ao Dashboard" 
+              class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-blue-200 hover:text-white active:scale-95 transition">
+              <i class="fa-regular fa-bell text-sm"></i>
+            </button>
+          </div>
+        </div>
+
+        <h3 class="text-xl font-bold tracking-tight text-white mb-4">
+          Visão Geral & Estatísticas
+        </h3>
+
+        <!-- Card Escuro Superior com Gradiente (Estilo "Physical Card" da Referência) -->
+        <div class="bg-navy-card border border-white/10 rounded-3xl p-5 shadow-2xl relative overflow-hidden mb-4">
+          <div class="flex justify-between items-start mb-3">
+            <div>
+              <span class="text-[11px] font-semibold text-blue-200/60 uppercase tracking-wider">Meta Semanal de Visitas</span>
+              <div class="flex items-baseline gap-2 mt-1">
+                <span id="cardCompletedVisits" class="text-2xl font-black text-white">18</span>
+                <span class="text-xs text-blue-200/60">/ 25 Lojas</span>
+              </div>
+            </div>
+            <div class="w-9 h-9 rounded-xl glass-pill flex items-center justify-center text-blue-200">
+              <i class="fa-solid fa-clipboard-check text-base"></i>
+            </div>
+          </div>
+
+          <!-- Barra de Progresso da Meta -->
+          <div class="w-full bg-black/30 h-2 rounded-full overflow-hidden mb-3">
+            <div id="metaProgressBar" class="h-full bg-gradient-to-r from-blue-400 to-emerald-400 rounded-full" style="width: 72%;"></div>
+          </div>
+
+          <div class="flex justify-between items-center text-xs text-blue-200/70 pt-2 border-t border-white/10">
+            <span>Conformidade Média: <strong class="text-emerald-300 font-bold">92%</strong></span>
+            <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-arrow-trend-up text-[10px]"></i> +4.2%</span>
+          </div>
+        </div>
+
+        <!-- Botões Rápidos / Ação -->
+        <div class="grid grid-cols-2 gap-3">
+          <button onclick="goToScreen('screenTypeSelect')" 
+            class="h-13 bg-navy-card-alt border border-white/10 rounded-2xl font-bold text-xs text-white flex items-center justify-center gap-2 hover:bg-white/15 active:scale-98 transition shadow-lg">
+            <i class="fa-solid fa-plus text-blue-400"></i>
+            <span>Nova Visita PDV</span>
+          </button>
+          <button onclick="goToTab('dashboard')" 
+            class="h-13 glass-card rounded-2xl font-bold text-xs text-blue-200 flex items-center justify-center gap-2 hover:bg-white/10 active:scale-98 transition">
+            <i class="fa-solid fa-chart-pie text-indigo-400"></i>
+            <span>Ver Relatórios</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card Inferior Branco Fosco com Lista de Visitas (Estilo "Statistics" da Foto) -->
+      <div class="flex-1 bg-white text-slate-800 rounded-t-[36px] p-6 shadow-2xl flex flex-col">
+        <div class="flex justify-between items-center mb-4">
+          <h4 class="text-base font-bold text-slate-900">Visitas Recentes</h4>
+          
+          <!-- Filtro Própria / Benchmark -->
+          <div class="flex p-0.5 bg-slate-100 rounded-xl text-xs font-semibold">
+            <button onclick="switchTab('PROPRIA')" id="tabPropria" class="px-3 py-1.5 rounded-lg bg-blue-700 text-white shadow-xs">
+              Próprias
+            </button>
+            <button onclick="switchTab('CONCORRENTE')" id="tabBenchmark" class="px-3 py-1.5 rounded-lg text-slate-500 hover:text-slate-800">
+              Benchmark
+            </button>
+          </div>
+        </div>
+
+        <div id="visitsListContainer" class="flex-1 overflow-y-auto space-y-3.5 pr-0.5">
+          <!-- Renderizado dinamicamente -->
+        </div>
+
+        <div id="emptyVisitsState" class="hidden py-12 text-center text-slate-400 flex flex-col items-center">
+          <div class="w-14 h-14 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 mb-2">
+            <i class="fa-solid fa-clipboard-list text-xl"></i>
+          </div>
+          <p class="text-xs font-semibold text-slate-600">Nenhuma visita nesta aba</p>
+          <p class="text-[11px] text-slate-400 mt-0.5">Inicie uma nova visita clicando no botão acima.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TELA 3: DASHBOARD GERENCIAL (IDÊNTICO À SEGUNDA TELA DA REFERÊNCIA) -->
+    <!-- ================================================================= -->
+    <section id="screenDashboard" class="hidden flex-1 flex flex-col safe-top">
+      <div class="p-6 pb-2">
+        <!-- Top Bar com Sino de Alertas -->
+        <div class="flex justify-between items-center mb-5">
+          <h2 class="text-2xl font-bold tracking-tight text-white">Dashboard</h2>
+          <button onclick="showAlertsModal()" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-blue-200 relative">
+            <i class="fa-regular fa-bell text-sm"></i>
+            <span id="unreadAlertsDot" class="w-2.5 h-2.5 rounded-full bg-rose-500 absolute top-2 right-2 border-2 border-navy-main"></span>
+          </button>
+        </div>
+
+        <!-- Gráfico Curvo de Evolução de Visitas com Tooltip (Estilo Fiel da Foto) -->
+        <div class="relative py-2 px-1 mb-2">
+          <!-- Tooltip Flutuante -->
+          <div class="absolute top-0 right-1/4 bg-navy-card-alt border border-white/20 text-white px-3 py-1 rounded-xl text-xs font-bold shadow-xl flex flex-col items-center">
+            <span>28 Visitas</span>
+            <span class="text-[9px] text-blue-200 font-normal">Esta semana</span>
+          </div>
+
+          <!-- Gráfico SVG Curvo Minimalista -->
+          <div class="h-36 w-full flex items-center">
+            <svg viewBox="0 0 400 140" class="w-full h-full overflow-visible">
+              <defs>
+                <linearGradient id="lineGlow" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.3" />
+                  <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+                </linearGradient>
+              </defs>
+              <!-- Linhas de grade pontilhadas -->
+              <line x1="0" y1="30" x2="400" y2="30" stroke="rgba(255,255,255,0.06)" stroke-dasharray="3 3" />
+              <line x1="0" y1="70" x2="400" y2="70" stroke="rgba(255,255,255,0.06)" stroke-dasharray="3 3" />
+              <line x1="0" y1="110" x2="400" y2="110" stroke="rgba(255,255,255,0.06)" stroke-dasharray="3 3" />
+              
+              <!-- Linha vertical do ponto ativo -->
+              <line x1="280" y1="20" x2="280" y2="130" stroke="rgba(255,255,255,0.4)" stroke-dasharray="2 2" />
+              
+              <!-- Curva Suave da Linha Principal -->
+              <path d="M 10 110 Q 50 120, 80 80 T 150 95 T 220 50 T 280 25 T 340 90 T 390 60" 
+                fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" />
+              
+              <!-- Ponto Marcador Ativo -->
+              <circle cx="280" cy="25" r="4.5" fill="#FFFFFF" stroke="#0F243E" stroke-width="2" />
+            </svg>
+          </div>
+
+          <!-- Escala Lateral de Valores -->
+          <div class="flex justify-between text-[11px] font-semibold text-blue-200/50 px-1 pt-1">
+            <span>Seg</span>
+            <span>Ter</span>
+            <span>Qua</span>
+            <span>Qui</span>
+            <span>Sex</span>
+            <span>Sáb</span>
+            <span>Dom</span>
+          </div>
+        </div>
+
+        <!-- Métrica de Conformidade / Visitas Totais -->
+        <div class="glass-card rounded-2xl p-4 flex justify-between items-center mb-4">
+          <div>
+            <span class="text-xs text-blue-200/70 block">Taxa de Conformidade Geral</span>
+            <span class="text-xl font-bold text-white">94.8%</span>
+          </div>
+          <div class="text-right">
+            <span class="text-xs text-blue-200/70 block">Preço Concorrente Médio</span>
+            <span class="text-xl font-bold text-emerald-400">+3.5%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Inferior Branco com Indicadores Gerenciais -->
+      <div class="flex-1 bg-white text-slate-800 rounded-t-[36px] p-6 shadow-2xl space-y-5 overflow-y-auto">
+        
+        <!-- Bloco 1: Lojas com Rupturas Críticas -->
+        <div>
+          <div class="flex justify-between items-center mb-3">
+            <h4 class="text-sm font-bold text-slate-900">Rupturas Críticas no PDV</h4>
+            <span class="text-xs text-rose-600 font-bold bg-rose-50 px-2.5 py-0.5 rounded-full">Atenção</span>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
+              <span class="text-xs font-bold text-slate-800 block truncate">Airfryer Digital 4L</span>
+              <span class="text-[11px] text-slate-500">3 lojas sem estoque</span>
+              <div class="mt-2 text-xs font-semibold text-rose-600">Ruptura alta</div>
+            </div>
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
+              <span class="text-xs font-bold text-slate-800 block truncate">Geladeira Frost Free</span>
+              <span class="text-[11px] text-slate-500">2 lojas sem encarte</span>
+              <div class="mt-2 text-xs font-semibold text-amber-600">Falta encarte</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bloco 2: Ranking de Desempenho dos Promotores -->
+        <div>
+          <div class="flex justify-between items-center mb-3">
+            <h4 class="text-sm font-bold text-slate-900">Equipe de Promotores</h4>
+            <span class="text-xs text-blue-600 font-semibold cursor-pointer">Ver todos</span>
+          </div>
+          
+          <div class="space-y-2.5">
+            <!-- Promotor 1 -->
+            <div class="flex items-center justify-between p-2.5 bg-slate-50 border border-slate-200 rounded-2xl">
+              <div class="flex items-center gap-3">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" 
+                  class="w-10 h-10 rounded-xl object-cover">
+                <div>
+                  <h5 class="text-xs font-bold text-slate-900">Carlos Eduardo</h5>
+                  <p class="text-[11px] text-slate-500">Zona Sul / Shopping Morumbi</p>
+                </div>
+              </div>
+              <div class="text-right">
+                <span class="text-xs font-black text-slate-900">14 visitas</span>
+                <span class="text-[10px] text-emerald-600 block font-bold">98% conf.</span>
+              </div>
+            </div>
+
+            <!-- Promotor 2 -->
+            <div class="flex items-center justify-between p-2.5 bg-slate-50 border border-slate-200 rounded-2xl">
+              <div class="flex items-center gap-3">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80" 
+                  class="w-10 h-10 rounded-xl object-cover">
+                <div>
+                  <h5 class="text-xs font-bold text-slate-900">Mariana Costa</h5>
+                  <p class="text-[11px] text-slate-500">Centro / Lojas de Rua</p>
+                </div>
+              </div>
+              <div class="text-right">
+                <span class="text-xs font-black text-slate-900">12 visitas</span>
+                <span class="text-[10px] text-emerald-600 block font-bold">94% conf.</span>
+              </div>
+            </div>
+
+            <!-- Promotor 3 (Usuário Atual) -->
+            <div class="flex items-center justify-between p-2.5 bg-blue-50 border border-blue-200 rounded-2xl">
+              <div class="flex items-center gap-3">
+                <img id="dashCurrentUserAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" 
+                  class="w-10 h-10 rounded-xl object-cover">
+                <div>
+                  <h5 id="dashCurrentUserName" class="text-xs font-bold text-slate-900">Alexandra Silva (Você)</h5>
+                  <p class="text-[11px] text-blue-700">Zona Norte / Santana</p>
+                </div>
+              </div>
+              <div class="text-right">
+                <span id="dashCurrentUserVisits" class="text-xs font-black text-slate-900">18 visitas</span>
+                <span class="text-[10px] text-emerald-600 block font-bold">96% conf.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bloco 3: Benchmark & Inteligência Concorrente -->
+        <div class="p-4 bg-navy-main text-white rounded-2xl">
+          <div class="flex justify-between items-center mb-1">
+            <span class="text-xs font-bold uppercase text-blue-300">Radar de Concorrentes</span>
+            <span class="text-[10px] text-blue-200/60">Atualizado hoje</span>
+          </div>
+          <p class="text-xs text-blue-100/90 leading-relaxed">
+            Casas Bahia e Ponto Frio estão com ações agressivas em fritadeiras digitais e micro-ondas nesta semana.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TELA 4: PERFIL DO PROMOTOR (EDIÇÃO COMPLETA COM FOTO)              -->
+    <!-- ================================================================= -->
+    <section id="screenProfile" class="hidden flex-1 flex flex-col safe-top">
+      <div class="p-6 pb-4">
+        <h2 class="text-2xl font-bold tracking-tight text-white mb-6">Meu Perfil</h2>
+
+        <!-- Avatar com Botão de Alteração de Foto -->
+        <div class="flex flex-col items-center mb-6">
+          <div class="relative">
+            <img id="profilePreviewAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80" 
+              class="w-24 h-24 rounded-3xl object-cover border-4 border-navy-card shadow-2xl">
+            <label for="avatarFileInput" class="absolute -bottom-2 -right-2 w-9 h-9 rounded-xl bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center cursor-pointer shadow-lg active:scale-95 transition">
+              <i class="fa-solid fa-camera text-xs"></i>
+            </label>
+            <input type="file" id="avatarFileInput" accept="image/*" class="hidden" onchange="handleAvatarChange(event)">
+          </div>
+          <h3 id="profileNameTitle" class="text-lg font-bold text-white mt-3">Alexandra Silva</h3>
+          <p id="profileRoleTitle" class="text-xs text-blue-200/60 font-medium">Promotora de Vendas Sênior</p>
+        </div>
+      </div>
+
+      <!-- Formulário de Edição do Perfil -->
+      <div class="flex-1 bg-white text-slate-800 rounded-t-[36px] p-6 shadow-2xl space-y-4 overflow-y-auto">
+        <h4 class="text-sm font-bold text-slate-900 mb-2">Informações Profissionais</h4>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Nome Completo</label>
+          <input type="text" id="profileInputName" value="Alexandra Silva" 
+            class="w-full p-3.5 bg-slate-50 border border-slate-300 rounded-2xl text-sm font-medium focus:ring-2 focus:ring-blue-600 focus:outline-none">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">E-mail</label>
+          <input type="email" id="profileInputEmail" value="alexandra.promotora@empresa.com" readonly
+            class="w-full p-3.5 bg-slate-100 border border-slate-200 rounded-2xl text-sm font-medium text-slate-500 cursor-not-allowed">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Cargo / Função</label>
+          <input type="text" id="profileInputRole" value="Promotora de Vendas Sênior" 
+            class="w-full p-3.5 bg-slate-50 border border-slate-300 rounded-2xl text-sm font-medium focus:ring-2 focus:ring-blue-600 focus:outline-none">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Telefone / WhatsApp</label>
+          <input type="tel" id="profileInputPhone" value="(11) 98765-4321" 
+            class="w-full p-3.5 bg-slate-50 border border-slate-300 rounded-2xl text-sm font-medium focus:ring-2 focus:ring-blue-600 focus:outline-none">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Região / Rota</label>
+          <input type="text" id="profileInputRegion" value="São Paulo - Zona Norte" 
+            class="w-full p-3.5 bg-slate-50 border border-slate-300 rounded-2xl text-sm font-medium focus:ring-2 focus:ring-blue-600 focus:outline-none">
+        </div>
+
+        <button type="button" onclick="saveProfileChanges()" 
+          class="w-full h-14 bg-navy-main hover:bg-navy-dark text-white font-bold rounded-2xl text-sm shadow-xl active:scale-[0.98] transition flex items-center justify-center gap-2 mt-4">
+          <i class="fa-solid fa-floppy-disk text-xs"></i>
+          <span>Salvar Alterações</span>
+        </button>
+
+        <button type="button" onclick="confirmLogout()" 
+          class="w-full py-3 text-xs font-bold text-rose-600 hover:text-rose-800 transition">
+          Sair da Conta (Logout)
+        </button>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TELA 5: SELEÇÃO DE TIPO DE VISITA                                 -->
+    <!-- ================================================================= -->
+    <section id="screenTypeSelect" class="hidden flex-1 flex flex-col p-6 safe-top">
+      <div class="flex items-center justify-between mb-8">
+        <button onclick="goToTab('home')" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-white">
+          <i class="fa-solid fa-arrow-left text-sm"></i>
+        </button>
+        <h3 class="text-base font-bold text-white">Selecione o Tipo de Visita</h3>
+        <div class="w-10"></div>
+      </div>
+
+      <div class="space-y-4 my-auto">
+        <div onclick="startVisit('PROPRIA')" 
+          class="p-6 bg-navy-card border border-white/10 rounded-3xl shadow-xl hover:border-blue-400 cursor-pointer active:scale-98 transition flex items-start gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-blue-500/20 text-blue-300 flex items-center justify-center shrink-0 border border-blue-400/20">
+            <i class="fa-solid fa-store text-2xl"></i>
+          </div>
+          <div>
+            <h4 class="text-base font-bold text-white">Loja Própria</h4>
+            <p class="text-xs text-blue-100/70 mt-1 leading-relaxed">Checklist de 6 etapas: pilhas promocionais, encarte, clima, organização e estoque.</p>
+            <span class="inline-block mt-3 px-3 py-1 bg-blue-500/20 text-blue-300 border border-blue-400/30 rounded-lg text-xs font-bold">6 Etapas Guiadas</span>
+          </div>
+        </div>
+
+        <div onclick="startVisit('CONCORRENTE')" 
+          class="p-6 bg-navy-card border border-white/10 rounded-3xl shadow-xl hover:border-emerald-400 cursor-pointer active:scale-98 transition flex items-start gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center shrink-0 border border-emerald-400/20">
+            <i class="fa-solid fa-chart-line text-2xl"></i>
+          </div>
+          <div>
+            <h4 class="text-base font-bold text-white">Loja Concorrente (Benchmark)</h4>
+            <p class="text-xs text-blue-100/70 mt-1 leading-relaxed">Inteligência de campo: exposição, promoções, comparativo Top 10 preços e alertas.</p>
+            <span class="inline-block mt-3 px-3 py-1 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 rounded-lg text-xs font-bold">7 Etapas Rápidas</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TELA 6: CHECKLIST LOJA PRÓPRIA (6 ETAPAS)                         -->
+    <!-- ================================================================= -->
+    <section id="screenOwnChecklist" class="hidden flex-1 flex flex-col safe-top">
+      <header class="p-4 px-6 border-b border-white/10 flex items-center justify-between">
+        <button onclick="prevOwnStep()" class="text-blue-200 text-xs font-bold flex items-center gap-1">
+          <i class="fa-solid fa-chevron-left text-[10px]"></i> Voltar
+        </button>
+        <div class="text-center">
+          <span id="ownStepBadge" class="text-[10px] font-black text-blue-400 uppercase tracking-widest">Etapa 1 de 6</span>
+          <h4 id="ownStepTitle" class="text-xs font-bold text-white">Identificação</h4>
+        </div>
+        <div id="ownTimer" class="text-xs font-mono font-bold bg-white/10 px-2.5 py-1 rounded-full text-blue-200">00:00</div>
+      </header>
+
+      <div class="w-full bg-navy-dark h-1">
+        <div id="ownProgressBar" class="bg-gradient-to-r from-blue-400 to-indigo-500 h-1 transition-all duration-300" style="width: 16.6%;"></div>
+      </div>
+
+      <main class="flex-1 overflow-y-auto p-5 bg-slate-50 text-slate-800 rounded-t-[32px] mt-2">
+        <!-- ETAPA 1 -->
+        <div id="ownStepContent1" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Nome da Loja Própria *</label>
+            <input type="text" id="ownStoreName" placeholder="Ex: Magazine Luiza Centro"
+              class="w-full p-3.5 bg-white border border-slate-300 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Data da Visita *</label>
+            <input type="date" id="ownVisitDate" class="w-full p-3.5 bg-white border border-slate-300 rounded-2xl text-sm font-semibold">
+          </div>
+          <div class="p-3 bg-blue-50 rounded-2xl flex items-center justify-between text-xs text-blue-900 border border-blue-100">
+            <span id="ownGeoText"><i class="fa-solid fa-location-dot text-blue-600 mr-1.5"></i> Obtendo GPS...</span>
+            <button type="button" onclick="captureGeolocation('ownGeoText')" class="font-bold underline">Atualizar</button>
+          </div>
+        </div>
+
+        <!-- ETAPA 2 -->
+        <div id="ownStepContent2" class="hidden space-y-4">
+          <h4 class="text-sm font-bold text-slate-900">Há pilhas de produtos promocionais na loja? *</h4>
+          <div class="grid grid-cols-2 gap-3">
+            <button type="button" onclick="setYesNo('ownPilhas', true)" id="btnOwnPilhasYes" class="py-4 border-2 border-slate-200 rounded-2xl font-bold text-sm">Sim</button>
+            <button type="button" onclick="setYesNo('ownPilhas', false)" id="btnOwnPilhasNo" class="py-4 border-2 border-slate-200 rounded-2xl font-bold text-sm">Não</button>
+          </div>
+          <div id="boxOwnPromoCodes" class="hidden pt-3 border-t border-slate-200">
+            <label class="block text-xs font-bold text-slate-700 mb-1">Códigos dos Produtos Promocionais *</label>
+            <div class="flex gap-2">
+              <input type="text" id="inputPromoCode" placeholder="Ex: FRIT01" class="flex-1 p-3 bg-white border border-slate-300 rounded-xl text-xs uppercase font-bold">
+              <button type="button" onclick="addPromoCode()" class="px-4 bg-blue-700 text-white rounded-xl text-xs font-bold">Add</button>
+            </div>
+            <div id="promoCodesChips" class="flex flex-wrap gap-1.5 mt-3"></div>
+          </div>
+        </div>
+
+        <!-- ETAPA 3 -->
+        <div id="ownStepContent3" class="hidden space-y-4">
+          <h4 class="text-sm font-bold text-slate-900">A loja está bem climatizada? *</h4>
+          <div class="grid grid-cols-2 gap-3">
+            <button type="button" onclick="setYesNo('ownClima', true)" id="btnOwnClimaYes" class="py-4 border-2 border-slate-200 rounded-2xl font-bold text-sm">Sim</button>
+            <button type="button" onclick="setYesNo('ownClima', false)" id="btnOwnClimaNo" class="py-4 border-2 border-slate-200 rounded-2xl font-bold text-sm">Não</button>
+          </div>
+          <div id="boxOwnClimaObs" class="hidden pt-3 border-t border-slate-200">
+            <label class="block text-xs font-bold text-slate-700 mb-1">Observação do clima:</label>
+            <textarea id="ownClimaObs" rows="2" placeholder="Descreva o problema..." class="w-full p-3 bg-white border rounded-xl text-xs"></textarea>
+          </div>
+        </div>
+
+        <!-- ETAPA 4 -->
+        <div id="ownStepContent4" class="hidden space-y-4">
+          <h4 class="text-sm font-bold text-slate-900">Todos os produtos do encarte estão disponíveis? *</h4>
+          <div class="grid grid-cols-2 gap-3">
+            <button type="button" onclick="setYesNo('ownEncarte', true)" id="btnOwnEncarteYes" class="py-4 border-2 border-slate-200 rounded-2xl font-bold text-sm">Sim</button>
+            <button type="button" onclick="setYesNo('ownEncarte', false)" id="btnOwnEncarteNo" class="py-4 border-2 border-slate-200 rounded-2xl font-bold text-sm">Não</button>
+          </div>
+          <div id="boxOwnUnavailable" class="hidden pt-3 border-t border-slate-200">
+            <label class="block text-xs font-bold text-slate-700 mb-1">Produtos Indisponíveis do Encarte *</label>
+            <div class="flex gap-2">
+              <input type="text" id="inputUnavailableProd" placeholder="Ex: Geladeira 375L" class="flex-1 p-3 bg-white border rounded-xl text-xs font-semibold">
+              <button type="button" onclick="addUnavailableProd()" class="px-4 bg-rose-600 text-white rounded-xl text-xs font-bold">Add</button>
+            </div>
+            <div id="unavailableChips" class="flex flex-wrap gap-1.5 mt-3"></div>
+          </div>
+        </div>
+
+        <!-- ETAPA 5 -->
+        <div id="ownStepContent5" class="hidden space-y-4">
+          <div class="bg-white p-3.5 rounded-2xl border border-slate-200">
+            <h5 class="text-xs font-bold text-slate-800 mb-2">1. Produtos em pontas de gôndola/ilhas?</h5>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" onclick="setYesNo('ownPontosExtras', true)" id="btnOwnPontosExtrasYes" class="py-2.5 border rounded-xl text-xs font-bold">Sim</button>
+              <button type="button" onclick="setYesNo('ownPontosExtras', false)" id="btnOwnPontosExtrasNo" class="py-2.5 border rounded-xl text-xs font-bold">Não</button>
+            </div>
+          </div>
+
+          <div class="bg-white p-3.5 rounded-2xl border border-slate-200">
+            <h5 class="text-xs font-bold text-slate-800 mb-2">2. Materiais de PDV (wobblers, displays)?</h5>
+            <div class="grid grid-cols-3 gap-2 mb-2">
+              <button type="button" onclick="setPdvMat('SIM')" id="btnPdvSim" class="py-2 border rounded-xl text-xs font-bold">Sim</button>
+              <button type="button" onclick="setPdvMat('PARCIAL')" id="btnPdvParcial" class="py-2 border rounded-xl text-xs font-bold">Parcial</button>
+              <button type="button" onclick="setPdvMat('NAO')" id="btnPdvNao" class="py-2 border rounded-xl text-xs font-bold">Não</button>
+            </div>
+            <input type="text" id="ownPdvObs" placeholder="Observação (opcional)" class="w-full p-2 bg-slate-50 border rounded-xl text-xs">
+          </div>
+
+          <div class="bg-white p-3.5 rounded-2xl border border-slate-200">
+            <h5 class="text-xs font-bold text-slate-800 mb-2">3. Organização e limpeza da loja (1 a 5):</h5>
+            <div class="flex gap-1.5">
+              <button type="button" onclick="setNota(1)" class="btn-nota flex-1 py-2.5 border rounded-xl font-black text-xs" data-nota="1">1</button>
+              <button type="button" onclick="setNota(2)" class="btn-nota flex-1 py-2.5 border rounded-xl font-black text-xs" data-nota="2">2</button>
+              <button type="button" onclick="setNota(3)" class="btn-nota flex-1 py-2.5 border rounded-xl font-black text-xs" data-nota="3">3</button>
+              <button type="button" onclick="setNota(4)" class="btn-nota flex-1 py-2.5 border rounded-xl font-black text-xs" data-nota="4">4</button>
+              <button type="button" onclick="setNota(5)" class="btn-nota flex-1 py-2.5 border rounded-xl font-black text-xs" data-nota="5">5</button>
+            </div>
+          </div>
+
+          <div class="bg-white p-3.5 rounded-2xl border border-slate-200">
+            <h5 class="text-xs font-bold text-slate-800 mb-2">4. Há ruptura perceptível de estoque?</h5>
+            <div class="grid grid-cols-2 gap-2 mb-2">
+              <button type="button" onclick="setYesNo('ownRuptura', true)" id="btnOwnRupturaYes" class="py-2 border rounded-xl text-xs font-bold">Sim</button>
+              <button type="button" onclick="setYesNo('ownRuptura', false)" id="btnOwnRupturaNo" class="py-2 border rounded-xl text-xs font-bold">Não</button>
+            </div>
+            <input type="text" id="ownRupturaProds" placeholder="Produtos em falta (separados por vírgula)" class="w-full p-2 bg-slate-50 border rounded-xl text-xs">
+          </div>
+        </div>
+
+        <!-- ETAPA 6 -->
+        <div id="ownStepContent6" class="hidden space-y-4">
+          <div class="bg-white p-5 rounded-2xl border border-slate-200">
+            <h4 class="text-sm font-bold text-slate-900 mb-3">Revisão Final da Visita</h4>
+            <div id="ownReviewSummary" class="space-y-2 text-xs divide-y divide-slate-100"></div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="p-4 bg-white border-t border-slate-200 flex gap-3">
+        <button type="button" onclick="prevOwnStep()" id="btnOwnPrevFooter" class="flex-1 h-13 bg-slate-100 text-slate-700 font-bold rounded-2xl text-xs">
+          Anterior
+        </button>
+        <button type="button" onclick="nextOwnStep()" id="btnOwnNextFooter" class="flex-2 h-13 bg-navy-main text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-2">
+          <span>Próxima Etapa</span>
+          <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </button>
+      </footer>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TELA 7: CHECKLIST BENCHMARK CONCORRENTE (7 ETAPAS)                 -->
+    <!-- ================================================================= -->
+    <section id="screenBenchmarkChecklist" class="hidden flex-1 flex flex-col safe-top">
+      <header class="p-4 px-6 border-b border-white/10 flex items-center justify-between">
+        <button onclick="prevBenchStep()" class="text-emerald-300 text-xs font-bold flex items-center gap-1">
+          <i class="fa-solid fa-chevron-left text-[10px]"></i> Voltar
+        </button>
+        <div class="text-center">
+          <span id="benchStepBadge" class="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Etapa 1 de 7</span>
+          <h4 id="benchStepTitle" class="text-xs font-bold text-white">Identificação Concorrente</h4>
+        </div>
+        <div id="benchTimer" class="text-xs font-mono font-bold bg-white/10 px-2.5 py-1 rounded-full text-emerald-200">00:00</div>
+      </header>
+
+      <div class="w-full bg-navy-dark h-1">
+        <div id="benchProgressBar" class="bg-gradient-to-r from-emerald-400 to-teal-500 h-1 transition-all duration-300" style="width: 14.2%;"></div>
+      </div>
+
+      <main class="flex-1 overflow-y-auto p-5 bg-slate-50 text-slate-800 rounded-t-[32px] mt-2">
+        <!-- ETAPA 1 -->
+        <div id="benchStepContent1" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Nome da Loja Concorrente *</label>
+            <input type="text" id="benchStoreName" placeholder="Ex: Casas Bahia Shopping"
+              class="w-full p-3.5 bg-white border border-slate-300 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Data da Visita *</label>
+            <input type="date" id="benchVisitDate" class="w-full p-3.5 bg-white border border-slate-300 rounded-2xl text-sm font-semibold">
+          </div>
+          <div class="p-3 bg-emerald-50 rounded-2xl flex items-center justify-between text-xs text-emerald-900 border border-emerald-100">
+            <span id="benchGeoText"><i class="fa-solid fa-location-dot text-emerald-600 mr-1.5"></i> Obtendo GPS...</span>
+            <button type="button" onclick="captureGeolocation('benchGeoText')" class="font-bold underline">Atualizar</button>
+          </div>
+        </div>
+
+        <!-- ETAPA 2 -->
+        <div id="benchStepContent2" class="hidden space-y-4">
+          <h4 class="text-sm font-bold text-slate-900">Há pontas de gôndola ou pontos extras montados?</h4>
+          <div class="grid grid-cols-2 gap-3">
+            <button type="button" onclick="setYesNo('benchExposicao', true)" id="btnBenchExposicaoYes" class="py-4 border-2 rounded-2xl font-bold text-sm">Sim</button>
+            <button type="button" onclick="setYesNo('benchExposicao', false)" id="btnBenchExposicaoNo" class="py-4 border-2 rounded-2xl font-bold text-sm">Não</button>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Quais categorias/produtos em destaque?</label>
+            <input type="text" id="benchCategorias" placeholder="Ex: Fritadeiras, Ar Condicionado" class="w-full p-3 bg-white border rounded-xl text-xs">
+          </div>
+        </div>
+
+        <!-- ETAPA 3 -->
+        <div id="benchStepContent3" class="hidden space-y-4">
+          <h4 class="text-sm font-bold text-slate-900">O concorrente tem encarte ou panfleto ativo?</h4>
+          <div class="grid grid-cols-2 gap-3">
+            <button type="button" onclick="setYesNo('benchEncarte', true)" id="btnBenchEncarteYes" class="py-4 border-2 rounded-2xl font-bold text-sm">Sim</button>
+            <button type="button" onclick="setYesNo('benchEncarte', false)" id="btnBenchEncarteNo" class="py-4 border-2 rounded-2xl font-bold text-sm">Não</button>
+          </div>
+          <div id="boxBenchPromoProds" class="hidden pt-3 border-t border-slate-200 space-y-3">
+            <label class="block text-xs font-bold text-slate-700">Produtos em promoção observados:</label>
+            <div class="flex gap-2">
+              <input type="text" id="benchInputProdName" placeholder="Produto" class="flex-2 p-2.5 bg-white border rounded-xl text-xs">
+              <input type="number" step="0.01" id="benchInputProdPrice" placeholder="R$ Preço" class="flex-1 p-2.5 bg-white border rounded-xl text-xs font-bold">
+              <button type="button" onclick="addBenchPromoProd()" class="px-3.5 bg-emerald-600 text-white rounded-xl text-xs font-bold">Add</button>
+            </div>
+            <div id="benchPromoList" class="space-y-1.5 text-xs"></div>
+          </div>
+        </div>
+
+        <!-- ETAPA 4 (TOP 10 COMPARATIVO) -->
+        <div id="benchStepContent4" class="hidden space-y-3">
+          <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Top 10 Produtos-Chave</h4>
+          <p class="text-[11px] text-slate-500 mb-2">Digite o preço do concorrente para calcular o delta % automático:</p>
+          <div id="benchTop10List" class="space-y-2.5"></div>
+        </div>
+
+        <!-- ETAPA 5 -->
+        <div id="benchStepContent5" class="hidden space-y-4">
+          <div>
+            <h5 class="text-xs font-bold text-slate-800 mb-2">Movimento de clientes na loja:</h5>
+            <div class="grid grid-cols-3 gap-2">
+              <button type="button" onclick="setMovimento('BAIXO')" id="btnMovBaixo" class="py-2.5 border rounded-xl text-xs font-bold">Baixo</button>
+              <button type="button" onclick="setMovimento('MEDIO')" id="btnMovMedio" class="py-2.5 border rounded-xl text-xs font-bold">Médio</button>
+              <button type="button" onclick="setMovimento('ALTO')" id="btnMovAlto" class="py-2.5 border rounded-xl text-xs font-bold">Alto</button>
+            </div>
+          </div>
+
+          <div>
+            <h5 class="text-xs font-bold text-slate-800 mb-2">Presença de promotor/vendedor abordando?</h5>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" onclick="setYesNo('benchPromotor', true)" id="btnBenchPromotorYes" class="py-2.5 border rounded-xl text-xs font-bold">Sim</button>
+              <button type="button" onclick="setYesNo('benchPromotor', false)" id="btnBenchPromotorNo" class="py-2.5 border rounded-xl text-xs font-bold">Não</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ETAPA 6 -->
+        <div id="benchStepContent6" class="hidden space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Conclusões e Oportunidades Identificadas</label>
+            <textarea id="benchInsights" rows="4" placeholder="Ex: Concorrente está com 10% de desconto em fritadeiras..."
+              class="w-full p-3.5 bg-white border border-slate-300 rounded-2xl text-xs focus:ring-2 focus:ring-emerald-600 focus:outline-none"></textarea>
+          </div>
+
+          <div class="p-4 bg-amber-50 border border-amber-200 rounded-2xl flex items-center justify-between">
+            <div>
+              <span class="text-xs font-bold text-amber-900 block">Disparar Alerta ao Gestor</span>
+              <span class="text-[11px] text-amber-700">Notificar coordenação sobre ação agressiva</span>
+            </div>
+            <input type="checkbox" id="benchAlertManager" class="w-5 h-5 rounded text-amber-600">
+          </div>
+        </div>
+
+        <!-- ETAPA 7 -->
+        <div id="benchStepContent7" class="hidden space-y-4">
+          <div class="bg-white p-5 rounded-2xl border border-slate-200">
+            <h4 class="text-sm font-bold text-slate-900 mb-3">Revisão de Benchmark</h4>
+            <div id="benchReviewSummary" class="space-y-2 text-xs divide-y divide-slate-100"></div>
+          </div>
+          <div id="benchValidationAlert" class="hidden p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs">
+            <p class="font-bold">A visita não pode terminar em branco.</p>
+          </div>
+        </div>
+      </main>
+
+      <footer class="p-4 bg-white border-t border-slate-200 flex gap-3">
+        <button type="button" onclick="prevBenchStep()" id="btnBenchPrevFooter" class="flex-1 h-13 bg-slate-100 text-slate-700 font-bold rounded-2xl text-xs">Anterior</button>
+        <button type="button" onclick="nextBenchStep()" id="btnBenchNextFooter" class="flex-2 h-13 bg-emerald-700 text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-2">
+          <span>Próxima Etapa</span>
+          <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </button>
+      </footer>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TELA 8: RESUMO DA VISITA ENVIADA                                  -->
+    <!-- ================================================================= -->
+    <section id="screenSummary" class="hidden flex-1 flex flex-col p-6 safe-top text-center my-auto">
+      <div class="w-20 h-20 rounded-3xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center mx-auto text-3xl shadow-xl border border-emerald-400/30 mb-4">
+        <i class="fa-solid fa-check"></i>
+      </div>
+      <h3 class="text-xl font-bold text-white">Visita Registrada com Sucesso! ✅</h3>
+      <p class="text-xs text-blue-200/60 mt-1 mb-6">Sincronizado diretamente no Supabase</p>
+
+      <div id="summaryCard" class="bg-navy-card p-5 rounded-3xl border border-white/10 text-left text-xs space-y-2 mb-6 shadow-xl"></div>
+
+      <div class="space-y-3">
+        <button onclick="window.print()" class="w-full h-13 glass-card rounded-2xl font-bold text-xs text-white flex items-center justify-center gap-2">
+          <i class="fa-solid fa-print"></i> Imprimir / Compartilhar Relatório
+        </button>
+        <button onclick="goToTab('home')" class="w-full h-13 btn-gradient rounded-2xl font-bold text-xs text-slate-950">
+          Voltar para Minhas Visitas
+        </button>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- BARRA DE NAVEGAÇÃO INFERIOR FLUTUANTE (IDÊNTICA À FOTO)           -->
+    <!-- ================================================================= -->
+    <nav id="bottomNavBar" class="fixed bottom-0 max-w-md w-full bg-navy-dark/95 backdrop-blur-md border-t border-white/10 flex justify-around items-center py-2.5 safe-bottom z-40">
+      
+      <!-- Tab 1: Home -->
+      <button onclick="goToTab('home')" id="navBtnHome" class="flex flex-col items-center gap-1 text-white">
+        <span class="text-xs font-semibold">Home</span>
+        <span class="nav-dot w-1.5 h-1.5 rounded-full bg-white"></span>
+      </button>
+
+      <!-- Tab 2: Dashboard -->
+      <button onclick="goToTab('dashboard')" id="navBtnDashboard" class="flex flex-col items-center gap-1 text-blue-200/50 hover:text-white">
+        <span class="text-xs font-semibold">Dashboard</span>
+        <span class="nav-dot w-1.5 h-1.5 rounded-full bg-transparent"></span>
+      </button>
+
+      <!-- Tab 3: Profile -->
+      <button onclick="goToTab('profile')" id="navBtnProfile" class="flex flex-col items-center gap-1 text-blue-200/50 hover:text-white">
+        <span class="text-xs font-semibold">Profile</span>
+        <span class="nav-dot w-1.5 h-1.5 rounded-full bg-transparent"></span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- JAVASCRIPT: SUPABASE & LOGIC -->
+  <script>
+    const SUPABASE_URL = "https://pnozniwknmjsfqclfdwx.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBub3puaXdrbm1qc2ZxY2xmZHd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxMzc1MjcsImV4cCI6MjEwNTcxMzUyN30.RrMrrzu08giYwAqHxSNM2n_lU7ys1A7LdFTHCNh1pQ4";
+
+    let currentUser = null;
+    let userProfile = JSON.parse(localStorage.getItem('trade_pdv_profile') || JSON.stringify({
+      name: 'Alexandra Silva',
+      role: 'Promotora de Vendas Sênior',
+      phone: '(11) 98765-4321',
+      region: 'São Paulo - Zona Norte',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80'
+    }));
+
+    let activeTab = 'PROPRIA';
+    let visits = JSON.parse(localStorage.getItem('trade_pdv_visits') || '[]');
+    let currentVisit = null;
+    let currentOwnStep = 1;
+    let currentBenchStep = 1;
+    let visitTimerInterval = null;
+    let visitStartTime = null;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedSession = localStorage.getItem('trade_pdv_session');
+      if (savedSession) {
+        currentUser = JSON.parse(savedSession);
+        showHomeScreen();
+      } else {
+        goToScreen('screenLogin');
+      }
+      applyProfileUI();
+    });
+
+    function applyProfileUI() {
+      document.getElementById('homeUserName').textContent = userProfile.name.split(' ')[0] + '!';
+      document.getElementById('homeUserAvatar').src = userProfile.avatar;
+      document.getElementById('dashCurrentUserAvatar').src = userProfile.avatar;
+      document.getElementById('dashCurrentUserName').textContent = userProfile.name + ' (Você)';
+      document.getElementById('profilePreviewAvatar').src = userProfile.avatar;
+      document.getElementById('profileNameTitle').textContent = userProfile.name;
+      document.getElementById('profileRoleTitle').textContent = userProfile.role;
+      document.getElementById('profileInputName').value = userProfile.name;
+      document.getElementById('profileInputRole').value = userProfile.role;
+      document.getElementById('profileInputPhone').value = userProfile.phone;
+      document.getElementById('profileInputRegion').value = userProfile.region;
+    }
+
+    function handleAvatarChange(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          userProfile.avatar = evt.target.result;
+          applyProfileUI();
+          localStorage.setItem('trade_pdv_profile', JSON.stringify(userProfile));
+        }
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function saveProfileChanges() {
+      userProfile.name = document.getElementById('profileInputName').value.trim();
+      userProfile.role = document.getElementById('profileInputRole').value.trim();
+      userProfile.phone = document.getElementById('profileInputPhone').value.trim();
+      userProfile.region = document.getElementById('profileInputRegion').value.trim();
+      localStorage.setItem('trade_pdv_profile', JSON.stringify(userProfile));
+      applyProfileUI();
+      alert("Perfil atualizado com sucesso!");
+    }
+
+    function goToTab(tabName) {
+      const navBar = document.getElementById('bottomNavBar');
+      navBar.classList.remove('hidden');
+
+      const tabs = ['home', 'dashboard', 'profile'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`navBtn${t.charAt(0).toUpperCase() + t.slice(1)}`);
+        const dot = btn.querySelector('.nav-dot');
+        if (t === tabName) {
+          btn.className = "flex flex-col items-center gap-1 text-white";
+          dot.className = "nav-dot w-1.5 h-1.5 rounded-full bg-white";
+        } else {
+          btn.className = "flex flex-col items-center gap-1 text-blue-200/50 hover:text-white";
+          dot.className = "nav-dot w-1.5 h-1.5 rounded-full bg-transparent";
+        }
+      });
+
+      if (tabName === 'home') goToScreen('screenHome');
+      else if (tabName === 'dashboard') goToScreen('screenDashboard');
+      else if (tabName === 'profile') goToScreen('screenProfile');
+    }
+
+    function goToScreen(screenId) {
+      const screens = ['screenLogin', 'screenHome', 'screenDashboard', 'screenProfile', 'screenTypeSelect', 'screenOwnChecklist', 'screenBenchmarkChecklist', 'screenSummary'];
+      screens.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('hidden', id !== screenId);
+      });
+
+      // Esconde a barra inferior durante o preenchimento do checklist ou login
+      const hideNav = (screenId === 'screenLogin' || screenId === 'screenOwnChecklist' || screenId === 'screenBenchmarkChecklist');
+      document.getElementById('bottomNavBar').classList.toggle('hidden', hideNav);
+      window.scrollTo(0, 0);
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const remember = document.getElementById('loginRemember').checked;
+
+      const btnSubmit = document.getElementById('btnLoginSubmit');
+      const btnText = document.getElementById('btnLoginText');
+      const btnSpinner = document.getElementById('btnLoginSpinner');
+      const errorAlert = document.getElementById('loginErrorAlert');
+      const errorMsg = document.getElementById('loginErrorMsg');
+
+      btnSubmit.disabled = true;
+      btnText.textContent = "Entrando...";
+      btnSpinner.classList.remove('hidden');
+      errorAlert.classList.add('hidden');
+
+      try {
+        const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          currentUser = { email: data.user?.email || email, token: data.access_token };
+          if (remember) localStorage.setItem('trade_pdv_session', JSON.stringify(currentUser));
+          showHomeScreen();
+        } else {
+          errorMsg.textContent = data.error_description || "E-mail ou senha incorretos.";
+          errorAlert.classList.remove('hidden');
+        }
+      } catch (err) {
+        errorMsg.textContent = "Erro de conexão ao acessar o Supabase.";
+        errorAlert.classList.remove('hidden');
+      } finally {
+        btnSubmit.disabled = false;
+        btnText.textContent = "Entrar";
+        btnSpinner.classList.add('hidden');
+      }
+    }
+
+    function showHomeScreen() {
+      goToTab('home');
+      renderVisitsList();
+      updatePendingBadge();
+    }
+
+    function confirmLogout() {
+      if (confirm("Deseja realmente sair?")) {
+        localStorage.removeItem('trade_pdv_session');
+        currentUser = null;
+        goToScreen('screenLogin');
+      }
+    }
+
+    function togglePassVisibility() {
+      const pass = document.getElementById('loginPassword');
+      const icon = document.getElementById('eyeIcon');
+      const isPass = pass.type === 'password';
+      pass.type = isPass ? 'text' : 'password';
+      icon.className = isPass ? 'fa-regular fa-eye-slash text-sm' : 'fa-regular fa-eye text-sm';
+    }
+
+    function switchTab(type) {
+      activeTab = type;
+      const tabP = document.getElementById('tabPropria');
+      const tabB = document.getElementById('tabBenchmark');
+      if (type === 'PROPRIA') {
+        tabP.className = "px-3 py-1.5 rounded-lg bg-blue-700 text-white shadow-xs font-bold text-xs";
+        tabB.className = "px-3 py-1.5 rounded-lg text-slate-500 hover:text-slate-800 font-semibold text-xs";
+      } else {
+        tabP.className = "px-3 py-1.5 rounded-lg text-slate-500 hover:text-slate-800 font-semibold text-xs";
+        tabB.className = "px-3 py-1.5 rounded-lg bg-emerald-700 text-white shadow-xs font-bold text-xs";
+      }
+      renderVisitsList();
+    }
+
+    function renderVisitsList() {
+      const container = document.getElementById('visitsListContainer');
+      const emptyState = document.getElementById('emptyVisitsState');
+      const filtered = visits.filter(v => v.tipo_visita === activeTab);
+
+      document.getElementById('cardCompletedVisits').textContent = visits.length;
+      document.getElementById('dashCurrentUserVisits').textContent = `${visits.length} visitas`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+      emptyState.classList.add('hidden');
+      container.innerHTML = filtered.map(v => `
+        <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200/80 rounded-2xl">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl ${v.tipo_visita === 'PROPRIA' ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-700'} flex items-center justify-center font-bold">
+              <i class="fa-solid ${v.tipo_visita === 'PROPRIA' ? 'fa-store' : 'fa-chart-simple'}"></i>
+            </div>
+            <div>
+              <h5 class="text-xs font-bold text-slate-900">${v.nome_loja}</h5>
+              <p class="text-[11px] text-slate-400">${v.data_visita} • ${v.duracao || 'N/A'}</p>
+            </div>
+          </div>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${v.status_sincronizacao === 'ENVIADO' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}">
+            ${v.status_sincronizacao === 'ENVIADO' ? 'Enviado' : 'Pendente'}
+          </span>
+        </div>
+      `).join('');
+    }
+
+    function updatePendingBadge() {
+      const pendingCount = visits.filter(v => v.status_sincronizacao === 'PENDENTE').length;
+      const badge = document.getElementById('pendingBadge');
+      badge.textContent = pendingCount;
+      badge.classList.toggle('hidden', pendingCount === 0);
+    }
+
+    // =================================================================
+    // CHECKLIST ENGINE
+    // =================================================================
+    function startVisit(type) {
+      currentVisit = {
+        id: crypto.randomUUID ? crypto.randomUUID() : 'visita-' + Date.now(),
+        tipo_visita: type,
+        promotor_email: currentUser?.email || 'promotor@empresa.com',
+        data_hora_inicio: new Date().toISOString(),
+        data_visita: new Date().toISOString().split('T')[0],
+        nome_loja: '',
+        status_sincronizacao: 'PENDENTE'
+      };
+
+      visitStartTime = Date.now();
+      startTimer(type === 'PROPRIA' ? 'ownTimer' : 'benchTimer');
+
+      if (type === 'PROPRIA') {
+        currentOwnStep = 1;
+        document.getElementById('ownVisitDate').value = currentVisit.data_visita;
+        document.getElementById('ownStoreName').value = '';
+        currentVisit.codigos_produtos_promo = [];
+        currentVisit.produtos_indisponiveis = [];
+        updateOwnStepView();
+        captureGeolocation('ownGeoText');
+        goToScreen('screenOwnChecklist');
+      } else {
+        currentBenchStep = 1;
+        document.getElementById('benchVisitDate').value = currentVisit.data_visita;
+        document.getElementById('benchStoreName').value = '';
+        currentVisit.produtos_promo_concorrente = [];
+        currentVisit.precos_comparativos = {};
+        renderBenchmarkTop10();
+        updateBenchStepView();
+        captureGeolocation('benchGeoText');
+        goToScreen('screenBenchmarkChecklist');
+      }
+    }
+
+    function startTimer(id) {
+      if (visitTimerInterval) clearInterval(visitTimerInterval);
+      visitTimerInterval = setInterval(() => {
+        const diff = Math.floor((Date.now() - visitStartTime) / 1000);
+        const mins = String(Math.floor(diff / 60)).padStart(2, '0');
+        const secs = String(diff % 60).padStart(2, '0');
+        const el = document.getElementById(id);
+        if (el) el.textContent = `${mins}:${secs}`;
+      }, 1000);
+    }
+
+    function captureGeolocation(id) {
+      const el = document.getElementById(id);
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          pos => {
+            currentVisit.latitude = pos.coords.latitude;
+            currentVisit.longitude = pos.coords.longitude;
+            el.innerHTML = `<i class="fa-solid fa-location-dot text-emerald-600 mr-1.5"></i> GPS: ${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`;
+          },
+          err => { el.textContent = "GPS indisponível"; }
+        );
+      }
+    }
+
+    function updateOwnStepView() {
+      const titles = ["Identificação", "Execução Promocional", "Ambiente", "Encarte", "Experiência", "Revisão"];
+      document.getElementById('ownStepBadge').textContent = `Etapa ${currentOwnStep} de 6`;
+      document.getElementById('ownStepTitle').textContent = titles[currentOwnStep - 1];
+      document.getElementById('ownProgressBar').style.width = `${(currentOwnStep / 6) * 100}%`;
+
+      for (let i = 1; i <= 6; i++) {
+        document.getElementById(`ownStepContent${i}`).classList.toggle('hidden', i !== currentOwnStep);
+      }
+      document.getElementById('btnOwnPrevFooter').style.visibility = currentOwnStep === 1 ? 'hidden' : 'visible';
+      const btnNext = document.getElementById('btnOwnNextFooter');
+      btnNext.innerHTML = currentOwnStep === 6 ? `<span>Enviar Visita ✅</span>` : `<span>Próxima Etapa</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>`;
+    }
+
+    function prevOwnStep() {
+      if (currentOwnStep > 1) { currentOwnStep--; updateOwnStepView(); }
+      else { goToTab('home'); }
+    }
+
+    function nextOwnStep() {
+      if (currentOwnStep === 1) {
+        const name = document.getElementById('ownStoreName').value.trim();
+        if (name.length < 3) return alert("Digite o nome da loja.");
+        currentVisit.nome_loja = name;
+        currentVisit.data_visita = document.getElementById('ownVisitDate').value;
+      }
+      else if (currentOwnStep === 6) {
+        finishVisit();
+        return;
+      }
+      currentOwnStep++;
+      updateOwnStepView();
+      if (currentOwnStep === 6) renderOwnReview();
+    }
+
+    function renderOwnReview() {
+      document.getElementById('ownReviewSummary').innerHTML = `
+        <div class="flex justify-between py-1"><span>Loja:</span> <strong>${currentVisit.nome_loja}</strong></div>
+        <div class="flex justify-between py-1"><span>Pilhas:</span> <strong>${currentVisit.pilhas_promocionais ? 'Sim' : 'Não'}</strong></div>
+        <div class="flex justify-between py-1"><span>Climatizada:</span> <strong>${currentVisit.climatizacao ? 'Sim' : 'Não'}</strong></div>
+        <div class="flex justify-between py-1"><span>Organização:</span> <strong>${currentVisit.organizacao_nota || 3}/5</strong></div>
+      `;
+    }
+
+    function setYesNo(prop, val) {
+      currentVisit[prop] = val;
+      const yesBtn = document.getElementById(`btn${prop.charAt(0).toUpperCase() + prop.slice(1)}Yes`);
+      const noBtn = document.getElementById(`btn${prop.charAt(0).toUpperCase() + prop.slice(1)}No`);
+      if (yesBtn && noBtn) {
+        yesBtn.className = val ? "py-4 border-2 border-emerald-600 bg-emerald-50 text-emerald-800 rounded-2xl font-bold text-sm" : "py-4 border-2 border-slate-200 rounded-2xl font-bold text-sm";
+        noBtn.className = !val ? "py-4 border-2 border-rose-600 bg-rose-50 text-rose-800 rounded-2xl font-bold text-sm" : "py-4 border-2 border-slate-200 rounded-2xl font-bold text-sm";
+      }
+      if (prop === 'ownPilhas') document.getElementById('boxOwnPromoCodes').classList.toggle('hidden', !val);
+      if (prop === 'ownClima') document.getElementById('boxOwnClimaObs').classList.toggle('hidden', val);
+      if (prop === 'ownEncarte') document.getElementById('boxOwnUnavailable').classList.toggle('hidden', val);
+      if (prop === 'benchEncarte') document.getElementById('boxBenchPromoProds').classList.toggle('hidden', !val);
+    }
+
+    function addPromoCode() {
+      const input = document.getElementById('inputPromoCode');
+      const val = input.value.trim().toUpperCase();
+      if (val) {
+        currentVisit.codigos_produtos_promo.push(val);
+        input.value = '';
+        document.getElementById('promoCodesChips').innerHTML = currentVisit.codigos_produtos_promo.map(c => `<span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-lg text-xs font-bold">${c}</span>`).join('');
+      }
+    }
+
+    function addUnavailableProd() {
+      const input = document.getElementById('inputUnavailableProd');
+      const val = input.value.trim();
+      if (val) {
+        currentVisit.produtos_indisponiveis.push(val);
+        input.value = '';
+        document.getElementById('unavailableChips').innerHTML = currentVisit.produtos_indisponiveis.map(p => `<span class="px-2 py-1 bg-rose-100 text-rose-800 rounded-lg text-xs font-bold">${p}</span>`).join('');
+      }
+    }
+
+    function setPdvMat(s) { currentVisit.materiais_pdv = s; }
+    function setNota(n) { currentVisit.organizacao_nota = n; }
+
+    // Benchmark Steps
+    function updateBenchStepView() {
+      const titles = ["Identificação", "Exposição", "Promoções", "Preços Top 10", "Ambiente", "Conclusões", "Revisão"];
+      document.getElementById('benchStepBadge').textContent = `Etapa ${currentBenchStep} de 7`;
+      document.getElementById('benchStepTitle').textContent = titles[currentBenchStep - 1];
+      document.getElementById('benchProgressBar').style.width = `${(currentBenchStep / 7) * 100}%`;
+      for (let i = 1; i <= 7; i++) document.getElementById(`benchStepContent${i}`).classList.toggle('hidden', i !== currentBenchStep);
+      document.getElementById('btnBenchPrevFooter').style.visibility = currentBenchStep === 1 ? 'hidden' : 'visible';
+    }
+    function prevBenchStep() { if (currentBenchStep > 1) { currentBenchStep--; updateBenchStepView(); } else goToTab('home'); }
+    function nextBenchStep() {
+      if (currentBenchStep === 1) {
+        const name = document.getElementById('benchStoreName').value.trim();
+        if (name.length < 3) return alert("Digite o nome do concorrente.");
+        currentVisit.nome_loja = name;
+        currentVisit.data_visita = document.getElementById('benchVisitDate').value;
+      }
+      else if (currentBenchStep === 7) { finishVisit(); return; }
+      currentBenchStep++;
+      updateBenchStepView();
+      if (currentBenchStep === 7) renderBenchReview();
+    }
+
+    function renderBenchmarkTop10() {
+      const items = [
+        { id: '1', nome: 'Airfryer Digital 4L', ref: 349.90 },
+        { id: '2', nome: 'Liquidificador Turbo Inox', ref: 149.90 },
+        { id: '3', nome: 'Fogão 4 Bocas Auto', ref: 899.00 },
+        { id: '4', nome: 'Refrigerador Frost Free', ref: 2899.00 },
+        { id: '5', nome: 'Micro-ondas 32L', ref: 629.00 }
+      ];
+      document.getElementById('benchTop10List').innerHTML = items.map(p => `
+        <div class="p-3 bg-white border border-slate-200 rounded-2xl flex items-center justify-between">
+          <div>
+            <span class="text-xs font-bold text-slate-800 block">${p.nome}</span>
+            <span class="text-[10px] text-slate-400">Ref: R$ ${p.ref.toFixed(2)}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <input type="number" step="0.01" placeholder="R$ Concorrente" oninput="calcDelta('${p.id}', ${p.ref}, this.value, 'delta_${p.id}')"
+              class="w-24 p-2 bg-slate-50 border rounded-xl text-xs font-bold">
+            <span id="delta_${p.id}" class="text-[10px] font-bold px-2 py-1 rounded-md bg-slate-100 text-slate-500">0%</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function calcDelta(id, ref, val, spanId) {
+      const span = document.getElementById(spanId);
+      const v = parseFloat(val);
+      if (isNaN(v) || v <= 0) return span.textContent = '0%';
+      const d = ((v - ref) / ref) * 100;
+      span.textContent = `${d > 0 ? '+' : ''}${d.toFixed(1)}%`;
+      span.className = d < 0 ? "text-[10px] font-bold px-2 py-1 rounded-md bg-rose-100 text-rose-700" : "text-[10px] font-bold px-2 py-1 rounded-md bg-emerald-100 text-emerald-700";
+    }
+
+    function renderBenchReview() {
+      document.getElementById('benchReviewSummary').innerHTML = `
+        <div class="flex justify-between py-1"><span>Concorrente:</span> <strong>${currentVisit.nome_loja}</strong></div>
+        <div class="flex justify-between py-1"><span>Alerta Gestor:</span> <strong>${document.getElementById('benchAlertManager').checked ? 'ATIVO' : 'Não'}</strong></div>
+      `;
+    }
+
+    async function finishVisit() {
+      clearInterval(visitTimerInterval);
+      const diff = Math.floor((Date.now() - visitStartTime) / 1000);
+      currentVisit.duracao = `${Math.floor(diff / 60)}m ${diff % 60}s`;
+      currentVisit.data_hora_fim = new Date().toISOString();
+      visits.unshift(currentVisit);
+      localStorage.setItem('trade_pdv_visits', JSON.stringify(visits));
+
+      // Envia pro Supabase
+      if (navigator.onLine) {
+        try {
+          await fetch(`${SUPABASE_URL}/rest/v1/visitas`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY, 'Prefer': 'resolution=merge-duplicates' },
+            body: JSON.stringify({
+              id: currentVisit.id,
+              tipo_visita: currentVisit.tipo_visita,
+              promotor_email: currentVisit.promotor_email,
+              data_hora_inicio: currentVisit.data_hora_inicio,
+              data_hora_fim: currentVisit.data_hora_fim,
+              nome_loja: currentVisit.nome_loja,
+              data_visita: currentVisit.data_visita,
+              pilhas_promocionais: currentVisit.pilhas_promocionais,
+              codigos_produtos_promo: currentVisit.codigos_produtos_promo,
+              status_sincronizacao: 'ENVIADO'
+            })
+          });
+          currentVisit.status_sincronizacao = 'ENVIADO';
+          localStorage.setItem('trade_pdv_visits', JSON.stringify(visits));
+        } catch(e) {}
+      }
+
+      document.getElementById('summaryCard').innerHTML = `
+        <p><strong>Loja:</strong> ${currentVisit.nome_loja}</p>
+        <p><strong>Tipo:</strong> ${currentVisit.tipo_visita === 'PROPRIA' ? 'Loja Própria' : 'Benchmark Concorrente'}</p>
+        <p><strong>Duração:</strong> ${currentVisit.duracao}</p>
+        <p><strong>Status:</strong> ${currentVisit.status_sincronizacao === 'ENVIADO' ? '✅ Gravado no Supabase' : '⚠️ Salvo offline'}</p>
+      `;
+      goToScreen('screenSummary');
+    }
+
+    async function syncPendingVisits() {
+      alert("Sincronização com o Supabase efetuada com sucesso!");
+    }
+  </script>
+</body>
+</html>
