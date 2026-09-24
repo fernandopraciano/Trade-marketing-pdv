@@ -3,12 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Trade Marketing PDV</title>
+  <title>TVLar · Trade Marketing PDV</title>
   
-  <meta name="theme-color" content="#0F243E">
+  <meta name="theme-color" content="#0072BC">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Trade PDV">
+  <meta name="apple-mobile-web-app-title" content="TVLar PDV">
+    <!-- Google Fonts: Plus Jakarta Sans (TVLar Official Typography) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="manifest" href="./manifest.json">
 
   <!-- Tailwind CSS & FontAwesome -->
@@ -22,7 +26,87 @@
       background-color: #0B192C;
     }
     
-    /* Paleta idêntica à referência */
+    
+    
+    /* ============================================================== */
+    /* PALETA OFICIAL TVLAR: ROXO, LAVANDA & AZUL CLARO               */
+    /* ============================================================== */
+    :root {
+      --tvlar-blue: #0072BC;
+      --tvlar-blue-light: #38BDF8;
+      --tvlar-purple: #5639B0;
+      --tvlar-lavender: #8B68E6;
+      --tvlar-lavender-light: #A78BFA;
+      --tvlar-lavender-subtle: #EDE9FE;
+      --tvlar-red: #ED1C24;
+      --tvlar-dark: #041021;
+      --tvlar-navy: #07152B;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+      background-color: #041021;
+    }
+
+    /* Barra Gradiente Oficial TVLar com Roxo, Lavanda e Azul Claro */
+    .tvlar-rainbow-bar {
+      background: linear-gradient(90deg, #0072BC 0%, #5639B0 35%, #8B68E6 70%, #38BDF8 100%) !important;
+    }
+
+    .tvlar-btn-gradient {
+      background: linear-gradient(135deg, #0072BC 0%, #5639B0 50%, #8B68E6 100%) !important;
+      color: #ffffff !important;
+    }
+
+    .tvlar-btn-purple {
+      background: linear-gradient(135deg, #5639B0 0%, #8B68E6 100%) !important;
+      color: #ffffff !important;
+    }
+
+    .tvlar-badge-purple {
+      background-color: #5639B0;
+      color: #ffffff;
+    }
+
+    .tvlar-badge-lavender {
+      background-color: #EDE9FE;
+      color: #5639B0;
+      border: 1px solid #C4B5FD;
+    }
+
+    .tvlar-badge-blue {
+      background-color: rgba(56, 189, 248, 0.15);
+      color: #38BDF8;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+    }
+
+    /* RODAPÉ / BOTTOM NAV COM 100% OPACIDADE E ALTO CONTRASTE */
+    #bottomNavBar {
+      background-color: #07152B !important;
+      border-top: 1.5px solid rgba(139, 104, 230, 0.35) !important;
+      box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.7) !important;
+    }
+
+    #bottomNavBar .nav-active {
+      color: #ffffff !important;
+      font-weight: 800 !important;
+    }
+
+    #bottomNavBar .nav-inactive {
+      color: #94A3B8 !important;
+      font-weight: 600 !important;
+    }
+
+    #bottomNavBar .nav-inactive:hover {
+      color: #F8FAFC !important;
+    }
+
+    .nav-dot-active {
+      background-color: #A78BFA !important;
+      box-shadow: 0 0 8px #A78BFA !important;
+    }
+
+    /* Paleta base */
     .bg-navy-main { background-color: #0F243E; }
     .bg-navy-dark { background-color: #091626; }
     .bg-navy-card { background: linear-gradient(145deg, #183354 0%, #0F243E 100%); }
@@ -77,12 +161,16 @@
     <section id="screenLogin" class="flex-1 flex flex-col justify-between p-6 safe-top safe-bottom z-10">
       <div></div>
       <div class="w-full my-auto">
-        <div class="flex flex-col items-center mb-5">
-          <div class="w-16 h-16 bg-navy-card border border-white/20 rounded-3xl flex items-center justify-center shadow-xl mb-3">
-            <i class="fa-solid fa-store text-2xl text-blue-300"></i>
+        <div class="flex flex-col items-center mb-6">
+          <div class="px-5 py-3 bg-white rounded-2xl shadow-2xl mb-3.5 border border-white/30 flex items-center justify-center">
+            <img src="./assets/tvlar-logo.svg" alt="TVLar" class="h-10 w-auto">
           </div>
-          <h1 class="text-2xl font-bold tracking-tight text-white">Trade Marketing PDV</h1>
-          <p class="text-xs text-blue-200 mt-0.5 font-semibold">Execução em Ponto de Venda & Benchmark</p>
+          <h1 class="text-xl font-black tracking-tight text-white flex items-center gap-2">
+            <span>Trade Marketing</span>
+            <span class="text-[10px] font-black uppercase bg-[#ED1C24] text-white px-2 py-0.5 rounded-md tracking-wider shadow-xs">PDV</span>
+          </h1>
+          <p class="text-xs text-blue-200/90 mt-1 font-semibold text-center">Execução em Lojas TVLar & Pesquisa de Concorrência</p>
+          <div class="w-24 h-1 tvlar-rainbow-bar rounded-full mt-2.5"></div>
         </div>
 
         <!-- Seletor de Modo: Entrar vs Cadastrar Promotor -->
@@ -133,7 +221,7 @@
           </div>
 
           <button type="submit" id="btnLoginSubmit"
-            class="w-full h-13 btn-gradient font-black text-slate-950 rounded-2xl shadow-xl active:scale-[0.98] transition flex items-center justify-center gap-2 mt-2 text-base">
+            class="w-full h-13 tvlar-btn-gradient font-black text-white rounded-2xl shadow-xl active:scale-[0.98] transition flex items-center justify-center gap-2 mt-2 text-base hover:opacity-95">
             <span id="btnLoginText">Entrar no Sistema</span>
             <div id="btnLoginSpinner" class="hidden w-5 h-5 border-2 border-slate-900 border-t-transparent rounded-full animate-spin"></div>
           </button>
@@ -195,20 +283,20 @@
         <div class="mt-4 pt-3.5 border-t border-white/10">
           <p class="text-[11px] font-bold text-blue-200/80 mb-2 text-center">⚡ Ou acesse com um promotor de teste:</p>
           <div class="grid grid-cols-3 gap-2">
-            <button type="button" onclick="fillQuickLogin('carlos@empresa.com', '123456')" 
+            <button type="button" onclick="fillQuickLogin('carlos@tvlar.com.br', '123456')" 
               class="p-2 bg-navy-card-alt border border-white/10 rounded-xl text-center hover:bg-white/15 active:scale-95 transition">
               <span class="block text-xs font-bold text-white truncate">Carlos E.</span>
-              <span class="text-[9px] text-blue-200/60 block">Zona Sul</span>
+              <span class="text-[9px] text-blue-200/60 block">TVLar Matriz</span>
             </button>
-            <button type="button" onclick="fillQuickLogin('mariana@empresa.com', '123456')" 
+            <button type="button" onclick="fillQuickLogin('mariana@tvlar.com.br', '123456')" 
               class="p-2 bg-navy-card-alt border border-white/10 rounded-xl text-center hover:bg-white/15 active:scale-95 transition">
               <span class="block text-xs font-bold text-white truncate">Mariana C.</span>
-              <span class="text-[9px] text-blue-200/60 block">Centro</span>
+              <span class="text-[9px] text-blue-200/60 block">TVLar Manauara</span>
             </button>
-            <button type="button" onclick="fillQuickLogin('alexandra@empresa.com', '123456')" 
+            <button type="button" onclick="fillQuickLogin('alexandra@tvlar.com.br', '123456')" 
               class="p-2 bg-navy-card-alt border border-white/10 rounded-xl text-center hover:bg-white/15 active:scale-95 transition">
               <span class="block text-xs font-bold text-white truncate">Alexandra S.</span>
-              <span class="text-[9px] text-blue-200/60 block">Zona Norte</span>
+              <span class="text-[9px] text-blue-200/60 block">TVLar G. Circular</span>
             </button>
           </div>
         </div>
@@ -233,14 +321,13 @@
       <div class="p-6 pb-4">
         <!-- Barra Superior: Avatar do Usuário e Notificações -->
         <div class="flex items-center justify-between mb-5">
-          <div class="flex items-center gap-3.5" onclick="goToTab('profile')">
-            <div class="w-13 h-13 rounded-2xl p-0.5 bg-gradient-to-tr from-blue-400 to-indigo-500 cursor-pointer shadow-lg">
-              <img id="homeUserAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" 
-                class="w-12 h-12 rounded-[14px] object-cover border-2 border-navy-main">
+          <div class="flex items-center gap-3" onclick="goToTab('profile')">
+            <div class="px-2.5 py-1.5 bg-white rounded-xl shadow-md border border-white/20 cursor-pointer shrink-0">
+              <img src="./assets/tvlar-logo.svg" alt="TVLar" class="h-6 w-auto">
             </div>
-            <div>
-              <p class="text-xs text-blue-200/60 font-medium">Bem-vindo(a),</p>
-              <h2 id="homeUserName" class="text-base font-bold text-white tracking-tight">Alexandra!</h2>
+            <div class="cursor-pointer">
+              <p class="text-[10px] text-blue-200/70 font-semibold uppercase tracking-wider">Rede TVLar</p>
+              <h2 id="homeUserName" class="text-sm font-bold text-white tracking-tight truncate max-w-[150px]">Alexandra Silva</h2>
             </div>
           </div>
           
@@ -265,7 +352,7 @@
         <div class="bg-navy-card border border-white/10 rounded-3xl p-5 shadow-2xl relative overflow-hidden mb-4">
           <div class="flex justify-between items-start mb-3">
             <div>
-              <span class="text-[11px] font-semibold text-blue-200/60 uppercase tracking-wider">Meta Semanal de Visitas</span>
+              <span class="text-[11px] font-semibold text-blue-200/60 uppercase tracking-wider">Meta Semanal de Visitas · TVLar</span>
               <div class="flex items-baseline gap-2 mt-1">
                 <span id="cardCompletedVisits" class="text-2xl font-black text-white">18</span>
                 <span class="text-xs text-blue-200/60">/ 25 Lojas</span>
@@ -303,17 +390,41 @@
       </div>
 
       <!-- Card Inferior Branco Fosco com Lista de Visitas (Estilo "Statistics" da Foto) -->
-      <div class="flex-1 bg-white text-slate-800 rounded-t-[36px] p-6 shadow-2xl flex flex-col">
-        <div class="flex justify-between items-center mb-4">
-          <h4 class="text-base font-bold text-slate-900">Visitas Recentes</h4>
-          
+      <div class="flex-1 bg-white text-slate-800 rounded-t-[36px] p-6 pb-28 shadow-2xl flex flex-col">
+        <!-- Controles de Visibilidade e Limpeza de Dados Fictícios -->
+        <div class="space-y-2.5 mb-4">
+          <!-- Botão para Limpar Dados Fictícios -->
+          <div class="flex items-center justify-between gap-2">
+            <h4 class="text-base font-bold text-slate-900">Visitas Recentes</h4>
+            <button type="button" onclick="clearFictitiousData()" id="btnClearDemo"
+              class="px-2.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200/80 rounded-xl text-[11px] font-bold flex items-center gap-1.5 transition-colors shadow-2xs"
+              title="Remove registros fictícios e mantém apenas as visitas reais da equipe">
+              <i class="fa-solid fa-trash-can text-rose-500"></i>
+              <span>Limpar Fictícios</span>
+            </button>
+          </div>
+
+          <!-- Filtro de Escopo: Toda a Equipe TVLar vs Apenas Minhas -->
+          <div class="flex p-1 bg-slate-100 rounded-xl text-xs font-bold gap-1 border border-slate-200/60">
+            <button type="button" onclick="setVisitScope('ALL')" id="scopeAll"
+              class="flex-1 py-1.5 px-2 rounded-lg transition bg-white text-blue-900 shadow-xs flex items-center justify-center gap-1.5">
+              <i class="fa-solid fa-users text-blue-600 text-[11px]"></i>
+              <span>Toda a Equipe TVLar</span>
+            </button>
+            <button type="button" onclick="setVisitScope('MINE')" id="scopeMine"
+              class="flex-1 py-1.5 px-2 rounded-lg transition text-slate-500 hover:text-slate-800 flex items-center justify-center gap-1.5">
+              <i class="fa-solid fa-user text-[11px]"></i>
+              <span>Apenas Minhas</span>
+            </button>
+          </div>
+
           <!-- Filtro Própria / Benchmark -->
-          <div class="flex p-0.5 bg-slate-100 rounded-xl text-xs font-semibold">
+          <div class="flex p-0.5 bg-slate-100 rounded-xl text-xs font-semibold justify-end">
             <button onclick="switchTab('PROPRIA')" id="tabPropria" class="px-3 py-1.5 rounded-lg bg-blue-700 text-white shadow-xs">
-              Próprias
+              Lojas TVLar
             </button>
             <button onclick="switchTab('CONCORRENTE')" id="tabBenchmark" class="px-3 py-1.5 rounded-lg text-slate-500 hover:text-slate-800">
-              Benchmark
+              Concorrentes
             </button>
           </div>
         </div>
@@ -349,7 +460,7 @@
         <!-- Gráfico Curvo de Evolução de Visitas com Tooltip (Estilo Fiel da Foto) -->
         <div class="relative py-2 px-1 mb-2">
           <!-- Tooltip Flutuante -->
-          <div class="absolute top-0 right-1/4 bg-navy-card-alt border border-white/20 text-white px-3 py-1 rounded-xl text-xs font-bold shadow-xl flex flex-col items-center">
+          <div class="absolute top-0 right-1/4 bg-gradient-to-r from-[#5639B0] to-[#0072BC] border border-purple-300/40 text-white px-3.5 py-1.5 rounded-xl text-xs font-extrabold shadow-xl flex flex-col items-center">
             <span>28 Visitas</span>
             <span class="text-[9px] text-blue-200 font-normal">Esta semana</span>
           </div>
@@ -358,25 +469,32 @@
           <div class="h-36 w-full flex items-center">
             <svg viewBox="0 0 400 140" class="w-full h-full overflow-visible">
               <defs>
-                <linearGradient id="lineGlow" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.3" />
-                  <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+                <linearGradient id="tvlarChartGradient" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#38BDF8" />
+                  <stop offset="45%" stop-color="#A78BFA" />
+                  <stop offset="80%" stop-color="#5639B0" />
+                  <stop offset="100%" stop-color="#ED1C24" />
                 </linearGradient>
+                <filter id="glowEffect" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="3" result="glow" />
+                  <feComposite in="SourceGraphic" in2="glow" operator="over" />
+                </filter>
               </defs>
               <!-- Linhas de grade pontilhadas -->
-              <line x1="0" y1="30" x2="400" y2="30" stroke="rgba(255,255,255,0.06)" stroke-dasharray="3 3" />
-              <line x1="0" y1="70" x2="400" y2="70" stroke="rgba(255,255,255,0.06)" stroke-dasharray="3 3" />
-              <line x1="0" y1="110" x2="400" y2="110" stroke="rgba(255,255,255,0.06)" stroke-dasharray="3 3" />
+              <line x1="0" y1="30" x2="400" y2="30" stroke="rgba(167,139,250,0.12)" stroke-dasharray="3 3" />
+              <line x1="0" y1="70" x2="400" y2="70" stroke="rgba(167,139,250,0.12)" stroke-dasharray="3 3" />
+              <line x1="0" y1="110" x2="400" y2="110" stroke="rgba(167,139,250,0.12)" stroke-dasharray="3 3" />
               
               <!-- Linha vertical do ponto ativo -->
-              <line x1="280" y1="20" x2="280" y2="130" stroke="rgba(255,255,255,0.4)" stroke-dasharray="2 2" />
+              <line x1="280" y1="20" x2="280" y2="130" stroke="rgba(167,139,250,0.5)" stroke-dasharray="2 2" />
               
-              <!-- Curva Suave da Linha Principal -->
+              <!-- Curva Suave da Linha Principal com Gradiente TVLar -->
               <path d="M 10 110 Q 50 120, 80 80 T 150 95 T 220 50 T 280 25 T 340 90 T 390 60" 
-                fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" />
+                fill="none" stroke="url(#tvlarChartGradient)" stroke-width="3.5" stroke-linecap="round" filter="url(#glowEffect)" />
               
-              <!-- Ponto Marcador Ativo -->
-              <circle cx="280" cy="25" r="4.5" fill="#FFFFFF" stroke="#0F243E" stroke-width="2" />
+              <!-- Ponto Marcador Ativo com Halo Lavanda -->
+              <circle cx="280" cy="25" r="7" fill="#A78BFA" opacity="0.35" />
+              <circle cx="280" cy="25" r="4.5" fill="#FFFFFF" stroke="#5639B0" stroke-width="2.5" />
             </svg>
           </div>
 
@@ -393,20 +511,20 @@
         </div>
 
         <!-- Métrica de Conformidade / Visitas Totais -->
-        <div class="glass-card rounded-2xl p-4 flex justify-between items-center mb-4">
+        <div class="bg-gradient-to-r from-[#071F3D] via-[#1B1947] to-[#2E1853] border border-purple-400/25 rounded-2xl p-4 flex justify-between items-center mb-4 shadow-lg">
           <div>
-            <span class="text-xs text-blue-200/70 block">Taxa de Conformidade Geral</span>
-            <span class="text-xl font-bold text-white">94.8%</span>
+            <span class="text-xs text-blue-200/80 block font-semibold">Taxa de Conformidade TVLar</span>
+            <span class="text-2xl font-black text-[#38BDF8]">94.8%</span>
           </div>
           <div class="text-right">
-            <span class="text-xs text-blue-200/70 block">Preço Concorrente Médio</span>
-            <span class="text-xl font-bold text-emerald-400">+3.5%</span>
+            <span class="text-xs text-purple-200/80 block font-semibold">Variação vs Concorrência</span>
+            <span class="text-2xl font-black text-[#A78BFA]">-3.5%</span>
           </div>
         </div>
       </div>
 
       <!-- Card Inferior Branco com Indicadores Gerenciais -->
-      <div class="flex-1 bg-white text-slate-800 rounded-t-[36px] p-6 shadow-2xl space-y-5 overflow-y-auto">
+      <div class="flex-1 bg-white text-slate-800 rounded-t-[36px] p-6 pb-28 shadow-2xl space-y-5 overflow-y-auto">
         
         <!-- Bloco 1: Lojas com Rupturas Críticas -->
         <div>
@@ -542,7 +660,7 @@
             <i class="fa-solid fa-store text-2xl"></i>
           </div>
           <div>
-            <h4 class="text-base font-bold text-white">Loja Própria</h4>
+            <h4 class="text-base font-bold text-white flex items-center gap-2"><span>Lojas TVLar (Própria)</span> <span class="text-[10px] bg-[#0072BC] text-white px-2 py-0.5 rounded font-extrabold">OFICIAL</span></h4>
             <p class="text-xs text-blue-100/70 mt-1 leading-relaxed">Checklist de 6 etapas: pilhas promocionais, encarte, clima, organização e estoque.</p>
             <span class="inline-block mt-3 px-3 py-1 bg-blue-500/20 text-blue-300 border border-blue-400/30 rounded-lg text-xs font-bold">6 Etapas Guiadas</span>
           </div>
@@ -554,8 +672,8 @@
             <i class="fa-solid fa-chart-line text-2xl"></i>
           </div>
           <div>
-            <h4 class="text-base font-bold text-white">Loja Concorrente (Benchmark)</h4>
-            <p class="text-xs text-blue-100/70 mt-1 leading-relaxed">Inteligência de campo: exposição, promoções, comparativo Top 10 preços e alertas.</p>
+            <h4 class="text-base font-bold text-white flex items-center gap-2"><span>Lojas Concorrentes (Benchmark)</span> <span class="text-[10px] bg-[#ED1C24] text-white px-2 py-0.5 rounded font-extrabold">PESQUISA</span></h4>
+            <p class="text-xs text-blue-100/70 mt-1 leading-relaxed">Inteligência de campo regional: coleta de preços por SKU na cesta fixa (Bemol, Casas Bahia, Magalu, etc.) e alertas ao gestor.</p>
             <span class="inline-block mt-3 px-3 py-1 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 rounded-lg text-xs font-bold">Por SKU · 4 Etapas</span>
           </div>
         </div>
@@ -580,7 +698,7 @@
       </header>
 
       <div class="w-full bg-navy-dark h-1.5">
-        <div id="ownProgressBar" class="bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-400 h-1.5 transition-all duration-300" style="width: 20%;"></div>
+        <div id="ownProgressBar" class="tvlar-rainbow-bar h-1.5 transition-all duration-300" style="width: 20%;"></div>
       </div>
 
       <main id="ownChecklistMain" class="flex-1 overflow-y-auto p-4 sm:p-5 bg-slate-100 text-slate-800 rounded-t-[28px] mt-2 pb-24 hide-scrollbar">
@@ -990,23 +1108,22 @@
     <!-- ================================================================= -->
     <!-- BARRA DE NAVEGAÇÃO INFERIOR FLUTUANTE (IDÊNTICA À FOTO)           -->
     <!-- ================================================================= -->
-    <nav id="bottomNavBar" class="fixed bottom-0 max-w-md w-full bg-navy-dark/95 backdrop-blur-md border-t border-white/10 flex justify-around items-center py-2.5 safe-bottom z-40">
-      
+    <nav id="bottomNavBar" class="fixed bottom-0 max-w-md w-full flex justify-around items-center py-2.5 safe-bottom z-40">
       <!-- Tab 1: Home -->
-      <button onclick="goToTab('home')" id="navBtnHome" class="flex flex-col items-center gap-1 text-white">
-        <span class="text-xs font-semibold">Home</span>
-        <span class="nav-dot w-1.5 h-1.5 rounded-full bg-white"></span>
+      <button onclick="goToTab('home')" id="navBtnHome" class="flex flex-col items-center gap-1 text-white font-bold transition-all">
+        <span class="text-xs tracking-wide">Home</span>
+        <span class="nav-dot w-1.5 h-1.5 rounded-full nav-dot-active"></span>
       </button>
 
       <!-- Tab 2: Dashboard -->
-      <button onclick="goToTab('dashboard')" id="navBtnDashboard" class="flex flex-col items-center gap-1 text-blue-200/50 hover:text-white">
-        <span class="text-xs font-semibold">Dashboard</span>
+      <button onclick="goToTab('dashboard')" id="navBtnDashboard" class="flex flex-col items-center gap-1 text-slate-400 hover:text-white font-medium transition-all">
+        <span class="text-xs tracking-wide">Dashboard</span>
         <span class="nav-dot w-1.5 h-1.5 rounded-full bg-transparent"></span>
       </button>
 
       <!-- Tab 3: Profile -->
-      <button onclick="goToTab('profile')" id="navBtnProfile" class="flex flex-col items-center gap-1 text-blue-200/50 hover:text-white">
-        <span class="text-xs font-semibold">Profile</span>
+      <button onclick="goToTab('profile')" id="navBtnProfile" class="flex flex-col items-center gap-1 text-slate-400 hover:text-white font-medium transition-all">
+        <span class="text-xs tracking-wide">Profile</span>
         <span class="nav-dot w-1.5 h-1.5 rounded-full bg-transparent"></span>
       </button>
     </nav>
@@ -1022,6 +1139,64 @@
     let userProfile = null;
     let visits = [];
     let activeTab = 'PROPRIA';
+    let visitScope = 'ALL'; // 'ALL' = Toda a Equipe TVLar, 'MINE' = Apenas Minhas
+
+    // =================================================================
+    // VISIBILIDADE DA EQUIPE & LIMPEZA DE DADOS FICTÍCIOS
+    // =================================================================
+    function setVisitScope(scope) {
+      visitScope = scope;
+      const btnAll = document.getElementById('scopeAll');
+      const btnMine = document.getElementById('scopeMine');
+
+      if (scope === 'ALL') {
+        if (btnAll) btnAll.className = "flex-1 py-1.5 px-2 rounded-lg transition bg-white text-blue-900 shadow-xs flex items-center justify-center gap-1.5 font-bold";
+        if (btnMine) btnMine.className = "flex-1 py-1.5 px-2 rounded-lg transition text-slate-500 hover:text-slate-800 flex items-center justify-center gap-1.5 font-bold";
+      } else {
+        if (btnAll) btnAll.className = "flex-1 py-1.5 px-2 rounded-lg transition text-slate-500 hover:text-slate-800 flex items-center justify-center gap-1.5 font-bold";
+        if (btnMine) btnMine.className = "flex-1 py-1.5 px-2 rounded-lg transition bg-white text-blue-900 shadow-xs flex items-center justify-center gap-1.5 font-bold";
+      }
+
+      renderVisitsList();
+    }
+
+    function clearFictitiousData() {
+      if (!confirm("Tem certeza que deseja remover todos os dados fictícios e de demonstração?\n\nIsso manterá apenas as visitas reais cadastradas por você e sua equipe.")) {
+        return;
+      }
+
+      // Marca flag para nunca mais recriar os fictícios
+      localStorage.setItem('trade_pdv_demo_cleared', 'true');
+
+      // Filtra visitas fictícias (que começam com 'visita-' ou são de demonstração dos promotores de teste)
+      visits = visits.filter(v => {
+        const id = String(v.id || '');
+        const isDemoId = id.startsWith('visita-');
+        return !isDemoId;
+      });
+
+      // Atualiza o pool compartilhado
+      localStorage.setItem('trade_pdv_all_visits', JSON.stringify(visits));
+
+      // Limpa também as chaves específicas por e-mail no localStorage
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith('trade_pdv_visits_')) {
+          try {
+            let uVis = JSON.parse(localStorage.getItem(k) || '[]');
+            uVis = uVis.filter(v => !String(v.id || '').startsWith('visita-'));
+            localStorage.setItem(k, JSON.stringify(uVis));
+          } catch(e) {}
+        }
+      }
+
+      renderVisitsList();
+      renderDashboardTeam();
+      updatePendingBadge();
+
+      alert("✅ Dados fictícios removidos com sucesso! Agora você só verá os dados reais da sua equipe.");
+    }
+
     let currentVisit = null;
     let currentOwnStep = 1;
     let currentBenchStep = 1;
@@ -1030,34 +1205,35 @@
 
     // Garante que o catálogo de promotores de demonstração exista com perfis e visitas distintas
     function ensureDefaultUsers() {
+      const demoCleared = (localStorage.getItem('trade_pdv_demo_cleared') === 'true');
       const users = JSON.parse(localStorage.getItem('trade_pdv_users') || '{}');
       const defaults = {
-        'carlos@empresa.com': {
-          email: 'carlos@empresa.com',
+        'carlos@tvlar.com.br': {
+          email: 'carlos@tvlar.com.br',
           password: '123456',
           name: 'Carlos Eduardo',
           role: 'Promotor de Vendas Pleno',
           phone: '(11) 97123-4567',
-          region: 'Zona Sul / Shopping Morumbi',
-          avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80'
+          region: 'TVLar Matriz Eduardo Ribeiro / Centro',
+          avatar: 'https://ui-avatars.com/api/?name=Carlos+Eduardo&background=5639B0&color=ffffff&size=150&bold=true'
         },
-        'mariana@empresa.com': {
-          email: 'mariana@empresa.com',
+        'mariana@tvlar.com.br': {
+          email: 'mariana@tvlar.com.br',
           password: '123456',
           name: 'Mariana Costa',
           role: 'Promotora de Vendas',
           phone: '(11) 98234-5678',
-          region: 'Centro / Lojas de Rua',
-          avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&auto=format&fit=crop&q=80'
+          region: 'TVLar Manauara Shopping',
+          avatar: 'https://ui-avatars.com/api/?name=Mariana+Costa&background=8B68E6&color=ffffff&size=150&bold=true'
         },
-        'alexandra@empresa.com': {
-          email: 'alexandra@empresa.com',
+        'alexandra@tvlar.com.br': {
+          email: 'alexandra@tvlar.com.br',
           password: '123456',
           name: 'Alexandra Silva',
           role: 'Promotora de Vendas Sênior',
           phone: '(11) 98765-4321',
-          region: 'Zona Norte / Santana',
-          avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80'
+          region: 'TVLar Shopping Grande Circular / Zona Leste',
+          avatar: 'https://ui-avatars.com/api/?name=Alexandra+Silva&background=0072BC&color=ffffff&size=150&bold=true'
         }
       };
 
@@ -1077,12 +1253,12 @@
           }));
         }
         const visKey = `trade_pdv_visits_${email}`;
-        if (!localStorage.getItem(visKey)) {
+        if (!demoCleared && !localStorage.getItem(visKey)) {
           const sampleStores = email.includes('carlos')
-            ? ['Carrefour Morumbi', 'Pão de Açúcar Real Parque', 'Extra Morumbi']
+            ? ['TVLar Matriz Eduardo Ribeiro', 'TVLar Manauara Shopping', 'TVLar Shopping Grande Circular']
             : email.includes('mariana')
-            ? ['Assaí Centro', 'Magazine Luiza 25 de Março', 'Casas Bahia São Bento']
-            : ['Sonda Santana', 'Carrefour Limão', 'Pão de Açúcar Tucuruvi', 'Extra Freguesia'];
+            ? ['TVLar Sumaúma Park', 'TVLar Amazonas Shopping', 'TVLar Torquato Tapajós']
+            : ['TVLar Djalma Batista', 'TVLar Cidade Nova', 'TVLar Silves', 'TVLar Autaz Mirim'];
 
           const sampleVisits = sampleStores.map((store, idx) => ({
             id: `visita-${email.split('@')[0]}-${idx + 1}`,
@@ -1327,16 +1503,66 @@
 
     function loadUserVisits(email) {
       const cleanEmail = email.toLowerCase().trim();
-      const visKey = `trade_pdv_visits_${cleanEmail}`;
-      const saved = localStorage.getItem(visKey);
-      if (saved) {
-        visits = JSON.parse(saved);
-      } else {
-        visits = [];
-        localStorage.setItem(visKey, JSON.stringify(visits));
-      }
+      const sharedKey = 'trade_pdv_all_visits';
+      const userKey = `trade_pdv_visits_${cleanEmail}`;
+
+      // 1. Carrega pool compartilhado da equipe
+      let sharedVisits = [];
+      try { sharedVisits = JSON.parse(localStorage.getItem(sharedKey) || '[]'); } catch(e) {}
+
+      // 2. Carrega visitas salvas neste dispositivo pelo usuário
+      let userVisits = [];
+      try { userVisits = JSON.parse(localStorage.getItem(userKey) || '[]'); } catch(e) {}
+
+      // 3. Mescla sem duplicatas por ID
+      const map = new Map();
+      [...sharedVisits, ...userVisits].forEach(v => {
+        if (v && v.id) map.set(v.id, v);
+      });
+      visits = Array.from(map.values());
+      localStorage.setItem(sharedKey, JSON.stringify(visits));
+
       renderVisitsList();
       updatePendingBadge();
+
+      // 4. Busca visitas da nuvem do Supabase para que toda a equipe veja tudo em tempo real
+      fetchRemoteVisitsFromSupabase();
+    }
+
+    async function fetchRemoteVisitsFromSupabase() {
+      if (!navigator.onLine || !SUPABASE_URL || !SUPABASE_ANON_KEY) return;
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/visitas?select=*&order=data_hora_inicio.desc&limit=100`, {
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+          }
+        });
+        if (res.ok) {
+          const remoteVisits = await res.json();
+          if (Array.isArray(remoteVisits) && remoteVisits.length > 0) {
+            const map = new Map();
+            // Primeiro as locais
+            visits.forEach(v => map.set(v.id, v));
+            // Sobrescreve com as da nuvem marcadas como sincronizadas
+            remoteVisits.forEach(rv => {
+              const local = map.get(rv.id) || {};
+              map.set(rv.id, {
+                ...local,
+                ...rv,
+                status_sincronizacao: 'ENVIADO'
+              });
+            });
+            visits = Array.from(map.values());
+            localStorage.setItem('trade_pdv_all_visits', JSON.stringify(visits));
+            renderVisitsList();
+            renderDashboardTeam();
+            updatePendingBadge();
+          }
+        }
+      } catch(e) {
+        console.warn('Busca de visitas da nuvem:', e);
+      }
     }
 
     function applyProfileUI() {
@@ -1454,10 +1680,10 @@
         const btn = document.getElementById(`navBtn${t.charAt(0).toUpperCase() + t.slice(1)}`);
         const dot = btn.querySelector('.nav-dot');
         if (t === tabName) {
-          btn.className = "flex flex-col items-center gap-1 text-white";
-          dot.className = "nav-dot w-1.5 h-1.5 rounded-full bg-white";
+          btn.className = "flex flex-col items-center gap-1 text-white font-extrabold";
+          dot.className = "nav-dot w-1.5 h-1.5 rounded-full nav-dot-active";
         } else {
-          btn.className = "flex flex-col items-center gap-1 text-blue-200/50 hover:text-white";
+          btn.className = "flex flex-col items-center gap-1 text-slate-400 hover:text-white font-semibold";
           dot.className = "nav-dot w-1.5 h-1.5 rounded-full bg-transparent";
         }
       });
@@ -1513,41 +1739,79 @@
       const emptyState = document.getElementById('emptyVisitsState');
       const currentEmail = (currentUser?.email || '').toLowerCase().trim();
 
-      // Isolamento estrito de visitas do usuário atual
-      const userVisits = visits.filter(v => (v.promotor_email || '').toLowerCase() === currentEmail);
-      const filtered = userVisits.filter(v => v.tipo_visita === activeTab);
+      // Filtra por escopo (Toda a Equipe vs Apenas Minhas)
+      let displayedVisits = visits;
+      if (visitScope === 'MINE') {
+        displayedVisits = visits.filter(v => (v.promotor_email || '').toLowerCase() === currentEmail);
+      }
 
-      document.getElementById('cardCompletedVisits').textContent = userVisits.length;
+      // Filtra por tipo de visita (Lojas TVLar vs Concorrentes)
+      const filtered = displayedVisits.filter(v => v.tipo_visita === activeTab);
 
-      // Atualiza barra de progresso da meta semanal
+      // Meta semanal considera visitas da equipe ou minhas conforme escopo
+      const completedCount = displayedVisits.length;
+      const countEl = document.getElementById('cardCompletedVisits');
+      if (countEl) countEl.textContent = completedCount;
+
       const metaBar = document.getElementById('metaProgressBar');
       if (metaBar) {
-        const pct = Math.min(100, Math.round((userVisits.length / 20) * 100));
+        const pct = Math.min(100, Math.round((completedCount / 25) * 100));
         metaBar.style.width = `${Math.max(5, pct)}%`;
       }
 
       if (filtered.length === 0) {
         container.innerHTML = '';
-        emptyState.classList.remove('hidden');
+        if (emptyState) emptyState.classList.remove('hidden');
         return;
       }
-      emptyState.classList.add('hidden');
-      container.innerHTML = filtered.map(v => `
-        <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200/80 rounded-2xl shadow-xs">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl ${v.tipo_visita === 'PROPRIA' ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-700'} flex items-center justify-center font-bold">
-              <i class="fa-solid ${v.tipo_visita === 'PROPRIA' ? 'fa-store' : 'fa-chart-simple'}"></i>
+      if (emptyState) emptyState.classList.add('hidden');
+
+      container.innerHTML = filtered.map(v => {
+        const isMine = (v.promotor_email || '').toLowerCase() === currentEmail;
+        const promoterLabel = v.promotor_nome || (v.promotor_email ? v.promotor_email.split('@')[0] : 'Promotor');
+        const isEnviado = (v.status_sincronizacao === 'ENVIADO');
+
+        const badgeHtml = isEnviado
+          ? '<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 flex items-center gap-1"><i class="fa-solid fa-check text-[9px]"></i> Enviado</span>'
+          : `<button type="button" onclick="syncSingleVisit('${v.id}')" title="Clique para sincronizar agora" class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-amber-100 hover:bg-amber-200 text-amber-800 border border-amber-300 transition-colors flex items-center gap-1 cursor-pointer shadow-2xs">
+              <i class="fa-solid fa-cloud-arrow-up text-[9px]"></i> Pendente
+            </button>`;
+
+        return `
+          <div class="p-3.5 bg-slate-50 border border-slate-200/90 rounded-2xl shadow-xs space-y-1.5">
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-9 h-9 rounded-xl ${v.tipo_visita === 'PROPRIA' ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-700'} flex items-center justify-center font-bold shrink-0">
+                  <i class="fa-solid ${v.tipo_visita === 'PROPRIA' ? 'fa-store' : 'fa-chart-simple'} text-sm"></i>
+                </div>
+                <div class="min-w-0">
+                  <h5 class="text-xs font-bold text-slate-900 truncate">${v.nome_loja}</h5>
+                  <div class="flex items-center gap-1.5 text-[11px] text-slate-400">
+                    <span>${v.data_visita}</span>
+                    <span>•</span>
+                    <span>${v.duracao || 'Concluída'}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="shrink-0">
+                ${badgeHtml}
+              </div>
             </div>
-            <div>
-              <h5 class="text-xs font-bold text-slate-900">${v.nome_loja}</h5>
-              <p class="text-[11px] text-slate-400">${v.data_visita} • ${v.duracao || 'N/A'}${v.organizacao_nota ? ' • Nota: ' + v.organizacao_nota + '/5' : ''}${v.materiais_pdv ? ' • PDV: ' + v.materiais_pdv : ''}</p>
+
+            <div class="flex items-center justify-between pt-1 border-t border-slate-200/60 text-[11px]">
+              <div class="flex items-center gap-1">
+                <span class="text-[10px] font-bold px-2 py-0.5 ${isMine ? 'bg-blue-600 text-white' : 'bg-slate-200 text-slate-700'} rounded-md">
+                  <i class="fa-solid fa-user text-[8px] mr-1"></i>${isMine ? 'Você (' + promoterLabel + ')' : promoterLabel}
+                </span>
+              </div>
+              <div class="text-slate-500 font-medium">
+                ${v.organizacao_nota ? 'Nota: <strong class="text-slate-700">' + v.organizacao_nota + '/5</strong>' : ''}
+                ${v.produtos_benchmark ? '<strong class="text-emerald-700">' + v.produtos_benchmark.length + ' SKUs cotados</strong>' : ''}
+              </div>
             </div>
           </div>
-          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${v.status_sincronizacao === 'ENVIADO' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}">
-            ${v.status_sincronizacao === 'ENVIADO' ? 'Enviado' : 'Pendente'}
-          </span>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     function renderDashboardTeam() {
@@ -1558,24 +1822,34 @@
       const currentEmail = (currentUser?.email || '').toLowerCase().trim();
       let html = '';
 
-      // 1. Promotor atualmente logado destacado no topo com 'VOCÊ'
+      // Helper para avatar com fallback seguro e cores TVLar
+      function getSafeAvatarUrl(name, rawUrl) {
+        if (!rawUrl || rawUrl.includes('unsplash.com')) {
+          return 'https://ui-avatars.com/api/?name=' + encodeURIComponent(name) + '&background=5639B0&color=ffffff&size=150&bold=true';
+        }
+        return rawUrl;
+      }
+
+      // 1. Promotor atualmente logado destacado no topo com 'VOCÊ' e estilo Lavanda/Roxo TVLar
       if (userProfile && currentUser) {
-        const userVisitCount = visits.length;
+        const myVisitsCount = visits.filter(v => (v.promotor_email || '').toLowerCase() === currentEmail).length;
+        const myAvatar = getSafeAvatarUrl(userProfile.name, userProfile.avatar);
+
         html += `
-          <div class="flex items-center justify-between p-3 bg-blue-50/90 border-2 border-blue-400 rounded-2xl shadow-sm">
-            <div class="flex items-center gap-3">
-              <img src="${userProfile.avatar}" class="w-11 h-11 rounded-xl object-cover border border-blue-400 shadow-xs">
-              <div>
-                <div class="flex items-center gap-1.5">
-                  <h5 class="text-xs font-bold text-slate-900">${userProfile.name}</h5>
-                  <span class="px-1.5 py-0.5 bg-blue-600 text-white text-[9px] font-black rounded-md">VOCÊ</span>
+          <div class="flex items-center justify-between p-3.5 bg-gradient-to-r from-purple-50 via-indigo-50 to-blue-50 border-2 border-[#8B68E6] rounded-2xl shadow-sm mb-2.5">
+            <div class="flex items-center gap-3 min-w-0">
+              <img src="${myAvatar}" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(userProfile.name)}&background=5639B0&color=fff'" class="w-12 h-12 rounded-xl object-cover border-2 border-[#5639B0] shadow-xs shrink-0">
+              <div class="min-w-0">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <h5 class="text-xs font-extrabold text-slate-900 truncate">${userProfile.name}</h5>
+                  <span class="px-2 py-0.5 bg-[#5639B0] text-white text-[9px] font-black rounded-md tracking-wider">VOCÊ</span>
                 </div>
-                <p class="text-[11px] text-blue-800 font-semibold">${userProfile.region || 'Sua Região'}</p>
+                <p class="text-[11px] text-[#5639B0] font-bold truncate">${userProfile.region || 'TVLar Manaus'}</p>
               </div>
             </div>
-            <div class="text-right">
-              <span class="text-xs font-black text-blue-900">${userVisitCount} ${userVisitCount === 1 ? 'visita' : 'visitas'}</span>
-              <span class="text-[10px] text-emerald-600 block font-bold">100% ativo</span>
+            <div class="text-right shrink-0 pl-2">
+              <span class="text-sm font-black text-[#5639B0] block">${myVisitsCount} ${myVisitsCount === 1 ? 'visita' : 'visitas'}</span>
+              <span class="text-[10px] text-emerald-700 bg-emerald-100 font-extrabold px-1.5 py-0.5 rounded-full">100% ativo</span>
             </div>
           </div>
         `;
@@ -1586,25 +1860,23 @@
         if (email === currentEmail) continue;
         const profKey = `trade_pdv_profile_${email}`;
         const prof = JSON.parse(localStorage.getItem(profKey) || '{}');
-        const visKey = `trade_pdv_visits_${email}`;
-        const userVis = JSON.parse(localStorage.getItem(visKey) || '[]');
         const name = prof.name || u.name || email.split('@')[0];
-        const avatar = prof.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=0F243E&color=ffffff&size=100`;
-        const region = prof.region || u.region || 'Região Comercial';
-        const count = userVis.length;
+        const avatar = getSafeAvatarUrl(name, prof.avatar || u.avatar);
+        const region = prof.region || u.region || 'Rede TVLar';
+        const teamVisitsCount = visits.filter(v => (v.promotor_email || '').toLowerCase() === email.toLowerCase()).length;
 
         html += `
-          <div class="flex items-center justify-between p-2.5 bg-slate-50 border border-slate-200 rounded-2xl">
-            <div class="flex items-center gap-3">
-              <img src="${avatar}" class="w-10 h-10 rounded-xl object-cover">
-              <div>
-                <h5 class="text-xs font-bold text-slate-900">${name}</h5>
-                <p class="text-[11px] text-slate-500">${region}</p>
+          <div class="flex items-center justify-between p-3 bg-slate-50 border border-slate-200/90 hover:border-purple-300 rounded-2xl transition-colors mb-2">
+            <div class="flex items-center gap-3 min-w-0">
+              <img src="${avatar}" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=0072BC&color=fff'" class="w-10 h-10 rounded-xl object-cover border border-purple-200 shrink-0">
+              <div class="min-w-0">
+                <h5 class="text-xs font-bold text-slate-900 truncate">${name}</h5>
+                <p class="text-[11px] text-slate-500 truncate">${region}</p>
               </div>
             </div>
-            <div class="text-right">
-              <span class="text-xs font-black text-slate-900">${count} visitas</span>
-              <span class="text-[10px] text-emerald-600 block font-bold">96% conf.</span>
+            <div class="text-right shrink-0 pl-2">
+              <span class="text-xs font-black text-slate-900 block">${teamVisitsCount} visitas</span>
+              <span class="text-[10px] text-purple-700 bg-purple-50 font-bold px-1.5 py-0.5 rounded-full border border-purple-200">96% conf.</span>
             </div>
           </div>
         `;
@@ -1764,17 +2036,17 @@
           if (Array.isArray(parsed) && parsed.length > 0) return parsed;
         } catch(e) {}
       }
-      const initialCatalog = [
-        { id: '1', nome: 'Smart TV 50" 4K UHD', precoReferencia: 2299.00, categoria: 'Eletrônicos' },
-        { id: '2', nome: 'Fritadeira Airfryer Digital 4L', precoReferencia: 349.90, categoria: 'Eletroportáteis' },
-        { id: '3', nome: 'Refrigerador Frost Free 375L', precoReferencia: 2899.00, categoria: 'Linha Branca' },
-        { id: '4', nome: 'Smartphone 128GB 5G', precoReferencia: 1499.00, categoria: 'Telefonia' },
-        { id: '5', nome: 'Máquina de Lavar 11kg', precoReferencia: 1899.00, categoria: 'Linha Branca' },
-        { id: '6', nome: 'Fogão 4 Bocas Acendimento Auto', precoReferencia: 899.00, categoria: 'Linha Branca' },
-        { id: '7', nome: 'Micro-ondas 32L Inox', precoReferencia: 649.00, categoria: 'Eletroportáteis' },
-        { id: '8', nome: 'Notebook 15.6" i5 8GB SSD 256GB', precoReferencia: 3199.00, categoria: 'Informática' },
-        { id: '9', nome: 'Liquidificador Turbo 1200W', precoReferencia: 159.90, categoria: 'Eletroportáteis' },
-        { id: '10', nome: 'Ventilador Turbo 40cm Coluna', precoReferencia: 199.90, categoria: 'Eletroportáteis' }
+            const initialCatalog = [
+        { id: '1', nome: 'Smart TV 50" 4K UHD', precoReferencia: 2299.00, categoria: 'TV e Vídeo' },
+        { id: '2', nome: 'Ar-Condicionado Split 12.000 BTUs Inverter', precoReferencia: 1999.00, categoria: 'Climatização' },
+        { id: '3', nome: 'Fritadeira Airfryer Digital 4L', precoReferencia: 349.90, categoria: 'Eletroportáteis' },
+        { id: '4', nome: 'Refrigerador Frost Free 375L Duplex', precoReferencia: 2899.00, categoria: 'Linha Branca' },
+        { id: '5', nome: 'Smartphone 128GB 5G', precoReferencia: 1499.00, categoria: 'Telefonia' },
+        { id: '6', nome: 'Máquina de Lavar 11kg Automática', precoReferencia: 1899.00, categoria: 'Linha Branca' },
+        { id: '7', nome: 'Fogão 4 Bocas Acendimento Auto Inox', precoReferencia: 899.00, categoria: 'Linha Branca' },
+        { id: '8', nome: 'Cama Box Casal Molas Ensacadas', precoReferencia: 1299.00, categoria: 'Móveis & Colchões' },
+        { id: '9', nome: 'Micro-ondas 32L Inox Espelhado', precoReferencia: 649.00, categoria: 'Eletroportáteis' },
+        { id: '10', nome: 'Motocicleta Yamaha Factor 150cc ED', precoReferencia: 15990.00, categoria: 'Motos & Náutica' }
       ];
       localStorage.setItem('trade_pdv_product_catalog', JSON.stringify(initialCatalog));
       return initialCatalog;
@@ -2645,36 +2917,41 @@
     }
 
     // 8. Construção de Payload e Sincronização Supabase
-    function buildVisitSupabasePayload(v) {
+    function buildVisitSupabasePayload(v, minimalOnly = false) {
       const payload = {
         id: v.id,
         tipo_visita: v.tipo_visita,
         promotor_email: (v.promotor_email || '').toLowerCase().trim(),
-        data_hora_inicio: v.data_hora_inicio,
-        data_hora_fim: v.data_hora_fim,
+        data_hora_inicio: v.data_hora_inicio || new Date().toISOString(),
+        data_hora_fim: v.data_hora_fim || new Date().toISOString(),
         nome_loja: v.nome_loja,
-        data_visita: v.data_visita,
+        data_visita: v.data_visita || new Date().toISOString().split('T')[0],
         latitude: v.latitude || null,
         longitude: v.longitude || null,
         status_sincronizacao: 'ENVIADO'
       };
 
+      // Campos retrocompatíveis padrão
       if (v.tipo_visita === 'PROPRIA') {
-        payload.bloco1_fachada = v.bloco1 || {};
-        payload.bloco2_marketing = v.bloco2 || {};
-        payload.bloco3_predial = v.bloco3 || {};
-
-        // Mapeamento retrocompatível para tabelas existentes
         payload.pilhas_promocionais = v.bloco2?.['2.9']?.resposta === true;
         payload.climatizacao = v.bloco3?.['3.4']?.resposta === true;
         payload.encarte_disponivel = v.bloco1?.['1.23']?.resposta === true;
         payload.materiais_pdv = v.bloco2?.['2.17']?.resposta === true ? 'SIM' : 'PARCIAL';
-        payload.organizacao_nota = 5;
+        payload.organizacao_nota = v.organizacao_nota ? parseInt(v.organizacao_nota, 10) : 5;
         payload.ruptura_estoque = v.bloco2?.['2.13']?.resposta === true;
+
+        if (!minimalOnly) {
+          payload.bloco1_fachada = v.bloco1 || {};
+          payload.bloco2_marketing = v.bloco2 || {};
+          payload.bloco3_predial = v.bloco3 || {};
+        }
       } else {
-        payload.benchmark_produtos = v.produtos_benchmark || [];
         payload.observacoes = v.observacoes || null;
         payload.alerta_gestor = v.alerta_gestor || false;
+
+        if (!minimalOnly) {
+          payload.benchmark_produtos = v.produtos_benchmark || [];
+        }
       }
 
       return payload;
@@ -2689,35 +2966,22 @@
       const secs = diffSecs % 60;
       currentVisit.duracao = mins + 'm ' + String(secs).padStart(2, '0') + 's';
 
+      // Registra dados do promotor na visita para visualização coletiva da equipe
+      currentVisit.promotor_nome = currentUser?.name || userProfile?.name || (currentUser?.email ? currentUser.email.split('@')[0] : 'Promotor');
+      currentVisit.promotor_email = (currentUser?.email || '').toLowerCase().trim();
+
       visits.unshift(currentVisit);
-      const email = (currentUser?.email || '').toLowerCase().trim();
-      const storageKey = email ? ('trade_pdv_visits_' + email) : 'trade_pdv_visits';
-      localStorage.setItem(storageKey, JSON.stringify(visits));
 
-      // Sincronização em background com Supabase
+      // Salva no pool compartilhado da equipe TVLar E na chave do usuário
+      localStorage.setItem('trade_pdv_all_visits', JSON.stringify(visits));
+      const email = currentVisit.promotor_email;
+      if (email) {
+        localStorage.setItem('trade_pdv_visits_' + email, JSON.stringify(visits.filter(v => (v.promotor_email || '').toLowerCase() === email)));
+      }
+
+      // Tentativa de envio ao Supabase com fallback inteligente
       if (navigator.onLine && SUPABASE_URL && SUPABASE_ANON_KEY) {
-        try {
-          const payload = buildVisitSupabasePayload(currentVisit);
-          const authToken = currentUser?.token || SUPABASE_ANON_KEY;
-
-          const res = await fetch(SUPABASE_URL + '/rest/v1/visitas', {
-            method: 'POST',
-            headers: {
-              'apikey': SUPABASE_ANON_KEY,
-              'Authorization': 'Bearer ' + authToken,
-              'Content-Type': 'application/json',
-              'Prefer': 'return=minimal'
-            },
-            body: JSON.stringify(payload)
-          });
-
-          if (res.ok) {
-            currentVisit.status_sincronizacao = 'ENVIADO';
-            localStorage.setItem(storageKey, JSON.stringify(visits));
-          }
-        } catch (e) {
-          console.warn('Erro ao sincronizar com Supabase:', e);
-        }
+        await sendVisitToSupabase(currentVisit);
       }
 
       renderVisitsList();
@@ -2751,10 +3015,90 @@
       goToScreen('screenSummary');
     }
 
+    
+    async function sendVisitToSupabase(v) {
+      if (!navigator.onLine || !SUPABASE_URL || !SUPABASE_ANON_KEY) return false;
+      const authToken = currentUser?.token || SUPABASE_ANON_KEY;
+
+      // 1. Tenta envio completo (com blocos JSONB)
+      let payload = buildVisitSupabasePayload(v, false);
+      try {
+        let res = await fetch(SUPABASE_URL + '/rest/v1/visitas', {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': 'Bearer ' + authToken,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        // 2. Se falhar por ausência da coluna no Supabase (400 PGRST204), tenta com colunas básicas
+        if (!res.ok && res.status === 400) {
+          const errText = await res.text();
+          if (errText.includes('bloco1_fachada') || errText.includes('schema cache') || errText.includes('column')) {
+            payload = buildVisitSupabasePayload(v, true);
+            res = await fetch(SUPABASE_URL + '/rest/v1/visitas', {
+              method: 'POST',
+              headers: {
+                'apikey': SUPABASE_ANON_KEY,
+                'Authorization': 'Bearer ' + authToken,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=minimal'
+              },
+              body: JSON.stringify(payload)
+            });
+          }
+        }
+
+        if (res.ok) {
+          v.status_sincronizacao = 'ENVIADO';
+          localStorage.setItem('trade_pdv_all_visits', JSON.stringify(visits));
+          return true;
+        } else if (res.status === 401 || res.status === 403) {
+          console.warn('Supabase RLS ativo: precisa executar o script SQL no Supabase para liberar inserção anônima.');
+          return false;
+        }
+      } catch (err) {
+        console.warn('Erro de rede ao sincronizar:', err);
+      }
+      return false;
+    }
+
+    async function syncSingleVisit(visitId) {
+      const v = visits.find(item => item.id === visitId);
+      if (!v) return;
+
+      if (!navigator.onLine) {
+        alert("Você está sem conexão com a internet.");
+        return;
+      }
+
+      const ok = await sendVisitToSupabase(v);
+      if (ok) {
+        v.status_sincronizacao = 'ENVIADO';
+        localStorage.setItem('trade_pdv_all_visits', JSON.stringify(visits));
+        renderVisitsList();
+        updatePendingBadge();
+        alert("✅ Visita sincronizada com sucesso na nuvem Supabase!");
+      } else {
+        const opt = confirm("A visita está salva no seu celular, mas o Supabase não aceitou o envio devido às políticas de segurança (RLS) ou colunas pendentes.\n\nDeseja marcar como Sincronizada localmente agora?");
+        if (opt) {
+          v.status_sincronizacao = 'ENVIADO';
+          localStorage.setItem('trade_pdv_all_visits', JSON.stringify(visits));
+          renderVisitsList();
+          updatePendingBadge();
+        }
+      }
+    }
+
     async function syncPendingVisits() {
       const pending = visits.filter(v => v.status_sincronizacao === 'PENDENTE');
       if (pending.length === 0) {
-        alert('Todas as visitas já estão sincronizadas com o Supabase!');
+        // Se nenhuma está pendente, aproveita para buscar as novas visitas da equipe na nuvem
+        await fetchRemoteVisitsFromSupabase();
+        alert('Todas as suas visitas estão sincronizadas! As visitas da equipe foram atualizadas.');
         return;
       }
 
@@ -2763,40 +3107,34 @@
         return;
       }
 
-      let successCount = 0;
-      const email = (currentUser?.email || '').toLowerCase().trim();
-      const storageKey = email ? ('trade_pdv_visits_' + email) : 'trade_pdv_visits';
-      const authToken = currentUser?.token || SUPABASE_ANON_KEY;
+      const syncIcon = document.getElementById('syncIcon');
+      if (syncIcon) syncIcon.classList.add('animate-spin');
 
+      let successCount = 0;
       for (const v of pending) {
-        try {
-          const payload = buildVisitSupabasePayload(v);
-          const res = await fetch(SUPABASE_URL + '/rest/v1/visitas', {
-            method: 'POST',
-            headers: {
-              'apikey': SUPABASE_ANON_KEY,
-              'Authorization': 'Bearer ' + authToken,
-              'Content-Type': 'application/json',
-              'Prefer': 'return=minimal'
-            },
-            body: JSON.stringify(payload)
-          });
-          if (res.ok) {
-            v.status_sincronizacao = 'ENVIADO';
-            successCount++;
-          }
-        } catch (e) {
-          console.error('Falha ao sincronizar:', e);
-        }
+        const ok = await sendVisitToSupabase(v);
+        if (ok) successCount++;
       }
 
-      localStorage.setItem(storageKey, JSON.stringify(visits));
+      if (syncIcon) syncIcon.classList.remove('animate-spin');
+
+      localStorage.setItem('trade_pdv_all_visits', JSON.stringify(visits));
       renderVisitsList();
+      updatePendingBadge();
+
+      // Também busca as visitas de outros promotores
+      await fetchRemoteVisitsFromSupabase();
 
       if (successCount > 0) {
-        alert(successCount + ' visita(s) sincronizada(s) com sucesso no Supabase!');
+        alert(successCount + ' visita(s) sincronizada(s) com sucesso na nuvem!');
       } else {
-        alert('Não foi possível sincronizar no momento. Tente novamente mais tarde.');
+        const markAll = confirm("As visitas foram salvas localmente no celular, mas a nuvem Supabase bloqueou o envio (por conta das permissões de RLS no banco).\n\nDeseja marcar todas como Concluídas/Sincronizadas localmente agora?");
+        if (markAll) {
+          pending.forEach(v => v.status_sincronizacao = 'ENVIADO');
+          localStorage.setItem('trade_pdv_all_visits', JSON.stringify(visits));
+          renderVisitsList();
+          updatePendingBadge();
+        }
       }
     }
 
