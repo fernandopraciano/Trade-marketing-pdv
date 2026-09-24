@@ -2,27 +2,32 @@
   "name": "TVLar Trade Marketing PDV",
   "short_name": "TVLar PDV",
   "description": "Aplicativo oficial de Trade Marketing, auditoria de lojas e benchmark de concorrência da Importadora TVLar.",
+  "id": "/",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#041021",
   "theme_color": "#0072BC",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "./assets/tvlar-logo.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "src": "./assets/tvlar-logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
-  ]
+  ],
+  "categories": ["business", "productivity"]
 }
