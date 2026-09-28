@@ -1,9 +1,10 @@
 {
   "version": 2,
+  "cleanUrls": true,
   "routes": [
     {
       "src": "^/sw.js$",
-      "headers": { "cache-control": "no-cache" },
+      "headers": { "cache-control": "no-cache, no-store, must-revalidate" },
       "dest": "/sw.js"
     },
     {
@@ -11,6 +12,7 @@
       "headers": { "content-type": "application/manifest+json" },
       "dest": "/manifest.json"
     },
+    { "handle": "filesystem" },
     {
       "src": "/(.*)",
       "dest": "/index.html"

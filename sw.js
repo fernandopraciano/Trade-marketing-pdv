@@ -1,5 +1,5 @@
 // Service Worker para modo offline e instalação PWA do Trade Marketing PDV TVLar
-const CACHE_NAME = 'tvlar-pdv-cache-v10';
+const CACHE_NAME = 'tvlar-pdv-cache-v12';
 const ASSETS = [
   './',
   './index.html',
@@ -38,30 +38,39 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Ignora requisições de API do Supabase no cache estático para não mascarar dados dinâmicos
-  if (event.request.url.includes('supabase.co')) {
+  // Ignora requisições de API externas (Supabase, avatars, etc.)
+  if (event.request.url.includes('supabase.co') || event.request.url.includes('ui-avatars.com')) {
     return;
   }
 
+  // Network-First para navegação HTML: garante que o usuário receba sempre a versão mais recente
+  if (event.request.mode === 'navigate' || event.request.destination === 'document') {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseClone));
+          }
+          return response;
+        })
+        .catch(() => caches.match(event.request).then((res) => res || caches.match('./index.html')))
+    );
+    return;
+  }
+
+  // Cache-First com atualização em background para assets estáticos
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      return fetch(event.request).then((response) => {
-        // Guarda no cache se for uma resposta válida do mesmo host
-        if (response && response.status === 200 && response.type === 'basic') {
-          const responseToCache = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
+      const fetchPromise = fetch(event.request).then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseToCache));
         }
-        return response;
-      }).catch(() => {
-        if (event.request.mode === 'navigate') {
-          return caches.match('./index.html');
-        }
-      });
+        return networkResponse;
+      }).catch(() => {});
+
+      return cachedResponse || fetchPromise;
     })
   );
 });
