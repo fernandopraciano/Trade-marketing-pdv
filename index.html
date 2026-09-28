@@ -1323,10 +1323,15 @@
           <h4 class="text-xs font-extrabold text-white tracking-wide">Cesta Fixa de SKUs</h4>
         </div>
         <div class="flex items-center gap-1.5">
+          <button type="button" id="btnSyncCatalogSupabase" onclick="fetchProductsFromSupabase(true)" title="Puxar produtos cadastrados no Supabase (produtos_referencia / produtos)"
+            class="px-2.5 py-1 bg-gradient-to-r from-emerald-600 to-teal-700 hover:opacity-90 active:scale-95 text-white rounded-lg text-[10px] font-bold shadow-xs flex items-center gap-1 transition">
+            <i id="iconSyncCatalogSupabase" class="fa-solid fa-cloud-arrow-down text-[9px]"></i>
+            <span id="textSyncCatalogSupabase">Puxar Supabase</span>
+          </button>
           <button type="button" onclick="resetToTvlarOfficialOffers()" title="Recarregar ofertas vigentes de tvlar.com.br"
-            class="px-2.5 py-1 bg-gradient-to-r from-red-600 to-[#0072BC] hover:opacity-90 active:scale-95 text-white rounded-lg text-[10px] font-bold shadow-xs flex items-center gap-1 transition">
+            class="px-2 py-1 bg-gradient-to-r from-red-600 to-[#0072BC] hover:opacity-90 active:scale-95 text-white rounded-lg text-[10px] font-bold shadow-xs flex items-center gap-1 transition">
             <i class="fa-solid fa-rotate text-[9px]"></i>
-            <span>TVLar.com.br</span>
+            <span>TVLar</span>
           </button>
           <span id="catalogProductCount" class="text-[10px] font-black bg-blue-500/20 text-blue-300 px-2.5 py-1 rounded-full border border-blue-400/30">0 SKUs</span>
         </div>
@@ -1417,9 +1422,16 @@
           <div class="flex items-center justify-between px-1 mb-1">
             <div>
               <h5 class="text-xs font-black text-slate-800 uppercase tracking-wide">Itens Ativos na Cesta Fixa</h5>
-              <p class="text-[10px] text-slate-500">Clique em "Editar" para alterar qualquer campo do produto</p>
+              <p class="text-[10px] text-slate-500">Clique em "Editar" para alterar ou na lixeira para excluir qualquer SKU</p>
             </div>
-            <span class="text-[10px] font-bold text-slate-400 bg-slate-200/60 px-2 py-0.5 rounded-full">Base Comparável</span>
+            <div class="flex items-center gap-1.5">
+              <button type="button" onclick="clearEntireProductCatalog()" 
+                class="text-[10px] font-bold text-rose-600 hover:text-rose-800 bg-rose-50 hover:bg-rose-100 px-2.5 py-1 rounded-lg border border-rose-200 flex items-center gap-1 transition active:scale-95"
+                title="Excluir todos os produtos da cesta">
+                <i class="fa-solid fa-trash-can text-[9px]"></i> Limpar Cesta
+              </button>
+              <span class="text-[10px] font-bold text-slate-400 bg-slate-200/60 px-2 py-0.5 rounded-full">Base Comparável</span>
+            </div>
           </div>
 
           <div id="catalogProductList" class="space-y-2.5"></div>
@@ -3398,16 +3410,16 @@
       ];
 
       const stored = localStorage.getItem('trade_pdv_product_catalog');
-      if (stored) {
+      if (stored !== null) {
         try {
           const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed) && parsed.length > 0) {
+          if (Array.isArray(parsed)) {
             return parsed.map((p, i) => ({
               id: String(p.id || ('sku_' + (i + 1))),
               codigo: p.codigo || ('SKU-' + (i + 1).toString().padStart(3, '0')),
               nome: p.nome || 'Produto sem nome',
               descricao: p.descricao || '',
-              precoReferencia: Number(p.precoReferencia) || 0,
+              precoReferencia: Number(p.precoReferencia || p.preco_referencia || 0),
               categoria: p.categoria || 'Geral'
             }));
           }
@@ -3466,6 +3478,8 @@
       cancelCatalogEdit();
       renderProductCatalog();
       goToScreen('screenProductCatalog');
+      // Sincroniza em segundo plano com Supabase se houver produtos cadastrados na nuvem
+      fetchProductsFromSupabase(false);
     }
 
     function closeProductCatalog() {
@@ -3806,7 +3820,7 @@
       }
     }
 
-    function removeCatalogProduct(id) {
+    async function removeCatalogProduct(id) {
       let catalog = loadProductCatalog();
       const p = catalog.find(item => String(item.id) === String(id));
       const nomeProd = p ? p.nome : 'este item';
@@ -3817,6 +3831,105 @@
       saveProductCatalog(catalog);
       renderProductCatalog();
       showCatalogToast(`SKU "${nomeProd}" removido com sucesso.`);
+
+      // Se for um item com ID remoto (UUID), tenta remover no Supabase também
+      if (id && typeof id === 'string' && id.includes('-')) {
+        const token = (currentUser && currentUser.token) ? currentUser.token : SUPABASE_ANON_KEY;
+        const headers = { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${token}` };
+        fetch(`${SUPABASE_URL}/rest/v1/produtos_referencia?id=eq.${id}`, { method: 'DELETE', headers }).catch(() => {});
+        fetch(`${SUPABASE_URL}/rest/v1/produtos?id=eq.${id}`, { method: 'DELETE', headers }).catch(() => {});
+      }
+    }
+
+    function clearEntireProductCatalog() {
+      const catalog = loadProductCatalog();
+      if (catalog.length === 0) {
+        showCatalogToast("A cesta já está vazia.");
+        return;
+      }
+      if (!confirm(`Tem certeza que deseja excluir TODOS os ${catalog.length} produtos da cesta?\n\nEssa ação deixará a cesta vazia. Você poderá puxar do Supabase ou recarregar as ofertas oficiais a qualquer momento.`)) return;
+
+      saveProductCatalog([]);
+      cancelCatalogEdit();
+      renderProductCatalog();
+      showCatalogToast("Todos os produtos foram removidos da cesta.");
+    }
+
+    async function fetchProductsFromSupabase(isManual) {
+      const btn = document.getElementById('btnSyncCatalogSupabase');
+      const icon = document.getElementById('iconSyncCatalogSupabase');
+      const text = document.getElementById('textSyncCatalogSupabase');
+
+      if (btn && icon && text && isManual) {
+        icon.className = 'fa-solid fa-spinner fa-spin text-[9px]';
+        text.textContent = 'Puxando...';
+      }
+
+      try {
+        let rows = [];
+        const token = (currentUser && currentUser.token) ? currentUser.token : SUPABASE_ANON_KEY;
+        const headers = {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${token}`
+        };
+
+        // 1. Tenta produtos_referencia (tabela onde o usuário importou o CSV no Supabase)
+        try {
+          const resRef = await fetch(`${SUPABASE_URL}/rest/v1/produtos_referencia?select=*&order=nome.asc`, { headers });
+          if (resRef.ok) {
+            const dataRef = await resRef.json();
+            if (Array.isArray(dataRef) && dataRef.length > 0) {
+              rows = dataRef;
+            }
+          }
+        } catch (e1) {
+          console.warn("Erro ao buscar produtos_referencia:", e1);
+        }
+
+        // 2. Se produtos_referencia veio vazio, tenta a tabela produtos
+        if (rows.length === 0) {
+          try {
+            const resProd = await fetch(`${SUPABASE_URL}/rest/v1/produtos?select=*&order=nome.asc`, { headers });
+            if (resProd.ok) {
+              const dataProd = await resProd.json();
+              if (Array.isArray(dataProd) && dataProd.length > 0) {
+                rows = dataProd;
+              }
+            }
+          } catch (e2) {
+            console.warn("Erro ao buscar produtos:", e2);
+          }
+        }
+
+        if (rows.length > 0) {
+          const mapped = rows.map((p, idx) => ({
+            id: String(p.id || ('sku_' + (idx + 1))),
+            codigo: p.codigo || (p.nome ? p.nome.split(' ')[0] : ('SKU-' + (idx + 1).toString().padStart(3, '0'))),
+            nome: p.nome || 'Produto sem nome',
+            descricao: p.descricao || '',
+            precoReferencia: Number(p.preco_referencia || p.precoReferencia || 0),
+            categoria: p.categoria || 'Geral'
+          }));
+
+          saveProductCatalog(mapped);
+          renderProductCatalog();
+          showCatalogToast(`${mapped.length} produtos carregados do Supabase!`);
+        } else {
+          if (isManual) {
+            showCatalogToast("Nenhum produto retornado do Supabase (verifique permissões RLS da tabela).", true);
+          }
+        }
+      } catch (err) {
+        console.error("Erro ao puxar produtos do Supabase:", err);
+        if (isManual) {
+          showCatalogToast("Falha de conexão com o Supabase.", true);
+        }
+      } finally {
+        if (btn && icon && text) {
+          icon.className = 'fa-solid fa-cloud-arrow-down text-[9px]';
+          text.textContent = 'Puxar Supabase';
+        }
+      }
     }
 
     function resetToTvlarOfficialOffers() {

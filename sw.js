@@ -1,5 +1,5 @@
 // Service Worker para modo offline e instalação PWA do Trade Marketing PDV TVLar
-const CACHE_NAME = 'tvlar-pdv-cache-v9';
+const CACHE_NAME = 'tvlar-pdv-cache-v10';
 const ASSETS = [
   './',
   './index.html',
