@@ -1,5 +1,5 @@
-// Service Worker para modo offline e instalação PWA do Trade Marketing PDV TVLar
-const CACHE_NAME = 'tvlar-pdv-cache-v13';
+// Service Worker para modo offline e instalação PWA do Tradefy PDV
+const CACHE_NAME = 'tradefy-pdv-cache-v14';
 const ASSETS = [
   './',
   './index.html',
@@ -7,8 +7,7 @@ const ASSETS = [
   './icon-192.png',
   './icon-512.png',
   './apple-touch-icon.png',
-  './assets/tvlar-logo.svg',
-  './assets/tvlar-logo-footer.svg'
+  './tradefy-icon.png'
 ];
 
 self.addEventListener('install', (event) => {

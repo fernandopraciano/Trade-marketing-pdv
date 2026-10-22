@@ -1,13 +1,13 @@
 {
-  "name": "TVLar Trade Marketing PDV",
-  "short_name": "TVLar PDV",
-  "description": "Aplicativo oficial de Trade Marketing, auditoria de lojas e benchmark de concorrência da Importadora TVLar.",
+  "name": "Tradefy · Trade Marketing PDV",
+  "short_name": "Tradefy",
+  "description": "Aplicativo de Trade Marketing, auditoria de lojas e inteligência de PDV.",
   "id": "/",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#041021",
-  "theme_color": "#0072BC",
+  "background_color": "#0b0f19",
+  "theme_color": "#1e293b",
   "orientation": "portrait-primary",
   "icons": [
     {
@@ -23,9 +23,9 @@
       "purpose": "any maskable"
     },
     {
-      "src": "./assets/tvlar-logo.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "./tradefy-icon.png",
+      "sizes": "256x256",
+      "type": "image/png",
       "purpose": "any"
     }
   ],
